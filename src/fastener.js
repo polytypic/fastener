@@ -39,6 +39,11 @@ export const downTo = R.curry((k, {focus, ...up}) => {
   }
 })
 
+export const keyOf = ({left, keys, up}) =>
+  keys ? keys[left.length] :
+  up   ? left.length :
+  undefined
+
 const downMost = head => z => {
   const {focus} = z
   if (isArray(focus)) {

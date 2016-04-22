@@ -41,6 +41,26 @@ describe("fastener", () => {
 })
 
 describe("illegal moves", () => {
-  ["downHead", "downLast", "downTo(0)", "left", "right", "up"]
+  ["downHead", "downLast", "downTo(0)", "left", "right", "up", "keyOf"]
   .forEach(op => testEq(`seq(F.toZipper(1), F.${op})`, undefined))
+})
+
+describe("keyOf", () => {
+  testEq("seq(F.toZipper({x: 1, y: 2})," +
+         "    F.downTo('x')," +
+         "    F.keyOf)",
+         'x')
+
+  testEq("seq(F.toZipper({x: 1, y: 2})," +
+         "    F.downTo('y')," +
+         "    F.keyOf)",
+         'y')
+
+  testEq("seq(F.toZipper(['a','b','c','d'])," +
+         "    F.downLast," +
+         "    F.left," +
+         "    F.left," +
+         "    F.right," +
+         "    F.keyOf)",
+         2)
 })
