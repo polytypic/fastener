@@ -74,6 +74,9 @@ export const right = ({left, focus, right, ...rest}) =>
     right: R.drop(1, right),
     ...rest}
 
+export const head = z => pass(up(z), z => z && downHead(z))
+export const last = z => pass(up(z), z => z && downLast(z))
+
 export const toZipper = focus => ({left: [], right: [], focus})
 
 export const fromZipper = z =>
