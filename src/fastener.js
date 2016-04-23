@@ -19,21 +19,18 @@ export const up = ({left, focus, right, keys, up}) => {
   }
 }
 
+const downIndex = (values, i, rest) =>
+  ({left: values.slice(0, i),
+    focus: values[i],
+    right: values.slice(i+1),
+    ...rest})
+
 export const downTo = R.curry((k, {focus, ...up}) => {
   if (isObject(focus)) {
     const keys = R.keys(focus)
-    const values = R.values(focus)
-    const i = keys.findIndex(R.equals(k))
-    return {left: values.slice(0, i),
-            focus: values[i],
-            right: values.slice(i+1),
-            keys,
-            up}
+    return downIndex(R.values(focus), keys.findIndex(R.equals(k)), {keys, up})
   } else if (isArray(focus)) {
-    return {left: focus.slice(0, k),
-            focus: focus[k],
-            right: focus.slice(k+1),
-            up}
+    return downIndex(focus, k, {up})
   } else {
     return undefined
   }
