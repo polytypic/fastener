@@ -83,9 +83,20 @@ containing array or object.
 Sibling movement is moving the focus between the elements of an array or an object.
 
 ##### <a name="head"></a>[`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
+
+`F.head(zipper)` moves the focus to the leftmost sibling of the current focus.
+
 ##### <a name="last"></a>[`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
+
+`F.last(zipper)` moves the focus to the rightmost sibling of the current focus.
+
 ##### <a name="left"></a>[`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
+
+`F.left(zipper)` moves the focus to the element on the left of the current focus.
+
 ##### <a name="right"></a>[`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
+
+`F.right(zipper)` moves the focus to the element on the right of the current focus.
 
 ### Queries
 
@@ -96,3 +107,6 @@ Sibling movement is moving the focus between the elements of an array or an obje
 #### <a name="transformMove"></a>[`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|left|right|up) -> (JSON -> JSON) -> Zipper -> Zipper")
 
 #### <a name="everywhere"></a>[`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
+
+`F.everywhere(fn, zipper)` performs a transform of the focused element by
+modifying each possible focus of the element with a bottom-up traversal.
