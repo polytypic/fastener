@@ -12,9 +12,21 @@ manipulating JSON data.
 
 ## Reference
 
+The zipper combinators are available as named imports.  Typically one just
+imports the the library as:
+
 ```js
 import * as F from "fastener"
 ```
+
+In the following examples we will make use of the function
+
+```js
+const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
+```
+
+written using [reduce](http://ramdajs.com/0.21.0/docs/#reduce) that allows one
+to express a sequence of operations to perform starting from a given value.
 
 ### Introduction and Elimination
 
@@ -23,9 +35,29 @@ import * as F from "fastener"
 `F.toZipper(json)` creates a new zipper that is focused on the root of the given
 JSON object.
 
+For example:
+
+```js
+seq(F.toZipper([1,2,3]),
+    F.downHead,
+    F.modify(x => x + 1),
+    F.fromZipper)
+// [ 2, 2, 3 ]
+```
+
 #### <a name="fromZipper"></a>[`F.fromZipper(zipper)`](#fromZipper "fromZipper :: Zipper -> JSON")
 
 `F.fromZipper(zipper)` extracts the modified JSON object from the given zipper.
+
+For example:
+
+```js
+seq(F.toZipper([1,2,3]),
+    F.downHead,
+    F.modify(x => x + 1),
+    F.fromZipper)
+// [ 2, 2, 3 ]
+```
 
 ### Focus
 
@@ -36,16 +68,47 @@ focused on.
 
 `F.get(zipper)` returns the element that the zipper is focused on.
 
+For example:
+
+```js
+seq(F.toZipper(1), F.get)
+// 1
+seq(F.toZipper(["a","b","c"]),
+    F.downTo(2),
+    F.get)
+// 'c'
+```
+
 #### <a name="modify"></a>[`F.modify(fn, zipper)`](#modify "modify :: (JSON -> JSON) -> Zipper -> Zipper")
 
 `F.modify(fn, zipper)` is equivalent to `F.set(fn(F.get(zipper)), zipper)` and
 replaces the element that the zipper is focused on with the value returned by
 the given function for the element.
 
+For example:
+
+```js
+seq(F.toZipper(["a","b","c"]),
+    F.downTo(2),
+    F.modify(x => x + x),
+    F.fromZipper)
+// [ 'a', 'b', 'cc' ]
+```
+
 #### <a name="set"></a>[`F.set(json, zipper)`](#set "set :: JSON -> Zipper -> Zipper")
 
 `F.set(json, zipper)` replaces the element that the zipper is focused on with
 the given value.
+
+For example:
+
+```js
+seq(F.toZipper(["a","b","c"]),
+    F.downTo(1),
+    F.set('lol'),
+    F.fromZipper)
+// [ 'a', 'lol', 'c' ]
+```
 
 ### Movement
 
@@ -113,9 +176,11 @@ move was illegal in which case the given default value is returned instead.
 For example:
 
 ```js
-R.pipe(F.toZipper, F.queryMove(F.downTo('y'), false, () => true))({x: 1})
+seq(F.toZipper({x: 1}),
+    F.queryMove(F.downTo('y'), false, () => true))
 // false
-R.pipe(F.toZipper, F.queryMove(F.downTo('y'), false, () => true))({y: 1})
+seq(F.toZipper({y: 1}),
+    F.queryMove(F.downTo('y'), false, () => true))
 // true
 ```
 
@@ -132,9 +197,13 @@ of an illegal move.
 For example:
 
 ```js
-R.pipe(F.toZipper, F.transformMove(F.downTo('y'), F.modify(x => x + 1)), F.fromZipper)({y: 1})
+seq(F.toZipper({y: 1}),
+    F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
+    F.fromZipper)
 // { y: 2 }
-R.pipe(F.toZipper, F.transformMove(F.downTo('y'), F.modify(x => x + 1)), F.fromZipper)({x: 1})
+seq(F.toZipper({x: 1}),
+    F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
+    F.fromZipper)
 // { x: 1 }
 ```
 
