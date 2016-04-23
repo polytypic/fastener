@@ -212,6 +212,16 @@ seq(F.toZipper({x: 1}),
 `F.everywhere(fn, zipper)` performs a transform of the focused element by
 modifying each possible focus of the element with a bottom-up traversal.
 
+For example:
+
+```js
+seq(F.toZipper({foo: 1,
+                bar: [{lol: "bal", example: 2}]}),
+    F.everywhere(x => typeof x === "number" ? x + 1 : x),
+    F.fromZipper)
+// { foo: 2, bar: [ { lol: 'bal', example: 3 } ] }
+```
+
 ## Related Work
 
 While the implementation is very different, the choice of combinators is based
