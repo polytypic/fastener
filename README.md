@@ -13,7 +13,7 @@ manipulating JSON data.
 ## Reference
 
 The zipper combinators are available as named imports.  Typically one just
-imports the the library as:
+imports the library as:
 
 ```js
 import * as F from "fastener"
