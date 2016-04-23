@@ -105,9 +105,37 @@ Sibling movement is moving the focus between the elements of an array or an obje
 
 #### <a name="queryMove"></a>[`F.queryMove(move, default, fn, zipper)`](#queryMove "F.queryMove :: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
 
+`F.queryMove(move, default, fn, zipper)` applies the given function `fn` to the
+zipper focused on after the given movement and returns the result unless the
+move was illegal in which case the given default value is returned instead.
+
+For example:
+
+```js
+R.pipe(F.toZipper, F.queryMove(F.downTo('y'), false, () => true))({x: 1})
+// false
+R.pipe(F.toZipper, F.queryMove(F.downTo('y'), false, () => true))({y: 1})
+// true
+```
+
 ### Transforms
 
-#### <a name="transformMove"></a>[`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|left|right|up) -> (JSON -> JSON) -> Zipper -> Zipper")
+#### <a name="transformMove"></a>[`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|downTo(key)|left|right|up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
+
+`F.transformMove(move, fn, zipper)` applies the given function to the zipper
+focused on after the given movement.  The function must the return a zipper
+focused on the same element that it was given.  Then the focus is moved back to
+the element that the zipper was originall focused on.  Nothing is done in case
+of an illegal move.
+
+For example:
+
+```js
+R.pipe(F.toZipper, F.transformMove(F.downTo('y'), F.modify(x => x + 1)), F.fromZipper)({y: 1})
+// { y: 2 }
+R.pipe(F.toZipper, F.transformMove(F.downTo('y'), F.modify(x => x + 1)), F.fromZipper)({x: 1})
+// { x: 1 }
+```
 
 #### <a name="everywhere"></a>[`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
 
