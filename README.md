@@ -25,7 +25,7 @@ In the following examples we will make use of the function
 const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
 ```
 
-written using [reduce](http://ramdajs.com/0.21.0/docs/#reduce) that allows one
+written using [`reduce`](http://ramdajs.com/0.21.0/docs/#reduce) that allows one
 to express a sequence of operations to perform starting from a given value.
 
 ### Introduction and Elimination
