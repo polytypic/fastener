@@ -22,10 +22,12 @@ export const up = ({left, focus, right, keys, up}) => {
 }
 
 const downIndex = (values, i, rest) =>
-  ({left: values.slice(0, i),
-    focus: values[i],
-    right: values.slice(i+1).reverse(),
-    ...rest})
+  0 <= i && i < values.length
+  ? ({left: values.slice(0, i),
+      focus: values[i],
+      right: values.slice(i+1).reverse(),
+      ...rest})
+  : undefined
 
 export const downTo = R.curry((k, {focus, ...up}) => {
   if (isObject(focus)) {
