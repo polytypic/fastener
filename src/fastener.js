@@ -13,7 +13,7 @@ export const up = ({left, focus, right, keys, up}) => {
   if (keys) {
     return {focus: R.zipObj(keys, [...left, focus, ...R.reverse(right)]), ...up}
   } else if (up) {
-    return {focus: [...left, focus, ...right], ...up}
+    return {focus: [...left, focus, ...R.reverse(right)], ...up}
   } else {
     return undefined
   }
