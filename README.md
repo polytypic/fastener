@@ -1,4 +1,4 @@
-[ [Tutorial](#tutorial) | [Reference](#reference) ]
+[ [Tutorial](#tutorial) | [Reference](#reference) | [Related work](#related-work) ]
 
 [Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
 are a powerful abstraction for *implementing* arbitrary queries and transforms
@@ -113,3 +113,9 @@ Sibling movement is moving the focus between the elements of an array or an obje
 
 `F.everywhere(fn, zipper)` performs a transform of the focused element by
 modifying each possible focus of the element with a bottom-up traversal.
+
+## Related Work
+
+While the implementation is very different, the choice of combinators is based
+on Michael D. Adams' paper
+[Scrap Your Zippers](http://michaeldadams.org/papers/scrap_your_zippers/).
