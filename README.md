@@ -1,10 +1,13 @@
-[ [Reference](#reference) ]
+[ [Tutorial](#tutorial) | [Reference](#reference) ]
 
-This is the very beginnings of a
-[Zipper](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
-library for manipulating JSON.
+[Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
+are a powerful abstraction for *implementing* arbitrary queries and transforms
+on immutable data structures and for step-by-step navigation and modification of
+data structures.
 
 [![npm version](https://badge.fury.io/js/fastener.svg)](http://badge.fury.io/js/fastener) [![Build Status](https://travis-ci.org/polytypic/fastener.svg?branch=master)](https://travis-ci.org/polytypic/fastener) [![](https://david-dm.org/polytypic/fastener.svg)](https://david-dm.org/polytypic/fastener) [![](https://david-dm.org/polytypic/fastener/dev-status.svg)](https://david-dm.org/polytypic/fastener#info=devDependencies)
+
+## Tutorial
 
 ## Reference
 
