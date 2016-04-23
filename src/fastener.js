@@ -83,12 +83,10 @@ export const queryMove = R.curry((move, b, f, z) =>
 
 const bwd = (move, z) => {
   switch (move) {
-    case downHead: return up
-    case downLast: return up
     case left: return right
     case right: return left
     case up: return downTo(keyOf(z))
-    default: throw new Error(`Cannot invert ${move}`)
+    default: return up
   }
 }
 
