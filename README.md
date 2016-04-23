@@ -25,6 +25,9 @@ JSON object.
 
 ### Focus
 
+Focus combinators allow one to inspect and modify the element that a zipper is
+focused on.
+
 #### <a name="get"></a>[`F.get(zipper)`](#get "get :: Zipper -> JSON")
 
 `F.get(zipper)` returns the element that the zipper is focused on.
@@ -51,14 +54,29 @@ Parent-Child movement is moving the focus between that parent object or array
 and a child element of said parent.
 
 ##### <a name="downHead"></a>[`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
+
+`F.downHead(zipper)` moves the focus to the leftmost element of the object or
+array that the zipper is focused on.
+
 ##### <a name="downLast"></a>[`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
+
+`F.downLast(zipper)` moves the focus to the rightmost element of the object or
+array that the zipper is focused on.
+
 ##### <a name="downTo"></a>[`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
+
+`F.downTo(key, zipper)` moves the focus to the specified object property or
+array index of the object or array that the zipper is focused on.
+
 ##### <a name="keyOf"></a>[`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
 
 `F.keyOf(zipper)` returns the object property name or the array index that the
 zipper is currently focused on.
 
 ##### <a name="up"></a>[`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+
+`F.up(zipper)` moves the focus from an array element or object property to the
+containing array or object.
 
 #### Sibling movement
 
