@@ -11,7 +11,7 @@ export const modify = R.curry((f, z) => set(f(get(z)), z))
 
 export const up = ({left, focus, right, keys, up}) => {
   if (keys) {
-    return {focus: R.zipObj(keys, [...left, focus, ...right]), ...up}
+    return {focus: R.zipObj(keys, [...left, focus, ...R.reverse(right)]), ...up}
   } else if (up) {
     return {focus: [...left, focus, ...right], ...up}
   } else {
@@ -22,7 +22,7 @@ export const up = ({left, focus, right, keys, up}) => {
 const downIndex = (values, i, rest) =>
   ({left: values.slice(0, i),
     focus: values[i],
-    right: values.slice(i+1),
+    right: values.slice(i+1).reverse(),
     ...rest})
 
 export const downTo = R.curry((k, {focus, ...up}) => {
@@ -57,19 +57,14 @@ export const downHead = downMost(true)
 export const downLast = downMost(false)
 
 // FYI: The left and right ops are not accidentally O(n).  I'm just lazy. :)
+const shift = (f, c, t, k) =>
+  f.length === 0 ? undefined : k(R.dropLast(1, f), R.last(f), R.append(c, t))
+
 export const left = ({left, focus, right, ...rest}) =>
-  left.length === 0 ? undefined : {
-    left: R.dropLast(1, left),
-    focus: R.last(left),
-    right: R.prepend(focus, right),
-    ...rest}
+  shift(left, focus, right, (l, f, r) => ({left: l, focus: f, right: r, ...rest}))
 
 export const right = ({left, focus, right, ...rest}) =>
-  right.length === 0 ? undefined : {
-    left: R.append(focus, left),
-    focus: R.head(right),
-    right: R.drop(1, right),
-    ...rest}
+  shift(right, focus, left, (r, f, l) => ({left: l, focus: f, right: r, ...rest}))
 
 export const head = z => pass(up(z), z => z && downHead(z))
 export const last = z => pass(up(z), z => z && downLast(z))
