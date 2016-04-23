@@ -1,5 +1,7 @@
 import * as R from "ramda"
 
+const empty = []
+
 const pass = (x, f) => f(x)
 
 const isObject = x => x && x.constructor === Object
@@ -69,7 +71,7 @@ export const right = ({left, focus, right, ...rest}) =>
 export const head = z => pass(up(z), z => z && downHead(z))
 export const last = z => pass(up(z), z => z && downLast(z))
 
-export const toZipper = focus => ({left: [], right: [], focus})
+export const toZipper = focus => ({left: empty, right: empty, focus})
 
 export const fromZipper = z =>
   pass(up(z), zz => zz ? fromZipper(zz) : get(z))
