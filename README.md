@@ -25,16 +25,20 @@ import * as F from "fastener"
 
 ### Movement
 
-#### <a name="downHead"></a>[`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
-#### <a name="downLast"></a>[`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
-#### <a name="downTo"></a>[`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
-#### <a name="keyOf"></a>[`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
-#### <a name="up"></a>[`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+#### Parent-Child movement
 
-#### <a name="head"></a>[`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
-#### <a name="last"></a>[`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
-#### <a name="left"></a>[`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
-#### <a name="right"></a>[`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
+##### <a name="downHead"></a>[`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
+##### <a name="downLast"></a>[`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
+##### <a name="downTo"></a>[`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
+##### <a name="keyOf"></a>[`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
+##### <a name="up"></a>[`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+
+#### Sibling movement
+
+##### <a name="head"></a>[`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
+##### <a name="last"></a>[`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
+##### <a name="left"></a>[`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
+##### <a name="right"></a>[`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
 
 ### Queries
 
