@@ -75,3 +75,17 @@ export const toZipper = focus => ({left: empty, right: empty, focus})
 
 export const fromZipper = z =>
   pass(up(z), zz => zz ? fromZipper(zz) : get(z))
+
+const queryMove = R.curry((move, b, f, z) =>
+  pass(move(z), z => z ? f(z) : b))
+
+const transformMove = R.curry((fwd, bwd, b, f, z) =>
+  queryMove(fwd, b, R.pipe(f, queryMove(bwd, b, R.identity)), z))
+
+export const downHeadT = R.curry((f, z) => transformMove(downHead, up, z, f, z))
+export const rightT = R.curry((f, z) => transformMove(right, left, z, f, z))
+
+const everywhereG = f => z => rightT(everywhereG(f), everywhere(f, z))
+
+export const everywhere = R.curry((f, z) =>
+  modify(f, downHeadT(everywhereG(f), z)))
