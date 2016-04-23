@@ -76,16 +76,24 @@ export const toZipper = focus => ({left: empty, right: empty, focus})
 export const fromZipper = z =>
   pass(up(z), zz => zz ? fromZipper(zz) : get(z))
 
-const queryMove = R.curry((move, b, f, z) =>
+export const queryMove = R.curry((move, b, f, z) =>
   pass(move(z), z => z ? f(z) : b))
 
-const transformMove = R.curry((fwd, bwd, b, f, z) =>
-  queryMove(fwd, b, R.pipe(f, queryMove(bwd, b, R.identity)), z))
+const bwd = (move, z) => {
+  switch (move) {
+    case left: return right
+    case right: return left
+    case downHead: return up
+    case downLast: return up
+    case up: return downTo(keyOf(z))
+    default: throw new Error(`Cannot invert ${move}`)
+  }
+}
 
-export const downHeadT = R.curry((f, z) => transformMove(downHead, up, z, f, z))
-export const rightT = R.curry((f, z) => transformMove(right, left, z, f, z))
+export const transformMove = R.curry((move, f, z) =>
+  queryMove(move, z, R.pipe(f, queryMove(bwd(move, z), z, R.identity)), z))
 
-const everywhereG = f => z => rightT(everywhereG(f), everywhere(f, z))
-
+const everywhereG = f => z =>
+  transformMove(right, everywhereG(f), everywhere(f, z))
 export const everywhere = R.curry((f, z) =>
-  modify(f, downHeadT(everywhereG(f), z)))
+  modify(f, transformMove(downHead, everywhereG(f), z)))
