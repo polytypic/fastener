@@ -1,4 +1,4 @@
-[ [Tutorial](#tutorial) | [Reference](#reference) | [Related work](#related-work) ]
+[ [Tutorial](#tutorial) | [Reference](#reference) | [Related Work](#related-work) ]
 
 [Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
 are a powerful abstraction for *implementing* arbitrary queries and transforms
