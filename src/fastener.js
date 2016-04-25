@@ -1,7 +1,5 @@
 import * as R from "ramda"
 
-const empty = []
-
 const pass = (x, f) => f(x)
 
 const isObject = x => x && x.constructor === Object
@@ -61,7 +59,7 @@ export const downLast = downMost(false)
 
 // FYI: The left and right ops are not accidentally O(n).  I'm just lazy. :)
 const shift = (f, c, t, k) =>
-  f.length === 0 ? undefined : k(R.dropLast(1, f), R.last(f), R.append(c, t))
+  f && f.length !== 0 ? k(R.dropLast(1, f), R.last(f), R.append(c, t)) : undefined
 
 export const left = ({left, focus, right, ...rest}) =>
   shift(left, focus, right, (l, f, r) => ({left: l, focus: f, right: r, ...rest}))
@@ -72,7 +70,7 @@ export const right = ({left, focus, right, ...rest}) =>
 export const head = z => pass(up(z), z => z && downHead(z))
 export const last = z => pass(up(z), z => z && downLast(z))
 
-export const toZipper = focus => ({left: empty, right: empty, focus})
+export const toZipper = focus => ({focus})
 
 export const fromZipper = z =>
   pass(up(z), zz => zz ? fromZipper(zz) : get(z))
