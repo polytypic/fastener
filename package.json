@@ -15,8 +15,13 @@
     "url": "git+https://github.com/polytypic/fastener.git"
   },
   "keywords": [
-    "zipper",
-    "json"
+    "cursor",
+    "functional",
+    "immutable",
+    "json",
+    "query",
+    "transform",
+    "zipper"
   ],
   "license": "MIT",
   "bugs": {
