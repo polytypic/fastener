@@ -10,13 +10,25 @@ manipulating JSON data.
 
 ## Tutorial
 
+Playing with zippers in a REPL can be very instructive.  First we require the
+libraries and define a little helper using
+[`reduce`](http://ramdajs.com/0.21.0/docs/#reduce) to perform a sequence of
+operations on a value:
+
 ```js
 const R = require("ramda")
 const F = require("fastener")
 const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
+```
+
+Let's work with the following simple JSON object:
+
+```js
 const data = { contents: [ { language: "en", text: "Title" },
                            { language: "sv", text: "Rubrik" } ] }
 ```
+
+First we just create a zipper using [`F.toZipper`](#toZipper):
 
 ```js
 seq(F.toZipper(data))
@@ -25,8 +37,17 @@ seq(F.toZipper(data))
 //   focus: { contents: [ [Object], [Object] ] } }
 ```
 
+As can be seen, the zipper is just a simple JSON object and the `focus` is the
+`data` object that we gave to [`F.toZipper`](#toZipper)..  However, you should
+use the zipper combinators to operate on zippers rather than rely on the exact
+format of the zipper object.
+
+Let's then move into the `contents` property of the object using
+[`F.downTo`](#downTo):
+
 ```js
-seq(F.toZipper(data), F.downTo('contents'))
+seq(F.toZipper(data),
+    F.downTo('contents'))
 // { left: [],
 //   focus:
 //    [ { language: 'en', text: 'Title' },
@@ -36,8 +57,22 @@ seq(F.toZipper(data), F.downTo('contents'))
 //   up: { left: [], right: [] } }
 ```
 
+As seen above, the `focus` now has the `contents` array.  We can use
+[`F.get`](#get) to extract the value under focus:
+
+
 ```js
-seq(F.toZipper(data), F.downTo('contents'), F.downHead)
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.get)
+// [ { language: 'en', text: 'Title' },
+//   { language: 'sv', text: 'Rubrik' } ]
+```
+
+```js
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.downHead)
 // { left: [],
 //   focus: { language: 'en', text: 'Title' },
 //   right: [ { language: 'sv', text: 'Rubrik' } ],
@@ -49,7 +84,10 @@ seq(F.toZipper(data), F.downTo('contents'), F.downHead)
 ```
 
 ```js
-seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead)
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.downHead,
+    F.downHead)
 // { left: [],
 //   focus: 'en',
 //   right: [ 'Title' ],
@@ -61,7 +99,11 @@ seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead)
 ```
 
 ```js
-seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right)
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.downHead,
+    F.downHead,
+    F.right)
 // { left: [ 'en' ],
 //   focus: 'Title',
 //   right: [],
@@ -73,7 +115,12 @@ seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right)
 ```
 
 ```js
-seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.modify(t => "The " + t))
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.downHead,
+    F.downHead,
+    F.right,
+    F.modify(t => "The " + t))
 // { left: [ 'en' ],
 //   focus: 'The Title',
 //   right: [],
@@ -85,7 +132,13 @@ seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.m
 ```
 
 ```js
-seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.modify(t => "The " + t), F.up)
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.downHead,
+    F.downHead,
+    F.right,
+    F.modify(t => "The " + t),
+    F.up)
 // { focus: { language: 'en', text: 'The Title' },
 //   left: [],
 //   right: [ { language: 'sv', text: 'Rubrik' } ],
@@ -97,7 +150,13 @@ seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.m
 ```
 
 ```js
-seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.modify(t => "The " + t), F.fromZipper)
+seq(F.toZipper(data),
+    F.downTo('contents'),
+    F.downHead,
+    F.downHead,
+    F.right,
+    F.modify(t => "The " + t),
+    F.fromZipper)
 // { contents:
 //    [ { language: 'en', text: 'The Title' },
 //      { language: 'sv', text: 'Rubrik' } ] }
