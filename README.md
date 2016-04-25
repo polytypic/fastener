@@ -39,8 +39,8 @@ seq(F.toZipper(data))
 
 As can be seen, the zipper is just a simple JSON object and the `focus` is the
 `data` object that we gave to [`F.toZipper`](#toZipper).  However, you should
-use the zipper combinators to operate on zippers rather than rely on the exact
-format of the zipper object.
+use the zipper combinators to operate on zippers rather than rely on their exact
+format.
 
 Let's then move into the `contents` property of the object using
 [`F.downTo`](#downTo):
