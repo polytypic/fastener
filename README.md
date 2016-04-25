@@ -10,6 +10,99 @@ manipulating JSON data.
 
 ## Tutorial
 
+```js
+const R = require("ramda")
+const F = require("fastener")
+const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
+const data = { contents: [ { language: "en", text: "Title" },
+                           { language: "sv", text: "Rubrik" } ] }
+```
+
+```js
+seq(F.toZipper(data))
+// { left: [],
+//   right: [],
+//   focus: { contents: [ [Object], [Object] ] } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'))
+// { left: [],
+//   focus:
+//    [ { language: 'en', text: 'Title' },
+//      { language: 'sv', text: 'Rubrik' } ],
+//   right: [],
+//   keys: [ 'contents' ],
+//   up: { left: [], right: [] } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'), F.downHead)
+// { left: [],
+//   focus: { language: 'en', text: 'Title' },
+//   right: [ { language: 'sv', text: 'Rubrik' } ],
+//   up:
+//    { left: [],
+//      right: [],
+//      keys: [ 'contents' ],
+//      up: { left: [], right: [] } } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead)
+// { left: [],
+//   focus: 'en',
+//   right: [ 'Title' ],
+//   keys: [ 'language', 'text' ],
+//   up:
+//    { left: [],
+//      right: [ [Object] ],
+//      up: { left: [], right: [], keys: [Object], up: [Object] } } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right)
+// { left: [ 'en' ],
+//   focus: 'Title',
+//   right: [],
+//   keys: [ 'language', 'text' ],
+//   up:
+//    { left: [],
+//      right: [ [Object] ],
+//      up: { left: [], right: [], keys: [Object], up: [Object] } } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.modify(t => "The " + t))
+// { left: [ 'en' ],
+//   focus: 'The Title',
+//   right: [],
+//   keys: [ 'language', 'text' ],
+//   up:
+//    { left: [],
+//      right: [ [Object] ],
+//      up: { left: [], right: [], keys: [Object], up: [Object] } } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.modify(t => "The " + t), F.up)
+// { focus: { language: 'en', text: 'The Title' },
+//   left: [],
+//   right: [ { language: 'sv', text: 'Rubrik' } ],
+//   up:
+//    { left: [],
+//      right: [],
+//      keys: [ 'contents' ],
+//      up: { left: [], right: [] } } }
+```
+
+```js
+seq(F.toZipper(data), F.downTo('contents'), F.downHead, F.downHead, F.right, F.modify(t => "The " + t), F.fromZipper)
+// { contents:
+//    [ { language: 'en', text: 'The Title' },
+//      { language: 'sv', text: 'Rubrik' } ] }
+```
+
 ## Reference
 
 The zipper combinators are available as named imports.  Typically one just
