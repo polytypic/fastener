@@ -44,11 +44,11 @@ export const keyOf = ({left, keys, up}) =>
   undefined
 
 const downMost = head => ({focus, ...up}) => {
-  if (isArray(focus)) {
-    return downIndex(focus, head ? 0 : focus.length-1, {up})
-  } else if (isObject(focus)) {
+  if (isObject(focus)) {
     const keys = R.keys(focus)
     return downIndex(R.values(focus), head ? 0 : keys.length-1, {keys, up})
+  } else if (isArray(focus)) {
+    return downIndex(focus, head ? 0 : focus.length-1, {up})
   } else {
     return undefined
   }
