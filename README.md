@@ -216,7 +216,8 @@ pipeU(F.toZipper, textIn("en"), F.modify(x => 'The ' + x), F.fromZipper)(data)
 
 Of course, this just scratches the surface.  Zippers are powerful enough to
 implement arbitrary transforms on data structures.  This can also make them more
-difficult to compose and reason about than other approaches.
+difficult to compose and reason about than more limited approaches such as
+[lenses](https://github.com/calmm-js/partial.lenses).
 
 ## Reference
 
