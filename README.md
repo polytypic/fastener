@@ -203,7 +203,7 @@ const pipeU = (...fs) => z => {
 }
 ```
 
-We can now compose zipper combinator that, given a zipper focused on an object
+We can now compose a zipper combinator that, given a zipper focused on an object
 like `data`, tries to focus on the `text` element of an object with the given
 `language` inside the `contents`:
 
