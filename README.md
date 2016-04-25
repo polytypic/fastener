@@ -32,9 +32,7 @@ First we just create a zipper using [`F.toZipper`](#toZipper):
 
 ```js
 seq(F.toZipper(data))
-// { left: [],
-//   right: [],
-//   focus: { contents: [ [Object], [Object] ] } }
+// { focus: { contents: [ [Object], [Object] ] } }
 ```
 
 As can be seen, the zipper is just a simple JSON object and the `focus` is the
@@ -54,7 +52,7 @@ seq(F.toZipper(data),
 //      { language: 'sv', text: 'Rubrik' } ],
 //   right: [],
 //   keys: [ 'contents' ],
-//   up: { left: [], right: [] } }
+//   up: {} }
 ```
 
 As seen above, the `focus` now has the `contents` array.  We can use
@@ -78,11 +76,7 @@ seq(F.toZipper(data),
 // { left: [],
 //   focus: { language: 'en', text: 'Title' },
 //   right: [ { language: 'sv', text: 'Rubrik' } ],
-//   up:
-//    { left: [],
-//      right: [],
-//      keys: [ 'contents' ],
-//      up: { left: [], right: [] } } }
+//   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
 ```
 
 And continue into the first item of that which happens to the `language`:
@@ -99,7 +93,7 @@ seq(F.toZipper(data),
 //   up:
 //    { left: [],
 //      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: [Object] } } }
+//      up: { left: [], right: [], keys: [Object], up: {} } } }
 ```
 
 And to the next item, `title`, using [`F.right`](#right):
@@ -117,7 +111,7 @@ seq(F.toZipper(data),
 //   up:
 //    { left: [],
 //      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: [Object] } } }
+//      up: { left: [], right: [], keys: [Object], up: {} } } }
 ```
 
 Let's then use [`F.modify`](#modify) to modify the `title`:
@@ -136,7 +130,7 @@ seq(F.toZipper(data),
 //   up:
 //    { left: [],
 //      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: [Object] } } }
+//      up: { left: [], right: [], keys: [Object], up: {} } } }
 ```
 
 When we now move outwards using [`F.up`](#up) we can see the changed title
@@ -153,11 +147,7 @@ seq(F.toZipper(data),
 // { focus: { language: 'en', text: 'The Title' },
 //   left: [],
 //   right: [ { language: 'sv', text: 'Rubrik' } ],
-//   up:
-//    { left: [],
-//      right: [],
-//      keys: [ 'contents' ],
-//      up: { left: [], right: [] } } }
+//   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
 ```
 
 We can also just move back to the root and get the updated data structure using
