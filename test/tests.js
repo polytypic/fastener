@@ -41,6 +41,17 @@ describe("fastener", () => {
          {xs: [1, 1, 2]})
 })
 
+describe("downHead and downLast", () => {
+  testEq("seq(F.toZipper({x: 1, y: 2}), F.downLast, F.right)", undefined)
+  testEq("seq(F.toZipper({y: 1, x: 2}), F.downLast, F.right)", undefined)
+
+  testEq("seq(F.toZipper({x: 1, y: 2}), F.downHead, F.left)", undefined)
+  testEq("seq(F.toZipper({y: 1, x: 2}), F.downHead, F.left)", undefined)
+
+  testEq("seq(F.toZipper(['x', 'y']), F.downLast, F.right)", undefined)
+  testEq("seq(F.toZipper(['x', 'y']), F.downHead, F.left)", undefined)
+})
+
 describe("illegal moves", () => {
   ["downHead", "downLast", "downTo(0)", "left", "right", "up", "keyOf", "head", "last"]
   .forEach(op => testEq(`seq(F.toZipper(1), F.${op})`, undefined))
