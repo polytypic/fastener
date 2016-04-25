@@ -182,6 +182,52 @@ create such a specific sequence of operations.  One rather uses the zipper
 combinators to create new combinators that perform more complex operations
 directly.
 
+Let's first define a zipper combinator that, given a zipper focused on an array,
+tries to focus on an element inside the array that satisfies a given predicate:
+
+```js
+const find = R.curry((p, z) =>
+  F.downTo(R.findIndex(p, F.get(z)), z))
+```
+
+Like all the basic zipper movement combinators, [`F.downTo`](#downTo) is a
+*partial function* that returns `undefined` in case the index is out of bounds.
+Let's define a simple function to compose partial functions:
+
+```js
+const pipeU = (...fs) => z => {
+  let r = z
+  for (let i=0; r !== undefined && i<fs.length; ++i)
+    r = fs[i](r)
+  return r
+}
+```
+
+We can now compose zipper combinator that, given a zipper focused on an object
+like `data`, tries to focus on the `text` element of an object with the given
+`language` inside the `contents`:
+
+
+```js
+const textIn = language =>
+  pipeU(F.downTo('contents'),
+        find(r => r.language === language),
+        F.downTo('text'))
+```
+
+Now we can say:
+
+```js
+pipeU(F.toZipper, textIn("en"), F.modify(x => 'The ' + x), F.fromZipper)(data)
+// { contents:
+//    [ { language: 'en', text: 'The Title' },
+//      { language: 'sv', text: 'Rubrik' } ] }
+```
+
+Of course, this just scratches the surface.  Zippers are powerful enough to
+implement arbitrary transforms on data structures.  This can also make them more
+difficult to compose and reason about than other approaches.
+
 ## Reference
 
 The zipper combinators are available as named imports.  Typically one just
