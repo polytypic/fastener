@@ -176,6 +176,12 @@ seq(F.toZipper(data),
 //      { language: 'sv', text: 'Rubrik' } ] }
 ```
 
+The above hopefully helped to understand how zippers work.  However, it is
+important to realize that one typically does not use zipper combinators to
+create such a specific sequence of operations.  One rather uses the zipper
+combinators to create new combinators that perform more complex operations
+directly.
+
 ## Reference
 
 The zipper combinators are available as named imports.  Typically one just
