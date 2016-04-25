@@ -38,7 +38,7 @@ seq(F.toZipper(data))
 ```
 
 As can be seen, the zipper is just a simple JSON object and the `focus` is the
-`data` object that we gave to [`F.toZipper`](#toZipper)..  However, you should
+`data` object that we gave to [`F.toZipper`](#toZipper).  However, you should
 use the zipper combinators to operate on zippers rather than rely on the exact
 format of the zipper object.
 
@@ -69,6 +69,8 @@ seq(F.toZipper(data),
 //   { language: 'sv', text: 'Rubrik' } ]
 ```
 
+Then we move into the first item of `contents` using [`F.downHead`](#downHead):
+
 ```js
 seq(F.toZipper(data),
     F.downTo('contents'),
@@ -82,6 +84,8 @@ seq(F.toZipper(data),
 //      keys: [ 'contents' ],
 //      up: { left: [], right: [] } } }
 ```
+
+And continue into the first item of that which happens to the `language`:
 
 ```js
 seq(F.toZipper(data),
@@ -98,6 +102,8 @@ seq(F.toZipper(data),
 //      up: { left: [], right: [], keys: [Object], up: [Object] } } }
 ```
 
+And to the next item, `title`, using [`F.right`](#right):
+
 ```js
 seq(F.toZipper(data),
     F.downTo('contents'),
@@ -113,6 +119,8 @@ seq(F.toZipper(data),
 //      right: [ [Object] ],
 //      up: { left: [], right: [], keys: [Object], up: [Object] } } }
 ```
+
+Let's then use [`F.modify`](#modify) to modify the `title`:
 
 ```js
 seq(F.toZipper(data),
@@ -131,6 +139,9 @@ seq(F.toZipper(data),
 //      up: { left: [], right: [], keys: [Object], up: [Object] } } }
 ```
 
+When we now move outwards using [`F.up`](#up) we can see the changed title
+become part of the data:
+
 ```js
 seq(F.toZipper(data),
     F.downTo('contents'),
@@ -148,6 +159,9 @@ seq(F.toZipper(data),
 //      keys: [ 'contents' ],
 //      up: { left: [], right: [] } } }
 ```
+
+We can also just move back to the root and get the updated data structure using
+[`F.fromZipper`](#fromZipper):
 
 ```js
 seq(F.toZipper(data),
