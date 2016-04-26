@@ -67,7 +67,8 @@ seq(F.toZipper(data),
 //   { language: 'sv', text: 'Rubrik' } ]
 ```
 
-Then we move into the first item of `contents` using [`F.downHead`](#downHead):
+Then we move into the first element of `contents` using
+[`F.downHead`](#downHead):
 
 ```js
 seq(F.toZipper(data),
@@ -79,7 +80,7 @@ seq(F.toZipper(data),
 //   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
 ```
 
-And continue into the first item of that which happens to the `language`:
+And continue into the first property of that which happens to be the `language`:
 
 ```js
 seq(F.toZipper(data),
@@ -96,7 +97,7 @@ seq(F.toZipper(data),
 //      up: { left: [], right: [], keys: [Object], up: {} } } }
 ```
 
-And to the next item, `title`, using [`F.right`](#right):
+And to the next property, `title`, using [`F.right`](#right):
 
 ```js
 seq(F.toZipper(data),
