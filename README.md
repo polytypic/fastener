@@ -327,8 +327,8 @@ in case of illegal moves.
 
 #### Parent-Child movement
 
-Parent-Child movement is moving the focus between that parent object or array
-and a child element of said parent.
+Parent-Child movement is moving the focus between a parent object or array and a
+child element of said parent.
 
 ##### <a name="downHead"></a>[`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
 
