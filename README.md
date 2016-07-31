@@ -401,7 +401,7 @@ seq(F.toZipper({y: 1}),
 `F.transformMove(move, fn, zipper)` applies the given function to the zipper
 focused on after the given movement.  The function must the return a zipper
 focused on the same element that it was given.  Then the focus is moved back to
-the element that the zipper was originall focused on.  Nothing is done in case
+the element that the zipper was originally focused on.  Nothing is done in case
 of an illegal move.
 
 For example:
