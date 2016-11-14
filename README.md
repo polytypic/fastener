@@ -1,4 +1,4 @@
-[ [Tutorial](#tutorial) | [Reference](#reference) | [Related Work](#related-work) ]
+[ [Contents](#contents) | [Tutorial](#tutorial) | [Reference](#reference) | [Related Work](#related-work) ]
 
 [Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
 are a powerful abstraction for *implementing* arbitrary queries and transforms
@@ -7,6 +7,36 @@ data structures.  This library implements a simple zipper designed for
 manipulating JSON data.
 
 [![npm version](https://badge.fury.io/js/fastener.svg)](http://badge.fury.io/js/fastener) [![Build Status](https://travis-ci.org/polytypic/fastener.svg?branch=master)](https://travis-ci.org/polytypic/fastener) [![](https://david-dm.org/polytypic/fastener.svg)](https://david-dm.org/polytypic/fastener) [![](https://david-dm.org/polytypic/fastener/dev-status.svg)](https://david-dm.org/polytypic/fastener?type=dev)
+
+## Contents
+
+* [Tutorial](#tutorial)
+* [Reference](#reference)
+  * [Introduction and Elimination](#introduction-and-elimination)
+    * [`F.toZipper(json)`](#toZipper "toZipper :: JSON -> Zipper")
+    * [`F.fromZipper(zipper)`](#fromZipper "fromZipper :: Zipper -> JSON")
+  * [Focus](#focus)
+    * [`F.get(zipper)`](#get "get :: Zipper -> JSON")
+    * [`F.modify(fn, zipper)`](#modify "modify :: (JSON -> JSON) -> Zipper -> Zipper")
+    * [`F.set(json, zipper)`](#set "set :: JSON -> Zipper -> Zipper")
+  * [Movement](#movement)
+    * [Parent-Child movement](#parent-child-movement)
+      * [`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
+      * [`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
+      * [`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
+      * [`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
+      * [`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+    * [Sibling movement](#sibling-movement)
+      * [`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
+      * [`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
+      * [`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
+      * [`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
+  * [Queries](#queries)
+    * [`F.queryMove(move, default, fn, zipper)`](#queryMove "F.queryMove :: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
+  * [Transforms](#transforms)
+    * [`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|downTo(key)|left|right|up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
+    * [`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
+* [Related Work](#related-work)
 
 ## Tutorial
 
