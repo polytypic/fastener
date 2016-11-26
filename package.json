@@ -4,6 +4,7 @@
   "description": "Zipper for manipulating JSON",
   "main": "lib/fastener.js",
   "scripts": {
+    "bench": "NODE_ENV=production node bench/bench.js",
     "dist": "babel src --source-maps inline --out-dir lib",
     "lint": "eslint src test",
     "prepublish": "npm run lint && npm run test && npm run dist",
@@ -37,6 +38,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-2": "^6.18.0",
     "babel-register": "^6.18.0",
+    "benchmark": "^2.1.2",
     "eslint": "^3.10.2",
     "mocha": "^3.1.2",
     "nyc": "^9.0.1"
