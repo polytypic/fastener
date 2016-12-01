@@ -1,82 +1,114 @@
-import * as R from "ramda"
+import * as I from "infestines"
 
-const pass = (x, f) => f(x)
+function toArray(list, array, i0, step) {
+  while (list) {
+    array[i0] = list[0]
+    i0 += step
+    list = list[1]
+  }
+}
 
-const isObject = x => x && x.constructor === Object
-const isArray = x => x && x.constructor === Array
+function toList(array, i0, i1, step) {
+  let list = null
+  while (i0 != i1) {
+    list = [array[i0], list]
+    i0 += step
+  }
+  return list
+}
+
+function length(list) {
+  let n = 0
+  while (list) {
+    ++n
+    list = list[1]
+  }
+  return n
+}
+
+function join(ls, f, rs) {
+  const lsN = length(ls)
+  const rsN = length(rs)
+  const ys = Array(lsN+1+rsN)
+  toArray(ls, ys, lsN-1, -1)
+  ys[lsN] = f
+  toArray(rs, ys, lsN+1, 1)
+  return ys
+}
+
+//
 
 export const get = z => z.focus
-export const set = R.curry((focus, z) => ({...z, focus}))
-export const modify = R.curry((f, z) => set(f(get(z)), z))
+
+const setU = (focus, z) => I.assocPartialU("focus", focus, z)
+export const set = I.curry2(setU)
+
+const modifyU = (f, z) => setU(f(get(z)), z)
+export const modify = I.curry2(modifyU)
 
 export const up = ({left, focus, right, keys, up}) => {
-  if (keys) {
-    return {focus: R.zipObj(keys, [...left, focus, ...R.reverse(right)]), ...up}
-  } else if (up) {
-    return {focus: [...left, focus, ...R.reverse(right)], ...up}
-  } else {
-    return undefined
-  }
+  if (keys)
+    return {focus: I.zipObjPartialU(keys, join(left, focus, right)), ...up}
+  if (up)
+    return {focus: join(left, focus, right), ...up}
 }
 
 const downIndex = (values, i, rest) =>
   0 <= i && i < values.length
-  ? ({left: values.slice(0, i),
+  ? ({left: toList(values, 0, i, 1),
       focus: values[i],
-      right: values.slice(i+1).reverse(),
+      right: toList(values, values.length-1, i, -1),
       ...rest})
   : undefined
 
-export const downTo = R.curry((k, {focus, ...up}) => {
-  if (isObject(focus)) {
-    const keys = R.keys(focus)
-    return downIndex(R.values(focus), keys.findIndex(R.equals(k)), {keys, up})
-  } else if (isArray(focus)) {
-    return downIndex(focus, k, {up})
-  } else {
-    return undefined
+export const downTo = I.curry2((k, {focus, ...up}) => {
+  if (I.isObject(focus)) {
+    const keys=[], values=[]
+    I.unzipObjIntoU(focus, keys, values)
+    return downIndex(values, keys.findIndex(x => k === x), {keys, up})
   }
+  if (I.isArray(focus))
+    return downIndex(focus, k, {up})
 })
 
 export const keyOf = ({left, keys, up}) =>
-  keys ? keys[left.length] :
-  up   ? left.length :
+  keys ? keys[length(left)] :
+  up   ? length(left) :
   undefined
 
 const downMost = head => ({focus, ...up}) => {
-  if (isObject(focus)) {
-    const keys = R.keys(focus)
-    return downIndex(R.values(focus), head ? 0 : keys.length-1, {keys, up})
-  } else if (isArray(focus)) {
-    return downIndex(focus, head ? 0 : focus.length-1, {up})
-  } else {
-    return undefined
+  if (I.isObject(focus)) {
+    const keys=[], values=[]
+    I.unzipObjIntoU(focus, keys, values)
+    return downIndex(values, head ? 0 : keys.length-1, {keys, up})
   }
+  if (I.isArray(focus))
+    return downIndex(focus, head ? 0 : focus.length-1, {up})
 }
 
 export const downHead = downMost(true)
 export const downLast = downMost(false)
 
-// FYI: The left and right ops are not accidentally O(n).  I'm just lazy. :)
-const shift = (f, c, t, k) =>
-  f && f.length !== 0 ? k(R.dropLast(1, f), R.last(f), R.append(c, t)) : undefined
+const shift = (f, c, t, r, k) =>
+  f ? k(f[1], f[0], [c, t], r) : undefined
 
+const leftI = (left, focus, right, rest) => ({left, focus, right, ...rest})
 export const left = ({left, focus, right, ...rest}) =>
-  shift(left, focus, right, (l, f, r) => ({left: l, focus: f, right: r, ...rest}))
+  shift(left, focus, right, rest, leftI)
 
+const rightI = (right, focus, left, rest) => ({left, focus, right, ...rest})
 export const right = ({left, focus, right, ...rest}) =>
-  shift(right, focus, left, (r, f, l) => ({left: l, focus: f, right: r, ...rest}))
+  shift(right, focus, left, rest, rightI)
 
-export const head = z => pass(up(z), z => z && downHead(z))
-export const last = z => pass(up(z), z => z && downLast(z))
+export function head(z) {const u = up(z); return u && downHead(u)}
+export function last(z) {const u = up(z); return u && downLast(u)}
 
 export const toZipper = focus => ({focus})
 
-export const fromZipper = z =>
-  pass(up(z), zz => zz ? fromZipper(zz) : get(z))
+export function fromZipper(z) {const u=up(z); return u ? fromZipper(u) : get(z)}
 
-export const queryMove = R.curry((move, b, f, z) =>
-  pass(move(z), z => z ? f(z) : b))
+function queryMoveU(move, b, f, z) {const m = move(z); return m ? f(m) : b}
+export const queryMove = I.curry4(queryMoveU)
 
 const bwd = (move, z) => {
   switch (move) {
@@ -87,10 +119,12 @@ const bwd = (move, z) => {
   }
 }
 
-export const transformMove = R.curry((move, f, z) =>
-  queryMove(move, z, R.pipe(f, queryMove(bwd(move, z), z, R.identity)), z))
+const transformMoveU = (move, f, z) =>
+  queryMoveU(move, z, x => queryMoveU(bwd(move, z), z, I.id, f(x)), z)
+export const transformMove = I.curry3(transformMoveU)
 
 const everywhereG = f => z =>
-  transformMove(right, everywhereG(f), everywhere(f, z))
-export const everywhere = R.curry((f, z) =>
-  modify(f, transformMove(downHead, everywhereG(f), z)))
+  transformMoveU(right, everywhereG(f), everywhereU(f, z))
+const everywhereU = (f, z) =>
+  modifyU(f, transformMoveU(downHead, everywhereG(f), z))
+export const everywhere = I.curry2(everywhereU)

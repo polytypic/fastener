@@ -1,8 +1,8 @@
 [ [Contents](#contents) | [Tutorial](#tutorial) | [Reference](#reference) | [Related Work](#related-work) ]
 
-[Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
-are a powerful abstraction for *implementing* arbitrary queries and transforms
-on immutable data structures and for step-by-step navigation and modification of
+[Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf) are
+a powerful abstraction for *implementing* arbitrary queries and transforms on
+immutable data structures and for step-by-step navigation and modification of
 data structures.  This library implements a simple zipper designed for
 manipulating JSON data.
 
@@ -76,11 +76,11 @@ Let's then move into the `contents` property of the object using
 ```js
 seq(F.toZipper(data),
     F.downTo('contents'))
-// { left: [],
+// { left: null,
 //   focus:
 //    [ { language: 'en', text: 'Title' },
 //      { language: 'sv', text: 'Rubrik' } ],
-//   right: [],
+//   right: null,
 //   keys: [ 'contents' ],
 //   up: {} }
 ```
@@ -104,10 +104,10 @@ Then we move into the first element of `contents` using
 seq(F.toZipper(data),
     F.downTo('contents'),
     F.downHead)
-// { left: [],
+// { left: null,
 //   focus: { language: 'en', text: 'Title' },
-//   right: [ { language: 'sv', text: 'Rubrik' } ],
-//   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
+//   right: [ { language: 'sv', text: 'Rubrik' }, null ],
+//   up: { left: null, right: null, keys: [ 'contents' ], up: {} } }
 ```
 
 And continue into the first property of that which happens to be the `language`:
@@ -117,14 +117,14 @@ seq(F.toZipper(data),
     F.downTo('contents'),
     F.downHead,
     F.downHead)
-// { left: [],
+// { left: null,
 //   focus: 'en',
-//   right: [ 'Title' ],
+//   right: [ 'Title', null ],
 //   keys: [ 'language', 'text' ],
 //   up:
-//    { left: [],
-//      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: {} } } }
+//    { left: null,
+//      right: [ [Object], null ],
+//      up: { left: null, right: null, keys: [Object], up: {} } } }
 ```
 
 And to the next property, `title`, using [`F.right`](#right):
@@ -135,14 +135,14 @@ seq(F.toZipper(data),
     F.downHead,
     F.downHead,
     F.right)
-// { left: [ 'en' ],
+// { left: [ 'en', null ],
 //   focus: 'Title',
-//   right: [],
+//   right: null,
 //   keys: [ 'language', 'text' ],
 //   up:
-//    { left: [],
-//      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: {} } } }
+//    { left: null,
+//      right: [ [Object], null ],
+//      up: { left: null, right: null, keys: [Object], up: {} } } }
 ```
 
 Let's then use [`F.modify`](#modify) to modify the `title`:
@@ -154,14 +154,14 @@ seq(F.toZipper(data),
     F.downHead,
     F.right,
     F.modify(t => "The " + t))
-// { left: [ 'en' ],
+// { left: [ 'en', null ],
 //   focus: 'The Title',
-//   right: [],
+//   right: null,
 //   keys: [ 'language', 'text' ],
 //   up:
-//    { left: [],
-//      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: {} } } }
+//    { left: null,
+//      right: [ [Object], null ],
+//      up: { left: null, right: null, keys: [Object], up: {} } } }
 ```
 
 When we now move outwards using [`F.up`](#up) we can see the changed title
@@ -176,9 +176,9 @@ seq(F.toZipper(data),
     F.modify(t => "The " + t),
     F.up)
 // { focus: { language: 'en', text: 'The Title' },
-//   left: [],
-//   right: [ { language: 'sv', text: 'Rubrik' } ],
-//   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
+//   left: null,
+//   right: [ { language: 'sv', text: 'Rubrik' }, null ],
+//   up: { left: null, right: null, keys: [ 'contents' ], up: {} } }
 ```
 
 We can also just move back to the root and get the updated data structure using
