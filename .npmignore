@@ -1,2 +1,5 @@
 !lib
 *~
+.babelrc
+docs
+scripts

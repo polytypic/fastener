@@ -1,0 +1,46 @@
+.markdown-body h4 code { font-size: 16px; }
+.markdown-body h5 code { font-size: 14px; }
+
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 45px auto;
+  padding: 45px;
+  border: 1px #ddd solid;
+  border-radius: 3px;
+}
+
+.markdown-body > pre {
+  padding: 11px;
+}
+
+.CodeMirror {
+  border: none;
+  font: 13.6px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 19.72px;
+}
+
+.CodeMirror:first-of-type {
+  border: 1px #f7f7f7 solid;
+  border-radius: 5px;
+}
+
+.markdown-body > pre > code {
+  display: block;
+  padding: 5px;
+}
+
+.CodeMirror:first-of-type:hover {
+  border: 1px #ddd solid;
+}
+
+.CodeMirror:last-of-type {
+  background: #f7f7f7;
+}
+
+.CodeMirror:last-of-type {
+  background: transparent;
+  filter: brightness(50%);
+  opacity: 0.85;
+}
