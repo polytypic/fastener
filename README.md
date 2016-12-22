@@ -1,8 +1,8 @@
-[ [Contents](#contents) | [Tutorial](#tutorial) | [Reference](#reference) | [Related Work](#related-work) ]
+[ [≡](#contents) | [Tutorial](#tutorial) | [Reference](#reference) | [Related Work](#related-work) | [GitHub](https://github.com/polytypic/fastener) | [Try Fastener!](https://polytypic.github.io/fastener/)  ]
 
-[Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf)
-are a powerful abstraction for *implementing* arbitrary queries and transforms
-on immutable data structures and for step-by-step navigation and modification of
+[Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf) are
+a powerful abstraction for *implementing* arbitrary queries and transforms on
+immutable data structures and for step-by-step navigation and modification of
 data structures.  This library implements a simple zipper designed for
 manipulating JSON data.
 
@@ -41,21 +41,26 @@ manipulating JSON data.
 ## Tutorial
 
 Playing with zippers in a REPL can be very instructive.  First we require the
-libraries and define a little helper using
-[`reduce`](http://ramdajs.com/0.21.0/docs/#reduce) to perform a sequence of
-operations on a value:
+libraries
+
+```jsx
+import * as F from "fastener"
+import * as R from "ramda"
+```
+
+and define a little helper
+using [`reduce`](http://ramdajs.com/0.21.0/docs/#reduce) to perform a sequence
+of operations on a value:
 
 ```js
-const R = require("ramda")
-const F = require("fastener")
 const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
 ```
 
 Let's work with the following simple JSON object:
 
 ```js
-const data = { contents: [ { language: "en", text: "Title" },
-                           { language: "sv", text: "Rubrik" } ] }
+const data = {contents: [{language: "en", text: "Title"},
+                         {language: "sv", text: "Rubrik"}]}
 ```
 
 First we just create a zipper using [`F.toZipper`](#toZipper):
@@ -76,13 +81,12 @@ Let's then move into the `contents` property of the object using
 ```js
 seq(F.toZipper(data),
     F.downTo('contents'))
-// { left: [],
+// { left: null,
 //   focus:
 //    [ { language: 'en', text: 'Title' },
 //      { language: 'sv', text: 'Rubrik' } ],
-//   right: [],
-//   keys: [ 'contents' ],
-//   up: {} }
+//   key: 'contents',
+//   right: null }
 ```
 
 As seen above, the `focus` now has the `contents` array.  We can use
@@ -104,10 +108,11 @@ Then we move into the first element of `contents` using
 seq(F.toZipper(data),
     F.downTo('contents'),
     F.downHead)
-// { left: [],
+// { left: null,
 //   focus: { language: 'en', text: 'Title' },
-//   right: [ { language: 'sv', text: 'Rubrik' } ],
-//   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
+//   key: 0,
+//   right: [ null, { language: 'sv', text: 'Rubrik' } ],
+//   up: { left: null, key: 'contents', right: null } }
 ```
 
 And continue into the first property of that which happens to be the `language`:
@@ -117,14 +122,15 @@ seq(F.toZipper(data),
     F.downTo('contents'),
     F.downHead,
     F.downHead)
-// { left: [],
+// { left: null,
 //   focus: 'en',
-//   right: [ 'Title' ],
-//   keys: [ 'language', 'text' ],
+//   key: 'language',
+//   right: [ null, 'Title', 'text' ],
 //   up:
-//    { left: [],
-//      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: {} } } }
+//    { left: null,
+//      key: 0,
+//      right: [ null, [Object] ],
+//      up: { left: null, key: 'contents', right: null } } }
 ```
 
 And to the next property, `title`, using [`F.right`](#right):
@@ -135,14 +141,15 @@ seq(F.toZipper(data),
     F.downHead,
     F.downHead,
     F.right)
-// { left: [ 'en' ],
+// { left: [ null, 'en', 'language' ],
 //   focus: 'Title',
-//   right: [],
-//   keys: [ 'language', 'text' ],
+//   key: 'text',
+//   right: null,
 //   up:
-//    { left: [],
-//      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: {} } } }
+//    { left: null,
+//      key: 0,
+//      right: [ null, [Object] ],
+//      up: { left: null, key: 'contents', right: null } } }
 ```
 
 Let's then use [`F.modify`](#modify) to modify the `title`:
@@ -154,14 +161,15 @@ seq(F.toZipper(data),
     F.downHead,
     F.right,
     F.modify(t => "The " + t))
-// { left: [ 'en' ],
+// { left: [ null, 'en', 'language' ],
 //   focus: 'The Title',
-//   right: [],
-//   keys: [ 'language', 'text' ],
+//   key: 'text',
+//   right: null,
 //   up:
-//    { left: [],
-//      right: [ [Object] ],
-//      up: { left: [], right: [], keys: [Object], up: {} } } }
+//    { left: null,
+//      key: 0,
+//      right: [ null, [Object] ],
+//      up: { left: null, key: 'contents', right: null } } }
 ```
 
 When we now move outwards using [`F.up`](#up) we can see the changed title
@@ -175,10 +183,11 @@ seq(F.toZipper(data),
     F.right,
     F.modify(t => "The " + t),
     F.up)
-// { focus: { language: 'en', text: 'The Title' },
-//   left: [],
-//   right: [ { language: 'sv', text: 'Rubrik' } ],
-//   up: { left: [], right: [], keys: [ 'contents' ], up: {} } }
+// { left: null,
+//   key: 0,
+//   right: [ null, { language: 'sv', text: 'Rubrik' } ],
+//   up: { left: null, key: 'contents', right: null },
+//   focus: { language: 'en', text: 'The Title' } }
 ```
 
 We can also just move back to the root and get the updated data structure using
@@ -207,8 +216,7 @@ Let's first define a zipper combinator that, given a zipper focused on an array,
 tries to focus on an element inside the array that satisfies a given predicate:
 
 ```js
-const find = R.curry((p, z) =>
-  F.downTo(R.findIndex(p, F.get(z)), z))
+const find = R.curry((p, z) => F.downTo(R.findIndex(p, F.get(z)), z))
 ```
 
 Like all the basic zipper movement combinators, [`F.downTo`](#downTo) is a
@@ -216,11 +224,10 @@ Like all the basic zipper movement combinators, [`F.downTo`](#downTo) is a
 Let's define a simple function to compose partial functions:
 
 ```js
-const pipeU = (...fs) => z => {
-  let r = z
-  for (let i=0; r !== undefined && i<fs.length; ++i)
-    r = fs[i](r)
-  return r
+const pipePartial = (...fs) => z => {
+  for (let i=0; z !== undefined && i<fs.length; ++i)
+    z = fs[i](z)
+  return z
 }
 ```
 
@@ -230,16 +237,20 @@ like `data`, tries to focus on the `text` element of an object with the given
 
 
 ```js
-const textIn = language =>
-  pipeU(F.downTo('contents'),
-        find(r => r.language === language),
-        F.downTo('text'))
+const textIn = language => pipePartial(
+  F.downTo('contents'),
+  find(R.whereEq({language})),
+  F.downTo('text'))
 ```
 
 Now we can say:
 
 ```js
-pipeU(F.toZipper, textIn("en"), F.modify(x => 'The ' + x), F.fromZipper)(data)
+seq(data,
+    F.toZipper,
+    textIn("en"),
+    F.modify(x => 'The ' + x),
+    F.fromZipper)
 // { contents:
 //    [ { language: 'en', text: 'The Title' },
 //      { language: 'sv', text: 'Rubrik' } ] }
@@ -255,13 +266,13 @@ difficult to compose and reason about than more limited approaches such as
 The zipper combinators are available as named imports.  Typically one just
 imports the library as:
 
-```js
+```jsx
 import * as F from "fastener"
 ```
 
 In the following examples we will make use of the function
 
-```js
+```jsx
 const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
 ```
 
@@ -270,7 +281,7 @@ to express a sequence of operations to perform starting from a given value.
 
 ### Introduction and Elimination
 
-#### <a name="toZipper"></a>[`F.toZipper(json)`](#toZipper "toZipper :: JSON -> Zipper")
+#### <a name="toZipper"></a> [≡](#contents) [`F.toZipper(json)`](#toZipper "toZipper :: JSON -> Zipper")
 
 `F.toZipper(json)` creates a new zipper that is focused on the root of the given
 JSON object.
@@ -285,7 +296,7 @@ seq(F.toZipper([1,2,3]),
 // [ 2, 2, 3 ]
 ```
 
-#### <a name="fromZipper"></a>[`F.fromZipper(zipper)`](#fromZipper "fromZipper :: Zipper -> JSON")
+#### <a name="fromZipper"></a> [≡](#contents) [`F.fromZipper(zipper)`](#fromZipper "fromZipper :: Zipper -> JSON")
 
 `F.fromZipper(zipper)` extracts the modified JSON object from the given zipper.
 
@@ -304,7 +315,7 @@ seq(F.toZipper([1,2,3]),
 Focus combinators allow one to inspect and modify the element that a zipper is
 focused on.
 
-#### <a name="get"></a>[`F.get(zipper)`](#get "get :: Zipper -> JSON")
+#### <a name="get"></a> [≡](#contents) [`F.get(zipper)`](#get "get :: Zipper -> JSON")
 
 `F.get(zipper)` returns the element that the zipper is focused on.
 
@@ -313,13 +324,15 @@ For example:
 ```js
 seq(F.toZipper(1), F.get)
 // 1
+```
+```js
 seq(F.toZipper(["a","b","c"]),
     F.downTo(2),
     F.get)
 // 'c'
 ```
 
-#### <a name="modify"></a>[`F.modify(fn, zipper)`](#modify "modify :: (JSON -> JSON) -> Zipper -> Zipper")
+#### <a name="modify"></a> [≡](#contents) [`F.modify(fn, zipper)`](#modify "modify :: (JSON -> JSON) -> Zipper -> Zipper")
 
 `F.modify(fn, zipper)` is equivalent to `F.set(fn(F.get(zipper)), zipper)` and
 replaces the element that the zipper is focused on with the value returned by
@@ -335,7 +348,7 @@ seq(F.toZipper(["a","b","c"]),
 // [ 'a', 'b', 'cc' ]
 ```
 
-#### <a name="set"></a>[`F.set(json, zipper)`](#set "set :: JSON -> Zipper -> Zipper")
+#### <a name="set"></a> [≡](#contents) [`F.set(json, zipper)`](#set "set :: JSON -> Zipper -> Zipper")
 
 `F.set(json, zipper)` replaces the element that the zipper is focused on with
 the given value.
@@ -360,27 +373,27 @@ in case of illegal moves.
 Parent-Child movement is moving the focus between a parent object or array and a
 child element of said parent.
 
-##### <a name="downHead"></a>[`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
+##### <a name="downHead"></a> [≡](#contents) [`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
 
 `F.downHead(zipper)` moves the focus to the leftmost element of the object or
 array that the zipper is focused on.
 
-##### <a name="downLast"></a>[`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
+##### <a name="downLast"></a> [≡](#contents) [`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
 
 `F.downLast(zipper)` moves the focus to the rightmost element of the object or
 array that the zipper is focused on.
 
-##### <a name="downTo"></a>[`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
+##### <a name="downTo"></a> [≡](#contents) [`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
 
 `F.downTo(key, zipper)` moves the focus to the specified object property or
 array index of the object or array that the zipper is focused on.
 
-##### <a name="keyOf"></a>[`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
+##### <a name="keyOf"></a> [≡](#contents) [`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
 
 `F.keyOf(zipper)` returns the object property name or the array index that the
 zipper is currently focused on.
 
-##### <a name="up"></a>[`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+##### <a name="up"></a> [≡](#contents) [`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
 
 `F.up(zipper)` moves the focus from an array element or object property to the
 containing array or object.
@@ -389,25 +402,25 @@ containing array or object.
 
 Sibling movement is moving the focus between the elements of an array or an object.
 
-##### <a name="head"></a>[`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
+##### <a name="head"></a> [≡](#contents) [`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
 
 `F.head(zipper)` moves the focus to the leftmost sibling of the current focus.
 
-##### <a name="last"></a>[`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
+##### <a name="last"></a> [≡](#contents) [`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
 
 `F.last(zipper)` moves the focus to the rightmost sibling of the current focus.
 
-##### <a name="left"></a>[`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
+##### <a name="left"></a> [≡](#contents) [`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
 
 `F.left(zipper)` moves the focus to the element on the left of the current focus.
 
-##### <a name="right"></a>[`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
+##### <a name="right"></a> [≡](#contents) [`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
 
 `F.right(zipper)` moves the focus to the element on the right of the current focus.
 
 ### Queries
 
-#### <a name="queryMove"></a>[`F.queryMove(move, default, fn, zipper)`](#queryMove "F.queryMove :: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
+#### <a name="queryMove"></a> [≡](#contents) [`F.queryMove(move, default, fn, zipper)`](#queryMove "F.queryMove :: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
 
 `F.queryMove(move, default, fn, zipper)` applies the given function `fn` to the
 zipper focused on after the given movement and returns the result unless the
@@ -419,6 +432,8 @@ For example:
 seq(F.toZipper({x: 1}),
     F.queryMove(F.downTo('y'), false, () => true))
 // false
+```
+```js
 seq(F.toZipper({y: 1}),
     F.queryMove(F.downTo('y'), false, () => true))
 // true
@@ -426,7 +441,7 @@ seq(F.toZipper({y: 1}),
 
 ### Transforms
 
-#### <a name="transformMove"></a>[`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|downTo(key)|left|right|up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
+#### <a name="transformMove"></a> [≡](#contents) [`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|downTo(key)|left|right|up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
 
 `F.transformMove(move, fn, zipper)` applies the given function to the zipper
 focused on after the given movement.  The function must the return a zipper
@@ -441,13 +456,15 @@ seq(F.toZipper({y: 1}),
     F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
     F.fromZipper)
 // { y: 2 }
+```
+```js
 seq(F.toZipper({x: 1}),
     F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
     F.fromZipper)
 // { x: 1 }
 ```
 
-#### <a name="everywhere"></a>[`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
+#### <a name="everywhere"></a> [≡](#contents) [`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
 
 `F.everywhere(fn, zipper)` performs a transform of the focused element by
 modifying each possible focus of the element with a bottom-up traversal.

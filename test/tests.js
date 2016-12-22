@@ -1,4 +1,4 @@
-import * as R from "ramda"
+import * as I from "infestines"
 
 import * as F from "../src/fastener"
 
@@ -12,13 +12,9 @@ function show(x) {
   }
 }
 
-const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
-
-const run = expr => eval(`(F, R, seq) => ${expr}`)(F, R, seq)
-
 const testEq = (expr, expect) => it(`${expr} => ${show(expect)}`, () => {
-  const actual = run(expr)
-  if (!R.equals(actual, expect))
+  const actual = eval(`(F, seq) => ${expr}`)(F, I.seq)
+  if (!I.acyclicEqualsU(actual, expect))
     throw new Error(`Expected: ${show(expect)}, actual: ${show(actual)}`)
 })
 
