@@ -125,6 +125,28 @@ describe("downPath", () => {
          undefined)
 })
 
+describe("pathOf", () => {
+  testEq(`seq(F.toZipper({xs: [1, {y: 2}, 3], z: 0}),
+              F.downPath(['xs', 1, 'y']),
+              F.pathOf)`,
+         ['xs', 1, 'y'])
+
+  testEq(`seq(F.toZipper([{xs: [1, {y: 2}, 3], z: 0}]),
+              F.downPath([0, 'xs', 1, 'y']),
+              F.pathOf)`,
+         [0, 'xs', 1, 'y'])
+
+  testEq(`seq(F.toZipper([{xs: [1, {y: 2}, 3], z: 0}]),
+              F.pathOf)`,
+         [])
+
+  testEq("seq(F.toZipper([]), F.pathOf)", [])
+
+  testEq("seq(F.toZipper(), F.pathOf)", [])
+
+  testEq("seq(undefined, F.pathOf)", [])
+})
+
 describe("transformMove", () => {
   testEq(`seq(F.toZipper({y: 1}),
               F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
