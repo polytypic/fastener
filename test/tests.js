@@ -37,6 +37,15 @@ describe("fastener", () => {
          {xs: [1, 1, 2]})
 })
 
+describe("downTo", () => {
+  testEq("seq(F.toZipper({xs: [1, {y: 2}, 3], z: 0})," +
+         "    F.downTo('xs')," +
+         "    F.downTo(1)," +
+         "    F.downTo('y')," +
+         "    F.get)",
+         2)
+})
+
 describe("downHead and downLast", () => {
   testEq("seq(F.toZipper({x: 1, y: 2}), F.downLast, F.right)", undefined)
   testEq("seq(F.toZipper({y: 1, x: 2}), F.downLast, F.right)", undefined)
@@ -83,4 +92,46 @@ describe("everywhere", () => {
          "    F.everywhere(x => typeof x == 'number' ? x+1 : x)," +
          "    F.fromZipper)",
          {foo: [2, {y: 3}, 4], bar: 1})
+})
+
+describe("downPath", () => {
+  testEq(`seq(F.toZipper({xs: [1, {y: 2}, 3], z: 0}),
+              F.downPath(['xs', 1, 'y']),
+              F.get)`,
+         2)
+
+  testEq(`seq(F.toZipper([{xs: [1, {y: 2}, 3], z: 0}]),
+              F.downPath([0, 'xs', 1, 'y']),
+              F.get)`,
+         2)
+
+  testEq(`seq(F.toZipper([{xs: [1, {y: 2}, 3], z: 0}]),
+              F.downPath([]),
+              F.get)`,
+         [{xs: [1, {y: 2}, 3], z: 0}])
+
+  testEq(`seq(F.toZipper({xs: [1, {y: 2}, 3], z: 0}),
+              F.downPath(['xs', 0, 'y']))`,
+         undefined)
+
+  testEq(`seq(F.toZipper({xs: [1, {y: 2}, 3], z: 0}),
+              F.downPath(['xs', 1, 'y', 'z']))`,
+         undefined)
+
+  testEq("seq(F.toZipper(), F.downPath(['xs', 1, 'y', 'z']))",
+         undefined)
+
+  testEq("seq(undefined, F.downPath(['xs', 1, 'y', 'z']))",
+         undefined)
+})
+
+describe("transformMove", () => {
+  testEq(`seq(F.toZipper({y: 1}),
+              F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
+              F.fromZipper)`,
+         {y: 2})
+  testEq(`seq(F.toZipper({y: [1, {x: 2}]}),
+              F.transformMove(F.downPath(['y', 1, 'x']), F.modify(x => x + 1)),
+              F.fromZipper)`,
+         {y: [1, {x: 3}]})
 })
