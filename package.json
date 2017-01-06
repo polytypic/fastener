@@ -1,6 +1,6 @@
 {
   "name": "fastener",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Zipper for manipulating JSON",
   "main": "lib/fastener.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "docs-bundle": "NODE_ENV=dev browserify -r ./lib/fastener:fastener -r ramda -r infestines -r babel-polyfill -g envify -g uglifyify > docs/bundle.js",
     "lint": "eslint src test",
     "prepublish": "npm run lint && npm run test && npm run dist",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "test": "nyc mocha"
   },
   "repository": {
@@ -57,14 +58,15 @@
     "babel-plugin-transform-es2015-unicode-regex": "^6.11.0",
     "babel-polyfill": "^6.20.0",
     "babel-register": "^6.18.0",
-    "benchmark": "^2.1.2",
-    "browserify": "^13.1.1",
+    "benchmark": "^2.1.3",
+    "browserify": "^13.3.0",
+    "codecov": "^1.0.1",
     "envify": "^4.0.0",
     "eslint": "^3.12.2",
     "marked": "^0.3.6",
     "mocha": "^3.2.0",
     "nyc": "^10.0.0",
-    "ramda": "^0.22.1",
+    "ramda": "^0.23.0",
     "uglifyify": "^3.0.4"
   }
 }
