@@ -126,8 +126,14 @@ function downToU(key, z) {
   if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length)
     return fromArray(focus, key, dissocPartialU("focus", z))
 }
-
 export const downTo = curry2(downToU)
+
+function downPathU(path, z) {
+  for (let i=0, n=path.length; z && i<n; ++i)
+    z = downToU(path[i], z)
+  return z
+}
+export const downPath = curry2(downPathU)
 
 const downMost = head => z => {
   const focus = z.focus
@@ -182,3 +188,12 @@ const everywhereG = f => z =>
 const everywhereU = (f, z) =>
   modifyU(f, transformMoveU(downHead, everywhereG(f), z))
 export const everywhere = curry2(everywhereU)
+
+export function pathOf(z) {
+  const path = []
+  while (z && isDefined(z.key)) {
+    path.unshift(z.key)
+    z = z.up
+  }
+  return path
+}
