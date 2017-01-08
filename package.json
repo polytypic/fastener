@@ -4,7 +4,7 @@
   "description": "Zipper for manipulating JSON",
   "main": "lib/fastener.js",
   "scripts": {
-    "bench": "NODE_ENV=production node bench/bench.js",
+    "bench": "NODE_ENV=production node --expose-gc bench/bench.js",
     "dist": "babel src --source-maps inline --out-dir lib",
     "docs": "./scripts/generate-docs",
     "docs-bundle": "NODE_ENV=dev browserify -r ./lib/fastener:fastener -r ramda -r infestines -r babel-polyfill -g envify -g uglifyify > docs/bundle.js",
@@ -62,11 +62,12 @@
     "browserify": "^13.3.0",
     "codecov": "^1.0.1",
     "envify": "^4.0.0",
-    "eslint": "^3.12.2",
+    "eslint": "^3.13.0",
     "marked": "^0.3.6",
     "mocha": "^3.2.0",
     "nyc": "^10.0.0",
     "ramda": "^0.23.0",
+    "sprintf-js": "^1.0.3",
     "uglifyify": "^3.0.4"
   }
 }
