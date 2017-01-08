@@ -1,8 +1,6 @@
 import {
   assocPartialU,
-  curry2,
-  curry3,
-  curry4,
+  curry,
   dissocPartialU,
   id,
   isArray,
@@ -93,10 +91,10 @@ export const get = z => z.focus
 export const keyOf = z => z.key
 
 const setU = (focus, z) => assocPartialU("focus", focus, z)
-export const set = curry2(setU)
+export const set = curry(setU)
 
 const modifyU = (f, z) => setU(f(get(z)), z)
-export const modify = curry2(modifyU)
+export const modify = curry(modifyU)
 
 export function up({left, focus, key, right, up}) {
   switch (typeof key) {
@@ -126,14 +124,14 @@ function downToU(key, z) {
   if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length)
     return fromArray(focus, key, dissocPartialU("focus", z))
 }
-export const downTo = curry2(downToU)
+export const downTo = curry(downToU)
 
 function downPathU(path, z) {
   for (let i=0, n=path.length; z && i<n; ++i)
     z = downToU(path[i], z)
   return z
 }
-export const downPath = curry2(downPathU)
+export const downPath = curry(downPathU)
 
 const downMost = head => z => {
   const focus = z.focus
@@ -168,7 +166,7 @@ export const toZipper = focus => ({focus})
 export function fromZipper(z) {const u=up(z); return u ? fromZipper(u) : get(z)}
 
 function queryMoveU(move, b, f, z) {const m = move(z); return m ? f(m) : b}
-export const queryMove = curry4(queryMoveU)
+export const queryMove = curry(queryMoveU)
 
 function bwd(move, z) {
   switch (move) {
@@ -181,13 +179,13 @@ function bwd(move, z) {
 
 const transformMoveU = (move, f, z) =>
   queryMoveU(move, z, x => queryMoveU(bwd(move, z), z, id, f(x)), z)
-export const transformMove = curry3(transformMoveU)
+export const transformMove = curry(transformMoveU)
 
 const everywhereG = f => z =>
   transformMoveU(right, everywhereG(f), everywhereU(f, z))
 const everywhereU = (f, z) =>
   modifyU(f, transformMoveU(downHead, everywhereG(f), z))
-export const everywhere = curry2(everywhereU)
+export const everywhere = curry(everywhereU)
 
 export function pathOf(z) {
   const path = []
