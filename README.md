@@ -13,29 +13,29 @@ manipulating JSON data.
 * [Tutorial](#tutorial)
 * [Reference](#reference)
   * [Introduction and Elimination](#introduction-and-elimination)
-    * [`F.toZipper(json)`](#toZipper "toZipper :: JSON -> Zipper")
-    * [`F.fromZipper(zipper)`](#fromZipper "fromZipper :: Zipper -> JSON")
+    * [`F.toZipper(json)`](#F-toZipper "F.toZipper: JSON -> Zipper")
+    * [`F.fromZipper(zipper)`](#F-fromZipper "F.fromZipper: Zipper -> JSON")
   * [Focus](#focus)
-    * [`F.get(zipper)`](#get "get :: Zipper -> JSON")
-    * [`F.modify(fn, zipper)`](#modify "modify :: (JSON -> JSON) -> Zipper -> Zipper")
-    * [`F.set(json, zipper)`](#set "set :: JSON -> Zipper -> Zipper")
+    * [`F.get(zipper)`](#F-get "F.get: Zipper -> JSON")
+    * [`F.modify(json => json, zipper)`](#F-modify "F.modify: (JSON -> JSON) -> Zipper -> Zipper")
+    * [`F.set(json, zipper)`](#F-set "F.set: JSON -> Zipper -> Zipper")
   * [Movement](#movement)
     * [Parent-Child movement](#parent-child-movement)
-      * [`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
-      * [`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
-      * [`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
-      * [`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
-      * [`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+      * [`F.downHead(zipper)`](#F-downHead "F.downHead: Zipper -> Maybe Zipper")
+      * [`F.downLast(zipper)`](#F-downLast "F.downLast: Zipper -> Maybe Zipper")
+      * [`F.downTo(key, zipper)`](#F-downTo "F.downTo: (String|Number) -> Zipper -> Maybe Zipper")
+      * [`F.keyOf(zipper)`](#F-keyOf "F.keyOf: Zipper -> Maybe (String|Number)")
+      * [`F.up(zipper)`](#F-up "F.up: Zipper -> Maybe Zipper")
     * [Sibling movement](#sibling-movement)
-      * [`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
-      * [`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
-      * [`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
-      * [`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
+      * [`F.head(zipper)`](#F-head "F.head: Zipper -> Maybe Zipper")
+      * [`F.last(zipper)`](#F-last "F.last: Zipper -> Maybe Zipper")
+      * [`F.left(zipper)`](#F-left "F.left: Zipper -> Maybe Zipper")
+      * [`F.right(zipper)`](#F-right "F.right: Zipper -> Maybe Zipper")
   * [Queries](#queries)
-    * [`F.queryMove(move, default, fn, zipper)`](#queryMove "F.queryMove :: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
+    * [`F.queryMove(zipper => maybeZipper, value, zipper => value, zipper)`](#F-queryMove "F.queryMove: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
   * [Transforms](#transforms)
-    * [`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|downTo(key)|left|right|up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
-    * [`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
+    * [`F.transformMove(move, zipper => zipper, zipper)`](#F-transformMove "F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
+    * [`F.everywhere(json => json, zipper)`](#F-everywhere "F.everywhere: (JSON -> JSON) -> Zipper -> Zipper")
 * [Related Work](#related-work)
 
 ## Tutorial
@@ -63,7 +63,7 @@ const data = {contents: [{language: "en", text: "Title"},
                          {language: "sv", text: "Rubrik"}]}
 ```
 
-First we just create a zipper using [`F.toZipper`](#toZipper):
+First we just create a zipper using [`F.toZipper`](#F-toZipper):
 
 ```js
 seq(F.toZipper(data))
@@ -71,12 +71,12 @@ seq(F.toZipper(data))
 ```
 
 As can be seen, the zipper is just a simple JSON object and the `focus` is the
-`data` object that we gave to [`F.toZipper`](#toZipper).  However, you should
+`data` object that we gave to [`F.toZipper`](#F-toZipper).  However, you should
 use the zipper combinators to operate on zippers rather than rely on their exact
 format.
 
 Let's then move into the `contents` property of the object using
-[`F.downTo`](#downTo):
+[`F.downTo`](#F-downTo):
 
 ```js
 seq(F.toZipper(data),
@@ -90,7 +90,7 @@ seq(F.toZipper(data),
 ```
 
 As seen above, the `focus` now has the `contents` array.  We can use
-[`F.get`](#get) to extract the value under focus:
+[`F.get`](#F-get) to extract the value under focus:
 
 
 ```js
@@ -102,7 +102,7 @@ seq(F.toZipper(data),
 ```
 
 Then we move into the first element of `contents` using
-[`F.downHead`](#downHead):
+[`F.downHead`](#F-downHead):
 
 ```js
 seq(F.toZipper(data),
@@ -133,7 +133,7 @@ seq(F.toZipper(data),
 //      up: { left: null, key: 'contents', right: null } } }
 ```
 
-And to the next property, `title`, using [`F.right`](#right):
+And to the next property, `title`, using [`F.right`](#F-right):
 
 ```js
 seq(F.toZipper(data),
@@ -152,7 +152,7 @@ seq(F.toZipper(data),
 //      up: { left: null, key: 'contents', right: null } } }
 ```
 
-Let's then use [`F.modify`](#modify) to modify the `title`:
+Let's then use [`F.modify`](#F-modify) to modify the `title`:
 
 ```js
 seq(F.toZipper(data),
@@ -172,7 +172,7 @@ seq(F.toZipper(data),
 //      up: { left: null, key: 'contents', right: null } } }
 ```
 
-When we now move outwards using [`F.up`](#up) we can see the changed title
+When we now move outwards using [`F.up`](#F-up) we can see the changed title
 become part of the data:
 
 ```js
@@ -191,7 +191,7 @@ seq(F.toZipper(data),
 ```
 
 We can also just move back to the root and get the updated data structure using
-[`F.fromZipper`](#fromZipper):
+[`F.fromZipper`](#F-fromZipper):
 
 ```js
 seq(F.toZipper(data),
@@ -219,7 +219,7 @@ tries to focus on an element inside the array that satisfies a given predicate:
 const find = R.curry((p, z) => F.downTo(R.findIndex(p, F.get(z)), z))
 ```
 
-Like all the basic zipper movement combinators, [`F.downTo`](#downTo) is a
+Like all the basic zipper movement combinators, [`F.downTo`](#F-downTo) is a
 *partial function* that returns `undefined` in case the index is out of bounds.
 Let's define a simple function to compose partial functions:
 
@@ -281,7 +281,7 @@ to express a sequence of operations to perform starting from a given value.
 
 ### Introduction and Elimination
 
-#### <a name="toZipper"></a> [≡](#contents) [`F.toZipper(json)`](#toZipper "toZipper :: JSON -> Zipper")
+#### <a name="F-toZipper"></a> [≡](#contents) [`F.toZipper(json)`](#F-toZipper "F.toZipper: JSON -> Zipper")
 
 `F.toZipper(json)` creates a new zipper that is focused on the root of the given
 JSON object.
@@ -296,7 +296,7 @@ seq(F.toZipper([1,2,3]),
 // [ 2, 2, 3 ]
 ```
 
-#### <a name="fromZipper"></a> [≡](#contents) [`F.fromZipper(zipper)`](#fromZipper "fromZipper :: Zipper -> JSON")
+#### <a name="F-fromZipper"></a> [≡](#contents) [`F.fromZipper(zipper)`](#F-fromZipper "F.fromZipper: Zipper -> JSON")
 
 `F.fromZipper(zipper)` extracts the modified JSON object from the given zipper.
 
@@ -315,7 +315,7 @@ seq(F.toZipper([1,2,3]),
 Focus combinators allow one to inspect and modify the element that a zipper is
 focused on.
 
-#### <a name="get"></a> [≡](#contents) [`F.get(zipper)`](#get "get :: Zipper -> JSON")
+#### <a name="F-get"></a> [≡](#contents) [`F.get(zipper)`](#F-get "F.get: Zipper -> JSON")
 
 `F.get(zipper)` returns the element that the zipper is focused on.
 
@@ -332,7 +332,7 @@ seq(F.toZipper(["a","b","c"]),
 // 'c'
 ```
 
-#### <a name="modify"></a> [≡](#contents) [`F.modify(fn, zipper)`](#modify "modify :: (JSON -> JSON) -> Zipper -> Zipper")
+#### <a name="F-modify"></a> [≡](#contents) [`F.modify(json => json, zipper)`](#F-modify "F.modify: (JSON -> JSON) -> Zipper -> Zipper")
 
 `F.modify(fn, zipper)` is equivalent to `F.set(fn(F.get(zipper)), zipper)` and
 replaces the element that the zipper is focused on with the value returned by
@@ -348,7 +348,7 @@ seq(F.toZipper(["a","b","c"]),
 // [ 'a', 'b', 'cc' ]
 ```
 
-#### <a name="set"></a> [≡](#contents) [`F.set(json, zipper)`](#set "set :: JSON -> Zipper -> Zipper")
+#### <a name="F-set"></a> [≡](#contents) [`F.set(json, zipper)`](#F-set "F.set: JSON -> Zipper -> Zipper")
 
 `F.set(json, zipper)` replaces the element that the zipper is focused on with
 the given value.
@@ -373,27 +373,27 @@ in case of illegal moves.
 Parent-Child movement is moving the focus between a parent object or array and a
 child element of said parent.
 
-##### <a name="downHead"></a> [≡](#contents) [`F.downHead(zipper)`](#downHead "downHead :: Zipper -> Maybe Zipper")
+##### <a name="F-downHead"></a> [≡](#contents) [`F.downHead(zipper)`](#F-downHead "F.downHead: Zipper -> Maybe Zipper")
 
 `F.downHead(zipper)` moves the focus to the leftmost element of the object or
 array that the zipper is focused on.
 
-##### <a name="downLast"></a> [≡](#contents) [`F.downLast(zipper)`](#downLast "downLast :: Zipper -> Maybe Zipper")
+##### <a name="F-downLast"></a> [≡](#contents) [`F.downLast(zipper)`](#F-downLast "F.downLast: Zipper -> Maybe Zipper")
 
 `F.downLast(zipper)` moves the focus to the rightmost element of the object or
 array that the zipper is focused on.
 
-##### <a name="downTo"></a> [≡](#contents) [`F.downTo(key, zipper)`](#downTo "downTo :: (String|Number) -> Zipper -> Maybe Zipper")
+##### <a name="F-downTo"></a> [≡](#contents) [`F.downTo(key, zipper)`](#F-downTo "F.downTo: (String|Number) -> Zipper -> Maybe Zipper")
 
 `F.downTo(key, zipper)` moves the focus to the specified object property or
 array index of the object or array that the zipper is focused on.
 
-##### <a name="keyOf"></a> [≡](#contents) [`F.keyOf(zipper)`](#keyOf "keyOf :: Zipper -> Maybe (String|Number)")
+##### <a name="F-keyOf"></a> [≡](#contents) [`F.keyOf(zipper)`](#F-keyOf "F.keyOf: Zipper -> Maybe (String|Number)")
 
 `F.keyOf(zipper)` returns the object property name or the array index that the
 zipper is currently focused on.
 
-##### <a name="up"></a> [≡](#contents) [`F.up(zipper)`](#up "up :: Zipper -> Maybe Zipper")
+##### <a name="F-up"></a> [≡](#contents) [`F.up(zipper)`](#F-up "F.up: Zipper -> Maybe Zipper")
 
 `F.up(zipper)` moves the focus from an array element or object property to the
 containing array or object.
@@ -402,25 +402,25 @@ containing array or object.
 
 Sibling movement is moving the focus between the elements of an array or an object.
 
-##### <a name="head"></a> [≡](#contents) [`F.head(zipper)`](#head "head :: Zipper -> Maybe Zipper")
+##### <a name="F-head"></a> [≡](#contents) [`F.head(zipper)`](#F-head "F.head: Zipper -> Maybe Zipper")
 
 `F.head(zipper)` moves the focus to the leftmost sibling of the current focus.
 
-##### <a name="last"></a> [≡](#contents) [`F.last(zipper)`](#last "last :: Zipper -> Maybe Zipper")
+##### <a name="F-last"></a> [≡](#contents) [`F.last(zipper)`](#F-last "F.last: Zipper -> Maybe Zipper")
 
 `F.last(zipper)` moves the focus to the rightmost sibling of the current focus.
 
-##### <a name="left"></a> [≡](#contents) [`F.left(zipper)`](#left "left :: Zipper -> Maybe Zipper")
+##### <a name="F-left"></a> [≡](#contents) [`F.left(zipper)`](#F-left "F.left: Zipper -> Maybe Zipper")
 
 `F.left(zipper)` moves the focus to the element on the left of the current focus.
 
-##### <a name="right"></a> [≡](#contents) [`F.right(zipper)`](#right "right :: Zipper -> Maybe Zipper")
+##### <a name="F-right"></a> [≡](#contents) [`F.right(zipper)`](#F-right "F.right: Zipper -> Maybe Zipper")
 
 `F.right(zipper)` moves the focus to the element on the right of the current focus.
 
 ### Queries
 
-#### <a name="queryMove"></a> [≡](#contents) [`F.queryMove(move, default, fn, zipper)`](#queryMove "F.queryMove :: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
+#### <a name="F-queryMove"></a> [≡](#contents) [`F.queryMove(zipper => maybeZipper, value, zipper => value, zipper)`](#F-queryMove "F.queryMove: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
 
 `F.queryMove(move, default, fn, zipper)` applies the given function `fn` to the
 zipper focused on after the given movement and returns the result unless the
@@ -441,7 +441,7 @@ seq(F.toZipper({y: 1}),
 
 ### Transforms
 
-#### <a name="transformMove"></a> [≡](#contents) [`F.transformMove(move, fn, zipper)`](#transformMove "F.transformMove :: (downHead|downLast|downTo(key)|left|right|up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
+#### <a name="F-transformMove"></a> [≡](#contents) [`F.transformMove(move, zipper => zipper, zipper)`](#F-transformMove "F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
 
 `F.transformMove(move, fn, zipper)` applies the given function to the zipper
 focused on after the given movement.  The function must the return a zipper
@@ -464,7 +464,7 @@ seq(F.toZipper({x: 1}),
 // { x: 1 }
 ```
 
-#### <a name="everywhere"></a> [≡](#contents) [`F.everywhere(fn, zipper)`](#everywhere "F.everywhere :: (JSON -> JSON) -> Zipper -> Zipper")
+#### <a name="F-everywhere"></a> [≡](#contents) [`F.everywhere(json => json, zipper)`](#F-everywhere "F.everywhere: (JSON -> JSON) -> Zipper -> Zipper")
 
 `F.everywhere(fn, zipper)` performs a transform of the focused element by
 modifying each possible focus of the element with a bottom-up traversal.
