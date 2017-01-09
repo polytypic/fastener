@@ -13,7 +13,7 @@ const vs100 = Array(100).fill(1)
 const vs1000 = Array(1000).fill(1)
 
 const Benchmark = require("benchmark")
-Benchmark.options.maxTime = Number(process.argv[2]) || 10
+Benchmark.options.maxTime = Number(process.argv[2]) || Benchmark.options.maxTime
 
 R.forEach(bs => {
   global.gc()
