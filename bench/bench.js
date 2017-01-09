@@ -1,7 +1,7 @@
 'use strict';
 
 const I = require("infestines")
-const F = require("../lib/fastener")
+const F = require("../dist/fastener.min")
 const R = require("ramda")
 const sprintf = require("sprintf-js").sprintf
 
