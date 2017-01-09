@@ -48,6 +48,11 @@ manipulating JSON data.</p>
 <li><a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper)</code></a></li>
 </ul>
 </li>
+<li><a href="#path-movement">Path movement</a><ul>
+<li><a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper)</code></a></li>
+<li><a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper)</code></a></li>
+</ul>
+</li>
 <li><a href="#sibling-movement">Sibling movement</a><ul>
 <li><a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper)</code></a></li>
 <li><a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper)</code></a></li>
@@ -267,6 +272,14 @@ zipper is currently focused on.</p>
 <h5 id="-a-name-f-up-a-contents-f-up-zipper-f-up-f-up-zipper-maybe-zipper-"><a name="F-up"></a> <a href="#contents">≡</a> <a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper)</code></a></h5>
 <p><code>F.up(zipper)</code> moves the focus from an array element or object property to the
 containing array or object.</p>
+<h4 id="path-movement">Path movement</h4>
+<p>Path movement is moving the focus along a path from a parent object or array to
+a nested child element.</p>
+<h5 id="-a-name-f-downpath-a-contents-f-downpath-keys-zipper-f-downpath-f-downpath-string-number-zipper-maybe-zipper-"><a name="F-downPath"></a> <a href="#contents">≡</a> <a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper)</code></a></h5>
+<p><code>F.downPath(path, zipper)</code> moves the focus along the specified path of keys.</p>
+<h5 id="-a-name-f-pathof-a-contents-f-pathof-zipper-f-pathof-f-pathof-zipper-string-number-"><a name="F-pathOf"></a> <a href="#contents">≡</a> <a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper)</code></a></h5>
+<p><code>F.pathOf(zipper)</code> returns the path from the root to the current element focused
+on by the zipper.</p>
 <h4 id="sibling-movement">Sibling movement</h4>
 <p>Sibling movement is moving the focus between the elements of an array or an object.</p>
 <h5 id="-a-name-f-head-a-contents-f-head-zipper-f-head-f-head-zipper-maybe-zipper-"><a name="F-head"></a> <a href="#contents">≡</a> <a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper)</code></a></h5>

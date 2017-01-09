@@ -26,6 +26,9 @@ manipulating JSON data.
       * [`F.downTo(key, zipper)`](#F-downTo "F.downTo: (String|Number) -> Zipper -> Maybe Zipper")
       * [`F.keyOf(zipper)`](#F-keyOf "F.keyOf: Zipper -> Maybe (String|Number)")
       * [`F.up(zipper)`](#F-up "F.up: Zipper -> Maybe Zipper")
+    * [Path movement](#path-movement)
+      * [`F.downPath([...keys], zipper)`](#F-downPath "F.downPath: [String|Number] -> Zipper -> Maybe Zipper")
+      * [`F.pathOf(zipper)`](#F-pathOf "F.pathOf: Zipper -> [String|Number]")
     * [Sibling movement](#sibling-movement)
       * [`F.head(zipper)`](#F-head "F.head: Zipper -> Maybe Zipper")
       * [`F.last(zipper)`](#F-last "F.last: Zipper -> Maybe Zipper")
@@ -397,6 +400,20 @@ zipper is currently focused on.
 
 `F.up(zipper)` moves the focus from an array element or object property to the
 containing array or object.
+
+#### Path movement
+
+Path movement is moving the focus along a path from a parent object or array to
+a nested child element.
+
+##### <a name="F-downPath"></a> [≡](#contents) [`F.downPath([...keys], zipper)`](#F-downPath "F.downPath: [String|Number] -> Zipper -> Maybe Zipper")
+
+`F.downPath(path, zipper)` moves the focus along the specified path of keys.
+
+##### <a name="F-pathOf"></a> [≡](#contents) [`F.pathOf(zipper)`](#F-pathOf "F.pathOf: Zipper -> [String|Number]")
+
+`F.pathOf(zipper)` returns the path from the root to the current element focused
+on by the zipper.
 
 #### Sibling movement
 
