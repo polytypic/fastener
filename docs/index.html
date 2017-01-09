@@ -306,10 +306,15 @@ move was illegal in which case the given default value is returned instead.</p>
 <h3 id="transforms">Transforms</h3>
 <h4 id="-a-name-f-transformmove-a-contents-f-transformmove-move-zipper-zipper-zipper-f-transformmove-f-transformmove-f-downhead-f-downlast-f-downto-key-f-left-f-right-f-up-zipper-zipper-zipper-zipper-"><a name="F-transformMove"></a> <a href="#contents">≡</a> <a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper)</code></a></h4>
 <p><code>F.transformMove(move, fn, zipper)</code> applies the given function to the zipper
-focused on after the given movement.  The function must the return a zipper
-focused on the same element that it was given.  Then the focus is moved back to
-the element that the zipper was originally focused on.  Nothing is done in case
-of an illegal move.</p>
+focused on after the given movement.  The movement <code>move</code> must be one
+of
+<a href="#F-downHead"><code>F.downHead</code></a>,
+<a href="#F-downLast"><code>F.downLast</code></a>,
+<a href="#F-downTo"><code>F.downTo(key)</code></a>, <a href="#F-left"><code>F.left</code></a>, <a href="#F-right"><code>F.right</code></a>,
+or <a href="#F-up"><code>F.up</code></a>.  The function <code>fn</code> must the return a zipper focused on the
+same element that it was given.  Then the focus is moved back to the element
+that the zipper was originally focused on.  Nothing is done in case of an
+illegal move.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper({y: 1}),
     F.transformMove(F.downTo(&#39;y&#39;), F.modify(x =&gt; x + 1)),

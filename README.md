@@ -462,10 +462,15 @@ seq(F.toZipper({y: 1}),
 #### <a name="F-transformMove"></a> [≡](#contents) [`F.transformMove(move, zipper => zipper, zipper)`](#F-transformMove "F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
 
 `F.transformMove(move, fn, zipper)` applies the given function to the zipper
-focused on after the given movement.  The function must the return a zipper
-focused on the same element that it was given.  Then the focus is moved back to
-the element that the zipper was originally focused on.  Nothing is done in case
-of an illegal move.
+focused on after the given movement.  The movement `move` must be one
+of
+[`F.downHead`](#F-downHead),
+[`F.downLast`](#F-downLast),
+[`F.downTo(key)`](#F-downTo), [`F.left`](#F-left), [`F.right`](#F-right),
+or [`F.up`](#F-up).  The function `fn` must the return a zipper focused on the
+same element that it was given.  Then the focus is moved back to the element
+that the zipper was originally focused on.  Nothing is done in case of an
+illegal move.
 
 For example:
 
