@@ -6,8 +6,8 @@
   "scripts": {
     "bench": "NODE_ENV=production node --expose-gc bench/bench.js",
     "dist": "npm run dist:bowerify & npm run dist:bowerify.min & npm run dist:commonjs & wait",
-    "dist:bowerify": "    NODE_ENV=dev        browserify src/fastener.js -t babelify --no-bundle-external -d -s F -g envify              -o dist/fastener.js",
-    "dist:bowerify.min": "NODE_ENV=production browserify src/fastener.js -t babelify --no-bundle-external    -s F -g envify -g uglifyify -o dist/fastener.min.js",
+    "dist:bowerify": "    NODE_ENV=dev        browserify src/fastener.js -t babelify --no-bundle-external -d -s F -g envify                               > dist/fastener.js",
+    "dist:bowerify.min": "NODE_ENV=production browserify src/fastener.js -t babelify --no-bundle-external    -s F -g envify -g uglifyify | uglifyjs -m -c > dist/fastener.min.js",
     "dist:commonjs": "babel src --source-maps inline --out-dir lib",
     "docs": "./scripts/generate-docs",
     "docs-bundle": "NODE_ENV=dev browserify -r ./lib/fastener:fastener -r ramda -r infestines -r babel-polyfill -g envify -g uglifyify > docs/bundle.js",
@@ -72,6 +72,7 @@
     "nyc": "^10.0.0",
     "ramda": "^0.23.0",
     "sprintf-js": "^1.0.3",
+    "uglify-js": "^2.7.5",
     "uglifyify": "^3.0.4"
   }
 }
