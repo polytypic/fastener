@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/polytypic/fastener#readme",
   "dependencies": {
-    "infestines": "^0.3.0"
+    "infestines": "^0.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
