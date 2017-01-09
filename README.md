@@ -73,10 +73,11 @@ seq(F.toZipper(data))
 // { focus: { contents: [ [Object], [Object] ] } }
 ```
 
-As can be seen, the zipper is just a simple JSON object and the `focus` is the
-`data` object that we gave to [`F.toZipper`](#F-toZipper).  However, you should
-use the zipper combinators to operate on zippers rather than rely on their exact
-format.
+As can be seen, **_the zipper is just a simple JSON object_** and the `focus` is
+the `data` object that we gave to [`F.toZipper`](#F-toZipper).  As long the data
+structure being manipulated is JSON, you can serialize and deserialize zippers
+as JSON.  However, it is recommended that you use the zipper combinators to
+operate on zippers rather than rely on their exact format.
 
 Let's then move into the `contents` property of the object using
 [`F.downTo`](#F-downTo):

@@ -93,10 +93,11 @@ of operations on a value:</p>
 <p>First we just create a zipper using <a href="#F-toZipper"><code>F.toZipper</code></a>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data))
 </code></pre>
-<p>As can be seen, the zipper is just a simple JSON object and the <code>focus</code> is the
-<code>data</code> object that we gave to <a href="#F-toZipper"><code>F.toZipper</code></a>.  However, you should
-use the zipper combinators to operate on zippers rather than rely on their exact
-format.</p>
+<p>As can be seen, <strong><em>the zipper is just a simple JSON object</em></strong> and the <code>focus</code> is
+the <code>data</code> object that we gave to <a href="#F-toZipper"><code>F.toZipper</code></a>.  As long the data
+structure being manipulated is JSON, you can serialize and deserialize zippers
+as JSON.  However, it is recommended that you use the zipper combinators to
+operate on zippers rather than rely on their exact format.</p>
 <p>Let&#39;s then move into the <code>contents</code> property of the object using
 <a href="#F-downTo"><code>F.downTo</code></a>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
