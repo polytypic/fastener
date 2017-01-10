@@ -126,12 +126,11 @@ function downToU(key, z) {
 }
 export const downTo = curry(downToU)
 
-function downPathU(path, z) {
+export const downPath = curry((path, z) => {
   for (let i=0, n=path.length; z && i<n; ++i)
     z = downToU(path[i], z)
   return z
-}
-export const downPath = curry(downPathU)
+})
 
 const downMost = head => z => {
   const focus = z.focus
