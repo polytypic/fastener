@@ -12,6 +12,14 @@ const vs10 = Array(10).fill(1)
 const vs100 = Array(100).fill(1)
 const vs1000 = Array(1000).fill(1)
 
+const z0y1d = I.seq(nested,
+                    F.toZipper,
+                    F.downPath([0, "y", 1, "d"]))
+
+const z0y = I.seq(nested,
+                  F.toZipper,
+                  F.downPath([0, "y"]))
+
 const Benchmark = require("benchmark")
 Benchmark.options.maxTime = Number(process.argv[2]) || Benchmark.options.maxTime
 
@@ -26,6 +34,10 @@ R.forEach(bs => {
   s.run()
 }, [
   [
+    'F.pathOf(z0y)',
+  ], [
+    'F.pathOf(z0y1d)',
+  ], [
     'F.fromZipper(F.everywhere(inc, F.toZipper(nested)))',
   ], [
     'F.fromZipper(F.everywhere(inc, F.toZipper(vs10)))',
