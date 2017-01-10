@@ -1,6 +1,6 @@
 {
   "name": "fastener",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Zipper for manipulating JSON",
   "main": "lib/fastener.js",
   "scripts": {
