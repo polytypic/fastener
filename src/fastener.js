@@ -189,8 +189,8 @@ export const everywhere = curry(everywhereU)
 export function pathOf(z) {
   const path = []
   while (z && isDefined(z.key)) {
-    path.unshift(z.key)
+    path.push(z.key)
     z = z.up
   }
-  return path
+  return path.reverse()
 }
