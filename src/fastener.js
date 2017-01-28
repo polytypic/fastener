@@ -5,7 +5,9 @@ import {
   id,
   isArray,
   isDefined,
-  isObject
+  isNumber,
+  isObject,
+  isString
 } from "infestines"
 
 //
@@ -21,9 +23,6 @@ function lastKey(o) {
     key = k
   return key
 }
-
-const isString = x => typeof x === "string"
-const isNumber = x => typeof x === "number"
 
 //
 
