@@ -29,46 +29,46 @@ manipulating JSON data.</p>
 <li><a href="#tutorial">Tutorial</a></li>
 <li><a href="#reference">Reference</a><ul>
 <li><a href="#introduction-and-elimination">Introduction and Elimination</a><ul>
-<li><a href="#F-toZipper" title="F.toZipper: JSON -&gt; Zipper"><code>F.toZipper(json)</code></a></li>
-<li><a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper)</code></a></li>
+<li><a href="#F-toZipper" title="F.toZipper: JSON -&gt; Zipper"><code>F.toZipper(json) ~&gt; zipper</code></a></li>
+<li><a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper) ~&gt; json</code></a></li>
 </ul>
 </li>
 <li><a href="#focus">Focus</a><ul>
-<li><a href="#F-get" title="F.get: Zipper -&gt; JSON"><code>F.get(zipper)</code></a></li>
-<li><a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper)</code></a></li>
-<li><a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper)</code></a></li>
+<li><a href="#F-get" title="F.get: Zipper -&gt; JSON"><code>F.get(zipper) ~&gt; json</code></a></li>
+<li><a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper) ~&gt; zipper</code></a></li>
+<li><a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper) ~&gt; zipper</code></a></li>
 </ul>
 </li>
 <li><a href="#movement">Movement</a><ul>
 <li><a href="#parent-child-movement">Parent-Child movement</a><ul>
-<li><a href="#F-downHead" title="F.downHead: Zipper -&gt; Maybe Zipper"><code>F.downHead(zipper)</code></a></li>
-<li><a href="#F-downLast" title="F.downLast: Zipper -&gt; Maybe Zipper"><code>F.downLast(zipper)</code></a></li>
-<li><a href="#F-downTo" title="F.downTo: (String|Number) -&gt; Zipper -&gt; Maybe Zipper"><code>F.downTo(key, zipper)</code></a></li>
-<li><a href="#F-keyOf" title="F.keyOf: Zipper -&gt; Maybe (String|Number)"><code>F.keyOf(zipper)</code></a></li>
-<li><a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper)</code></a></li>
+<li><a href="#F-downHead" title="F.downHead: Zipper -&gt; Maybe Zipper"><code>F.downHead(zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-downLast" title="F.downLast: Zipper -&gt; Maybe Zipper"><code>F.downLast(zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-downTo" title="F.downTo: (String|Number) -&gt; Zipper -&gt; Maybe Zipper"><code>F.downTo(key, zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-keyOf" title="F.keyOf: Zipper -&gt; Maybe (String|Number)"><code>F.keyOf(zipper) ~&gt; maybeKey</code></a></li>
+<li><a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper) ~&gt; maybeZipper</code></a></li>
 </ul>
 </li>
 <li><a href="#path-movement">Path movement</a><ul>
-<li><a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper)</code></a></li>
-<li><a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper)</code></a></li>
+<li><a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper) ~&gt; [...keys]</code></a></li>
 </ul>
 </li>
 <li><a href="#sibling-movement">Sibling movement</a><ul>
-<li><a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper)</code></a></li>
-<li><a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper)</code></a></li>
-<li><a href="#F-left" title="F.left: Zipper -&gt; Maybe Zipper"><code>F.left(zipper)</code></a></li>
-<li><a href="#F-right" title="F.right: Zipper -&gt; Maybe Zipper"><code>F.right(zipper)</code></a></li>
+<li><a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-left" title="F.left: Zipper -&gt; Maybe Zipper"><code>F.left(zipper) ~&gt; maybeZipper</code></a></li>
+<li><a href="#F-right" title="F.right: Zipper -&gt; Maybe Zipper"><code>F.right(zipper) ~&gt; maybeZipper</code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#queries">Queries</a><ul>
-<li><a href="#F-queryMove" title="F.queryMove: (Zipper -&gt; Maybe Zipper) -&gt; a -&gt; (Zipper -&gt; a) -&gt; Zipper -&gt; a"><code>F.queryMove(zipper =&gt; maybeZipper, value, zipper =&gt; value, zipper)</code></a></li>
+<li><a href="#F-queryMove" title="F.queryMove: (Zipper -&gt; Maybe Zipper) -&gt; a -&gt; (Zipper -&gt; a) -&gt; Zipper -&gt; a"><code>F.queryMove(zipper =&gt; maybeZipper, value, zipper =&gt; value, zipper) ~&gt; value</code></a></li>
 </ul>
 </li>
 <li><a href="#transforms">Transforms</a><ul>
-<li><a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper)</code></a></li>
-<li><a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper)</code></a></li>
+<li><a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper) ~&gt; zipper</code></a></li>
+<li><a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper) ~&gt; zipper</code></a></li>
 </ul>
 </li>
 </ul>
@@ -204,7 +204,7 @@ imports the library as:</p>
 <p>written using <a href="http://ramdajs.com/0.21.0/docs/#reduce"><code>reduce</code></a> that allows one
 to express a sequence of operations to perform starting from a given value.</p>
 <h3 id="introduction-and-elimination">Introduction and Elimination</h3>
-<h4 id="-a-name-f-tozipper-a-contents-f-tozipper-json-f-tozipper-f-tozipper-json-zipper-"><a name="F-toZipper"></a> <a href="#contents">≡</a> <a href="#F-toZipper" title="F.toZipper: JSON -&gt; Zipper"><code>F.toZipper(json)</code></a></h4>
+<h4 id="-a-name-f-tozipper-a-contents-f-tozipper-json-zipper-f-tozipper-f-tozipper-json-zipper-"><a name="F-toZipper"></a> <a href="#contents">≡</a> <a href="#F-toZipper" title="F.toZipper: JSON -&gt; Zipper"><code>F.toZipper(json) ~&gt; zipper</code></a></h4>
 <p><code>F.toZipper(json)</code> creates a new zipper that is focused on the root of the given
 JSON object.</p>
 <p>For example:</p>
@@ -213,7 +213,7 @@ JSON object.</p>
     F.modify(x =&gt; x + 1),
     F.fromZipper)
 </code></pre>
-<h4 id="-a-name-f-fromzipper-a-contents-f-fromzipper-zipper-f-fromzipper-f-fromzipper-zipper-json-"><a name="F-fromZipper"></a> <a href="#contents">≡</a> <a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper)</code></a></h4>
+<h4 id="-a-name-f-fromzipper-a-contents-f-fromzipper-zipper-json-f-fromzipper-f-fromzipper-zipper-json-"><a name="F-fromZipper"></a> <a href="#contents">≡</a> <a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper) ~&gt; json</code></a></h4>
 <p><code>F.fromZipper(zipper)</code> extracts the modified JSON object from the given zipper.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper([1,2,3]),
@@ -224,7 +224,7 @@ JSON object.</p>
 <h3 id="focus">Focus</h3>
 <p>Focus combinators allow one to inspect and modify the element that a zipper is
 focused on.</p>
-<h4 id="-a-name-f-get-a-contents-f-get-zipper-f-get-f-get-zipper-json-"><a name="F-get"></a> <a href="#contents">≡</a> <a href="#F-get" title="F.get: Zipper -&gt; JSON"><code>F.get(zipper)</code></a></h4>
+<h4 id="-a-name-f-get-a-contents-f-get-zipper-json-f-get-f-get-zipper-json-"><a name="F-get"></a> <a href="#contents">≡</a> <a href="#F-get" title="F.get: Zipper -&gt; JSON"><code>F.get(zipper) ~&gt; json</code></a></h4>
 <p><code>F.get(zipper)</code> returns the element that the zipper is focused on.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(1), F.get)
@@ -233,7 +233,7 @@ focused on.</p>
     F.downTo(2),
     F.get)
 </code></pre>
-<h4 id="-a-name-f-modify-a-contents-f-modify-json-json-zipper-f-modify-f-modify-json-json-zipper-zipper-"><a name="F-modify"></a> <a href="#contents">≡</a> <a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper)</code></a></h4>
+<h4 id="-a-name-f-modify-a-contents-f-modify-json-json-zipper-zipper-f-modify-f-modify-json-json-zipper-zipper-"><a name="F-modify"></a> <a href="#contents">≡</a> <a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.modify(fn, zipper)</code> is equivalent to <code>F.set(fn(F.get(zipper)), zipper)</code> and
 replaces the element that the zipper is focused on with the value returned by
 the given function for the element.</p>
@@ -243,7 +243,7 @@ the given function for the element.</p>
     F.modify(x =&gt; x + x),
     F.fromZipper)
 </code></pre>
-<h4 id="-a-name-f-set-a-contents-f-set-json-zipper-f-set-f-set-json-zipper-zipper-"><a name="F-set"></a> <a href="#contents">≡</a> <a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper)</code></a></h4>
+<h4 id="-a-name-f-set-a-contents-f-set-json-zipper-zipper-f-set-f-set-json-zipper-zipper-"><a name="F-set"></a> <a href="#contents">≡</a> <a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.set(json, zipper)</code> replaces the element that the zipper is focused on with
 the given value.</p>
 <p>For example:</p>
@@ -258,41 +258,41 @@ in case of illegal moves.</p>
 <h4 id="parent-child-movement">Parent-Child movement</h4>
 <p>Parent-Child movement is moving the focus between a parent object or array and a
 child element of said parent.</p>
-<h5 id="-a-name-f-downhead-a-contents-f-downhead-zipper-f-downhead-f-downhead-zipper-maybe-zipper-"><a name="F-downHead"></a> <a href="#contents">≡</a> <a href="#F-downHead" title="F.downHead: Zipper -&gt; Maybe Zipper"><code>F.downHead(zipper)</code></a></h5>
+<h5 id="-a-name-f-downhead-a-contents-f-downhead-zipper-maybezipper-f-downhead-f-downhead-zipper-maybe-zipper-"><a name="F-downHead"></a> <a href="#contents">≡</a> <a href="#F-downHead" title="F.downHead: Zipper -&gt; Maybe Zipper"><code>F.downHead(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downHead(zipper)</code> moves the focus to the leftmost element of the object or
 array that the zipper is focused on.</p>
-<h5 id="-a-name-f-downlast-a-contents-f-downlast-zipper-f-downlast-f-downlast-zipper-maybe-zipper-"><a name="F-downLast"></a> <a href="#contents">≡</a> <a href="#F-downLast" title="F.downLast: Zipper -&gt; Maybe Zipper"><code>F.downLast(zipper)</code></a></h5>
+<h5 id="-a-name-f-downlast-a-contents-f-downlast-zipper-maybezipper-f-downlast-f-downlast-zipper-maybe-zipper-"><a name="F-downLast"></a> <a href="#contents">≡</a> <a href="#F-downLast" title="F.downLast: Zipper -&gt; Maybe Zipper"><code>F.downLast(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downLast(zipper)</code> moves the focus to the rightmost element of the object or
 array that the zipper is focused on.</p>
-<h5 id="-a-name-f-downto-a-contents-f-downto-key-zipper-f-downto-f-downto-string-number-zipper-maybe-zipper-"><a name="F-downTo"></a> <a href="#contents">≡</a> <a href="#F-downTo" title="F.downTo: (String|Number) -&gt; Zipper -&gt; Maybe Zipper"><code>F.downTo(key, zipper)</code></a></h5>
+<h5 id="-a-name-f-downto-a-contents-f-downto-key-zipper-maybezipper-f-downto-f-downto-string-number-zipper-maybe-zipper-"><a name="F-downTo"></a> <a href="#contents">≡</a> <a href="#F-downTo" title="F.downTo: (String|Number) -&gt; Zipper -&gt; Maybe Zipper"><code>F.downTo(key, zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downTo(key, zipper)</code> moves the focus to the specified object property or
 array index of the object or array that the zipper is focused on.</p>
-<h5 id="-a-name-f-keyof-a-contents-f-keyof-zipper-f-keyof-f-keyof-zipper-maybe-string-number-"><a name="F-keyOf"></a> <a href="#contents">≡</a> <a href="#F-keyOf" title="F.keyOf: Zipper -&gt; Maybe (String|Number)"><code>F.keyOf(zipper)</code></a></h5>
+<h5 id="-a-name-f-keyof-a-contents-f-keyof-zipper-maybekey-f-keyof-f-keyof-zipper-maybe-string-number-"><a name="F-keyOf"></a> <a href="#contents">≡</a> <a href="#F-keyOf" title="F.keyOf: Zipper -&gt; Maybe (String|Number)"><code>F.keyOf(zipper) ~&gt; maybeKey</code></a></h5>
 <p><code>F.keyOf(zipper)</code> returns the object property name or the array index that the
 zipper is currently focused on.</p>
-<h5 id="-a-name-f-up-a-contents-f-up-zipper-f-up-f-up-zipper-maybe-zipper-"><a name="F-up"></a> <a href="#contents">≡</a> <a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper)</code></a></h5>
+<h5 id="-a-name-f-up-a-contents-f-up-zipper-maybezipper-f-up-f-up-zipper-maybe-zipper-"><a name="F-up"></a> <a href="#contents">≡</a> <a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.up(zipper)</code> moves the focus from an array element or object property to the
 containing array or object.</p>
 <h4 id="path-movement">Path movement</h4>
 <p>Path movement is moving the focus along a path from a parent object or array to
 a nested child element.</p>
-<h5 id="-a-name-f-downpath-a-contents-f-downpath-keys-zipper-f-downpath-f-downpath-string-number-zipper-maybe-zipper-"><a name="F-downPath"></a> <a href="#contents">≡</a> <a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper)</code></a></h5>
+<h5 id="-a-name-f-downpath-a-contents-f-downpath-keys-zipper-maybezipper-f-downpath-f-downpath-string-number-zipper-maybe-zipper-"><a name="F-downPath"></a> <a href="#contents">≡</a> <a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downPath(path, zipper)</code> moves the focus along the specified path of keys.</p>
-<h5 id="-a-name-f-pathof-a-contents-f-pathof-zipper-f-pathof-f-pathof-zipper-string-number-"><a name="F-pathOf"></a> <a href="#contents">≡</a> <a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper)</code></a></h5>
+<h5 id="-a-name-f-pathof-a-contents-f-pathof-zipper-keys-f-pathof-f-pathof-zipper-string-number-"><a name="F-pathOf"></a> <a href="#contents">≡</a> <a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper) ~&gt; [...keys]</code></a></h5>
 <p><code>F.pathOf(zipper)</code> returns the path from the root to the current element focused
 on by the zipper.</p>
 <h4 id="sibling-movement">Sibling movement</h4>
 <p>Sibling movement is moving the focus between the elements of an array or an object.</p>
-<h5 id="-a-name-f-head-a-contents-f-head-zipper-f-head-f-head-zipper-maybe-zipper-"><a name="F-head"></a> <a href="#contents">≡</a> <a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper)</code></a></h5>
+<h5 id="-a-name-f-head-a-contents-f-head-zipper-maybezipper-f-head-f-head-zipper-maybe-zipper-"><a name="F-head"></a> <a href="#contents">≡</a> <a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.head(zipper)</code> moves the focus to the leftmost sibling of the current focus.</p>
-<h5 id="-a-name-f-last-a-contents-f-last-zipper-f-last-f-last-zipper-maybe-zipper-"><a name="F-last"></a> <a href="#contents">≡</a> <a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper)</code></a></h5>
+<h5 id="-a-name-f-last-a-contents-f-last-zipper-maybezipper-f-last-f-last-zipper-maybe-zipper-"><a name="F-last"></a> <a href="#contents">≡</a> <a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.last(zipper)</code> moves the focus to the rightmost sibling of the current focus.</p>
-<h5 id="-a-name-f-left-a-contents-f-left-zipper-f-left-f-left-zipper-maybe-zipper-"><a name="F-left"></a> <a href="#contents">≡</a> <a href="#F-left" title="F.left: Zipper -&gt; Maybe Zipper"><code>F.left(zipper)</code></a></h5>
+<h5 id="-a-name-f-left-a-contents-f-left-zipper-maybezipper-f-left-f-left-zipper-maybe-zipper-"><a name="F-left"></a> <a href="#contents">≡</a> <a href="#F-left" title="F.left: Zipper -&gt; Maybe Zipper"><code>F.left(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.left(zipper)</code> moves the focus to the element on the left of the current focus.</p>
-<h5 id="-a-name-f-right-a-contents-f-right-zipper-f-right-f-right-zipper-maybe-zipper-"><a name="F-right"></a> <a href="#contents">≡</a> <a href="#F-right" title="F.right: Zipper -&gt; Maybe Zipper"><code>F.right(zipper)</code></a></h5>
+<h5 id="-a-name-f-right-a-contents-f-right-zipper-maybezipper-f-right-f-right-zipper-maybe-zipper-"><a name="F-right"></a> <a href="#contents">≡</a> <a href="#F-right" title="F.right: Zipper -&gt; Maybe Zipper"><code>F.right(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.right(zipper)</code> moves the focus to the element on the right of the current focus.</p>
 <h3 id="queries">Queries</h3>
-<h4 id="-a-name-f-querymove-a-contents-f-querymove-zipper-maybezipper-value-zipper-value-zipper-f-querymove-f-querymove-zipper-maybe-zipper-a-zipper-a-zipper-a-"><a name="F-queryMove"></a> <a href="#contents">≡</a> <a href="#F-queryMove" title="F.queryMove: (Zipper -&gt; Maybe Zipper) -&gt; a -&gt; (Zipper -&gt; a) -&gt; Zipper -&gt; a"><code>F.queryMove(zipper =&gt; maybeZipper, value, zipper =&gt; value, zipper)</code></a></h4>
+<h4 id="-a-name-f-querymove-a-contents-f-querymove-zipper-maybezipper-value-zipper-value-zipper-value-f-querymove-f-querymove-zipper-maybe-zipper-a-zipper-a-zipper-a-"><a name="F-queryMove"></a> <a href="#contents">≡</a> <a href="#F-queryMove" title="F.queryMove: (Zipper -&gt; Maybe Zipper) -&gt; a -&gt; (Zipper -&gt; a) -&gt; Zipper -&gt; a"><code>F.queryMove(zipper =&gt; maybeZipper, value, zipper =&gt; value, zipper) ~&gt; value</code></a></h4>
 <p><code>F.queryMove(move, default, fn, zipper)</code> applies the given function <code>fn</code> to the
 zipper focused on after the given movement and returns the result unless the
 move was illegal in which case the given default value is returned instead.</p>
@@ -304,7 +304,7 @@ move was illegal in which case the given default value is returned instead.</p>
     F.queryMove(F.downTo(&#39;y&#39;), false, () =&gt; true))
 </code></pre>
 <h3 id="transforms">Transforms</h3>
-<h4 id="-a-name-f-transformmove-a-contents-f-transformmove-move-zipper-zipper-zipper-f-transformmove-f-transformmove-f-downhead-f-downlast-f-downto-key-f-left-f-right-f-up-zipper-zipper-zipper-zipper-"><a name="F-transformMove"></a> <a href="#contents">≡</a> <a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper)</code></a></h4>
+<h4 id="-a-name-f-transformmove-a-contents-f-transformmove-move-zipper-zipper-zipper-zipper-f-transformmove-f-transformmove-f-downhead-f-downlast-f-downto-key-f-left-f-right-f-up-zipper-zipper-zipper-zipper-"><a name="F-transformMove"></a> <a href="#contents">≡</a> <a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.transformMove(move, fn, zipper)</code> applies the given function to the zipper
 focused on after the given movement.  The movement <code>move</code> must be one
 of
@@ -324,7 +324,7 @@ illegal move.</p>
     F.transformMove(F.downTo(&#39;y&#39;), F.modify(x =&gt; x + 1)),
     F.fromZipper)
 </code></pre>
-<h4 id="-a-name-f-everywhere-a-contents-f-everywhere-json-json-zipper-f-everywhere-f-everywhere-json-json-zipper-zipper-"><a name="F-everywhere"></a> <a href="#contents">≡</a> <a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper)</code></a></h4>
+<h4 id="-a-name-f-everywhere-a-contents-f-everywhere-json-json-zipper-zipper-f-everywhere-f-everywhere-json-json-zipper-zipper-"><a name="F-everywhere"></a> <a href="#contents">≡</a> <a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.everywhere(fn, zipper)</code> performs a transform of the focused element by
 modifying each possible focus of the element with a bottom-up traversal.</p>
 <p>For example:</p>
