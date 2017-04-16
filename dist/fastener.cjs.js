@@ -1,8 +1,8 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('infestines')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'infestines'], factory) :
-	(factory((global.fastener = global.fastener || {}),global.I));
-}(this, (function (exports,infestines) { 'use strict';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var infestines = require('infestines');
 
 //
 
@@ -239,7 +239,3 @@ exports.queryMove = queryMove;
 exports.transformMove = transformMove;
 exports.everywhere = everywhere;
 exports.pathOf = pathOf;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));

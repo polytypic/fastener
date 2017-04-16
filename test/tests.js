@@ -1,6 +1,6 @@
 import * as I from "infestines"
 
-import * as F from "../src/fastener"
+import * as F from "../dist/fastener.cjs"
 
 function show(x) {
   switch (typeof x) {

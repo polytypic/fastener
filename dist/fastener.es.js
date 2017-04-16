@@ -1,8 +1,4 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('infestines')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'infestines'], factory) :
-	(factory((global.fastener = global.fastener || {}),global.I));
-}(this, (function (exports,infestines) { 'use strict';
+import { assocPartialU, curry, dissocPartialU, id, isArray, isDefined, isNumber, isObject, isString } from 'infestines';
 
 //
 
@@ -33,7 +29,7 @@ function reverse(from) {
 //
 
 var zipper = function zipper(left, focus, key, right, up) {
-  return infestines.isDefined(up) ? { left: left, focus: focus, key: key, right: right, up: up } : { left: left, focus: focus, key: key, right: right };
+  return isDefined(up) ? { left: left, focus: focus, key: key, right: right, up: up } : { left: left, focus: focus, key: key, right: right };
 };
 
 //
@@ -50,7 +46,7 @@ function fromObject(object, key, up) {
   var right = null;
   var focus = void 0;
   for (var k in object) {
-    if (infestines.isDefined(focus)) right = [right, object[k], k];else if (key === k) focus = object[k];else left = [left, object[k], k];
+    if (isDefined(focus)) right = [right, object[k], k];else if (key === k) focus = object[k];else left = [left, object[k], k];
   }return zipper(left, focus, key, reverse(right), up);
 }
 
@@ -83,14 +79,14 @@ var keyOf = function keyOf(z) {
 };
 
 var setU = function setU(focus, z) {
-  return infestines.assocPartialU("focus", focus, z);
+  return assocPartialU("focus", focus, z);
 };
-var set = /*#__PURE__*/infestines.curry(setU);
+var set = /*#__PURE__*/curry(setU);
 
 var modifyU = function modifyU(f, z) {
   return setU(f(get(z)), z);
 };
-var modify = /*#__PURE__*/infestines.curry(modifyU);
+var modify = /*#__PURE__*/curry(modifyU);
 
 function up(_ref) {
   var left = _ref.left,
@@ -104,29 +100,29 @@ function up(_ref) {
       {
         var array = [];
         intoArray(reverse(left), array);
-        if (infestines.isDefined(focus)) array.push(focus);
+        if (isDefined(focus)) array.push(focus);
         intoArray(right, array);
-        return infestines.assocPartialU("focus", array, up);
+        return assocPartialU("focus", array, up);
       }
     case "string":
       {
         var object = {};
         intoObject(reverse(left), object);
-        if (infestines.isDefined(focus)) object[key] = focus;
+        if (isDefined(focus)) object[key] = focus;
         intoObject(right, object);
-        return infestines.assocPartialU("focus", object, up);
+        return assocPartialU("focus", object, up);
       }
   }
 }
 
 function downToU(key, z) {
   var focus = z.focus;
-  if (infestines.isObject(focus) && infestines.isString(key) && key in focus) return fromObject(focus, key, infestines.dissocPartialU("focus", z));
-  if (infestines.isArray(focus) && infestines.isNumber(key) && 0 <= key && key < focus.length) return fromArray(focus, key, infestines.dissocPartialU("focus", z));
+  if (isObject(focus) && isString(key) && key in focus) return fromObject(focus, key, dissocPartialU("focus", z));
+  if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length) return fromArray(focus, key, dissocPartialU("focus", z));
 }
-var downTo = /*#__PURE__*/infestines.curry(downToU);
+var downTo = /*#__PURE__*/curry(downToU);
 
-var downPath = /*#__PURE__*/infestines.curry(function (path, z) {
+var downPath = /*#__PURE__*/curry(function (path, z) {
   for (var i = 0, n = path.length; z && i < n; ++i) {
     z = downToU(path[i], z);
   }return z;
@@ -135,8 +131,8 @@ var downPath = /*#__PURE__*/infestines.curry(function (path, z) {
 var downMost = function downMost(head) {
   return function (z) {
     var focus = z.focus;
-    if (infestines.isObject(focus)) return downToU(head ? firstKey(focus) : lastKey(focus), z);
-    if (infestines.isArray(focus)) return downToU(head ? 0 : focus.length - 1, z);
+    if (isObject(focus)) return downToU(head ? firstKey(focus) : lastKey(focus), z);
+    if (isArray(focus)) return downToU(head ? 0 : focus.length - 1, z);
   };
 };
 
@@ -149,7 +145,7 @@ var left = function left(_ref2) {
       key = _ref2.key,
       right = _ref2.right,
       up = _ref2.up;
-  return left ? infestines.isNumber(key) ? zipper(left[0], left[1], key - 1, [right, focus], up) : zipper(left[0], left[1], left[2], [right, focus, key], up) : void 0;
+  return left ? isNumber(key) ? zipper(left[0], left[1], key - 1, [right, focus], up) : zipper(left[0], left[1], left[2], [right, focus, key], up) : void 0;
 };
 
 var right = function right(_ref3) {
@@ -158,7 +154,7 @@ var right = function right(_ref3) {
       key = _ref3.key,
       right = _ref3.right,
       up = _ref3.up;
-  return right ? infestines.isNumber(key) ? zipper([left, focus], right[1], key + 1, right[0], up) : zipper([left, focus, key], right[1], right[2], right[0], up) : void 0;
+  return right ? isNumber(key) ? zipper([left, focus], right[1], key + 1, right[0], up) : zipper([left, focus, key], right[1], right[2], right[0], up) : void 0;
 };
 
 function head(z) {
@@ -179,7 +175,7 @@ function fromZipper(z) {
 function queryMoveU(move, b, f, z) {
   var m = move(z);return m ? f(m) : b;
 }
-var queryMove = /*#__PURE__*/infestines.curry(queryMoveU);
+var queryMove = /*#__PURE__*/curry(queryMoveU);
 
 function bwd(move, z) {
   switch (move) {
@@ -196,10 +192,10 @@ function bwd(move, z) {
 
 var transformMoveU = function transformMoveU(move, f, z) {
   return queryMoveU(move, z, function (x) {
-    return queryMoveU(bwd(move, z), z, infestines.id, f(x));
+    return queryMoveU(bwd(move, z), z, id, f(x));
   }, z);
 };
-var transformMove = /*#__PURE__*/infestines.curry(transformMoveU);
+var transformMove = /*#__PURE__*/curry(transformMoveU);
 
 var everywhereG = function everywhereG(f) {
   return function (z) {
@@ -209,37 +205,15 @@ var everywhereG = function everywhereG(f) {
 var everywhereU = function everywhereU(f, z) {
   return modifyU(f, transformMoveU(downHead, everywhereG(f), z));
 };
-var everywhere = /*#__PURE__*/infestines.curry(everywhereU);
+var everywhere = /*#__PURE__*/curry(everywhereU);
 
 function pathOf(z) {
   var path = [];
-  while (z && infestines.isDefined(z.key)) {
+  while (z && isDefined(z.key)) {
     path.push(z.key);
     z = z.up;
   }
   return path.reverse();
 }
 
-exports.get = get;
-exports.keyOf = keyOf;
-exports.set = set;
-exports.modify = modify;
-exports.up = up;
-exports.downTo = downTo;
-exports.downPath = downPath;
-exports.downHead = downHead;
-exports.downLast = downLast;
-exports.left = left;
-exports.right = right;
-exports.head = head;
-exports.last = last;
-exports.toZipper = toZipper;
-exports.fromZipper = fromZipper;
-exports.queryMove = queryMove;
-exports.transformMove = transformMove;
-exports.everywhere = everywhere;
-exports.pathOf = pathOf;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+export { get, keyOf, set, modify, up, downTo, downPath, downHead, downLast, left, right, head, last, toZipper, fromZipper, queryMove, transformMove, everywhere, pathOf };
