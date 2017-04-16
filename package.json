@@ -1,6 +1,6 @@
 {
   "name": "fastener",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Zipper for manipulating JSON",
   "module": "dist/fastener.es.js",
   "main": "dist/fastener.cjs.js",
