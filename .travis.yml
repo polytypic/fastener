@@ -1,7 +1,10 @@
 language: node_js
+notifications:
+  email: false
+before_install: npm install npm@latest -g
 node_js:
-  - "4"
   - "6"
+  - "4"
   - "7"
 script:
   - npm run report-coverage

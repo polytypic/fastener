@@ -14,7 +14,7 @@
     "docs": "./scripts/generate-docs",
     "docs-bundle": "NODE_ENV=dev browserify -r ./dist/fastener.cjs:fastener -r ramda -r infestines -r babel-polyfill -g envify -g uglifyify | uglifyjs -m -c > docs/bundle.js",
     "lint": "eslint src test",
-    "prepublish": "npm run lint && npm run dist && npm run test",
+    "prepare": "npm run lint && npm run dist && npm run test",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "test": "nyc mocha"
   },
