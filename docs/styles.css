@@ -44,3 +44,119 @@
   filter: brightness(50%);
   opacity: 0.85;
 }
+
+.klipse-container {
+  display: none;
+}
+
+.preview-anchor {
+  position: relative;
+}
+
+.markdown-body div.preview {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 2px 4px 16px 0 rgba(0, 0, 0, 0.4);
+  padding: 0 1em;
+  bottom: 140%;
+  left: 50%;
+  width: 40em;
+  overflow: auto;
+  transform: translate(-20%, 0);
+  font-size: 90%;
+  z-index: 100;
+  color: rgb(51, 51, 51);
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.markdown-body div.preview * {
+  font-size: 90%;
+}
+
+.markdown-body a.preview-anchor:hover div.preview {
+  display: block;
+}
+
+.markdown-body table {
+  overflow: inherit;
+}
+
+.loading-message {
+  position: fixed;
+  display: block;
+  z-index: 100000;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background: #e77;
+  padding: 0.5em 1em;
+  color: white;
+  opacity: 0.9;
+  text-align: center;
+}
+
+.loading-hidden {
+  display: none;
+}
+
+.markdown-body .menu .menu-body {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: fixed;
+  display: flex;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: white;
+  z-index: 10000;
+  white-space: nowrap;
+  font-size: 90%;
+  max-width: 20px;
+  transition: all 250ms;
+  box-shadow: 2px 0 8px 0 rgba(0, 0, 0, 0.4);
+  background: #eee;
+  color: #000;
+}
+
+.markdown-body .menu.open .menu-body {
+  max-width: 100%;
+  background: #fff;
+  color: #333;
+}
+
+.markdown-body .menu .menu-side {
+  width: 20px;
+  min-width: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.markdown-body .menu .menu-overlay {
+  z-index: 1000;
+  position: fixed;
+  opacity: 0;
+  background: black;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transition: opacity 250ms;
+}
+
+.markdown-body .menu.open .menu-overlay {
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.markdown-body .menu .menu-contents {
+  padding-right: 1em;
+  overflow-y: scroll;
+}
+
+.markdown-body .menu .menu-contents ul {
+  list-style-type: none;
+  padding-left: 1em;
+}

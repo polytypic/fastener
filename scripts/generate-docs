@@ -2,7 +2,9 @@
 
 const title = "Try Fastener with KLIPSE"
 const icon = ""
-const blob = "https://github.com/polytypic/fastener/blob/master/"
+const github = "https://github.com/polytypic/fastener"
+const site = "https://polytypic.github.io/fastener/"
+const blob = `${github}/blob/master/`
 const hljsStyle = "googlecode"
 
 const I = require("infestines")
@@ -22,14 +24,20 @@ marked.setOptions({
   smartypants: false
 })
 
-const body = I.seq(fs.readFileSync("README.md"),
-                   R.toString,
-                   R.replace(/([^ ])\bconst\b/g, "$1var"),
-                   R.replace(/\/\/ .*/g, ""),
-                   R.replace(/\[([^\]]*)\]\(\.\/([^)]*)\)/g, `[$1](${blob}$2)`),
-                   marked,
-                   R.replace(/<code class="lang-([a-z]*)">/g,
-                             '<code class="hljs lang-$1\">'))
+const esc = R.replace(/[-\[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+
+const body = I.seq(
+  fs.readFileSync("README.md"),
+  R.toString,
+  R.replace(/([^ ])\bconst\b/g, "$1var"),
+  R.replace(/\/\/ .*/g, ""),
+  R.replace(/\[([^\]]*)\]\(\.\/([^)]*)\)/g, `[$1](${blob}$2)`),
+  R.replace(new RegExp(esc(`[▶](${site}#`) + "([a-zA-Z0-9-]*)" + esc(")"), "g"),
+            `[■](${github}#$1)`),
+  R.replace(new RegExp(esc(site), "g"), ""),
+  marked,
+  R.replace(/<code class="lang-([a-z]*)">/g,
+            '<code class="hljs lang-$1\">'))
 
 fs.writeFileSync("docs/index.html",
 `<!doctype html>
@@ -47,6 +55,19 @@ fs.writeFileSync("docs/index.html",
     <script type="text/javascript" src="start.js" async></script>
   </head>
   <body class="markdown-body">
+    <div class="loading-message">
+      Please wait... The interactive code snippets on this page take a moment to render.
+    </div>
+    <div class="menu">
+      <div class="menu-overlay"></div>
+      <div class="menu-body">
+        <div class="menu-side">
+          <div>≡</div>
+          <a id="to-top" href="#" onclick="">▲</a>
+        </div>
+        <div class="menu-contents"></div>
+      </div>
+    </div>
     <p>
       All the code snippets on this page are <b>live</b> and <b>interactive</b>
       powered by the <a href="https://github.com/viebel/klipse">klipse
@@ -54,5 +75,10 @@ fs.writeFileSync("docs/index.html",
     <p>
     <hr>
     ${body}
+    <div class="loading-hidden">
+      <pre><code class="hljs lang-js">document.querySelector('.loading-message').className = "loading-hidden"
+ga && ga('send', 'event', 'completed', 'load', Math.round((Date.now() - startTime)/1000))
+      </code></pre>
+    </div>
   </body>
 </html>`)
