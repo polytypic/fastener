@@ -13,6 +13,7 @@
     "dist:umd.min": "NODE_ENV=production rollup -c -n fastener -i src/fastener.js -f umd -o dist/fastener.min.js",
     "docs": "./scripts/generate-docs",
     "docs-bundle": "NODE_ENV=dev browserify -r ./dist/fastener.cjs:fastener -r ramda -r infestines -r babel-polyfill -g envify -g uglifyify | uglifyjs -m -c > docs/bundle.js",
+    "docs-watch": "watch-run -i -p README.md npm run docs",
     "lint": "eslint src test",
     "prepare": "npm run lint && npm run dist && npm run test",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
@@ -70,16 +71,17 @@
     "envify": "^4.0.0",
     "eslint": "^3.19.0",
     "marked": "^0.3.6",
-    "mocha": "^3.4.1",
+    "mocha": "^3.4.2",
     "nyc": "^10.3.2",
     "ramda": "^0.23.0",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^1.1.1",
-    "rollup-plugin-uglify": "^2.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
     "sprintf-js": "^1.1.0",
-    "uglify-js": "^3.0.9",
-    "uglifyify": "^3.0.4"
+    "uglify-js": "^3.0.11",
+    "uglifyify": "^3.0.4",
+    "watch-run": "^1.2.5"
   }
 }
