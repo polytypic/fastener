@@ -152,6 +152,16 @@ describe("pathOf", () => {
 })
 
 describe("transformMove", () => {
+  testEq(`seq(F.toZipper([[1, 2]]),
+              F.downPath([0, 0]),
+              F.transformMove(F.up, F.modify(xs => xs.slice().reverse())),
+              F.fromZipper)`,
+         [[2, 1]])
+  testEq(`seq(F.toZipper([1, 2]),
+              F.downTo(1),
+              F.transformMove(F.left, F.modify(x => x + 2)),
+              F.fromZipper)`,
+         [3, 2])
   testEq(`seq(F.toZipper({y: 1}),
               F.transformMove(F.downTo('y'), F.modify(x => x + 1)),
               F.fromZipper)`,
