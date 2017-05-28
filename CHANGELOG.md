@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+
+Changed default browser export name to `F` (previously `fastener`).
+
 ## 2.0.0
 
 Dropped Ramda dependency and added `infernals`.
