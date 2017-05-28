@@ -171,3 +171,16 @@ describe("transformMove", () => {
               F.fromZipper)`,
          {y: [1, {x: 3}]})
 })
+
+describe("remove", () => {
+  testEq(`seq(F.toZipper([1,2,3]),
+              F.downTo(1),
+              F.set(undefined),
+              F.fromZipper)`,
+         [1, 3])
+  testEq(`seq(F.toZipper({x:1,y:2,z:3}),
+              F.downTo("y"),
+              F.set(undefined),
+              F.fromZipper)`,
+         {x:1, z:3})
+})
