@@ -2,7 +2,6 @@
 
 const I = require("infestines")
 const F = require("../dist/fastener.min")
-const R = require("ramda")
 const sprintf = require("sprintf-js").sprintf
 
 const inc = x => typeof x === "number" ? x + 1 : x
@@ -23,16 +22,7 @@ const z0y = I.seq(nested,
 const Benchmark = require("benchmark")
 Benchmark.options.maxTime = Number(process.argv[2]) || Benchmark.options.maxTime
 
-R.forEach(bs => {
-  global.gc()
-  const s = new Benchmark.Suite()
-  bs.reverse().forEach(b => {
-    b = b.replace(/[ \n]+/g, " ")
-    s.add(b, eval("() => " + b))
-  })
-  s.on('complete', complete)
-  s.run()
-}, [
+;[
   [
     'F.pathOf(z0y)',
   ], [
@@ -46,17 +36,22 @@ R.forEach(bs => {
   ], [
     'F.fromZipper(F.everywhere(inc, F.toZipper(vs1000)))',
   ]
-])
+].forEach(bs => {
+  global.gc()
+  const s = new Benchmark.Suite()
+  bs.reverse().forEach(b => {
+    b = b.replace(/[ \n]+/g, " ")
+    s.add(b, eval("() => " + b))
+  })
+  s.on('complete', complete)
+  s.run()
+})
 
 function complete() {
-  const bs = I.seq(this,
-                   R.values,
-                   R.filter(R.is(Benchmark)),
-                   R.sortBy(R.prop("hz")),
-                   R.reverse)
-  const fastest = I.seq(bs,
-                        R.map(R.prop("hz")),
-                        R.reduce(R.max, 0))
+  const bs = I.values(this)
+     .filter(x => x instanceof Benchmark)
+     .sort((l, r) => l.hz < r.hz ? 1 : l.hz > r.hz ? -1 : 0)
+  const fastest = bs.map(x => x.hz).reduce((x, y) => Math.max(x, y), 0)
   bs.forEach(b => {
     console.log(sprintf('%12s/s %7.2fx  %s',
                         Math.round(b.hz).toLocaleString(),
