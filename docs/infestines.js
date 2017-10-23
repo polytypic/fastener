@@ -1,0 +1,448 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.I = {})));
+}(this, (function (exports) { 'use strict';
+
+var ary1of2 = function ary1of2(fn) {
+  return function (x0, x1) {
+    return arguments.length < 2 ? fn(x0) : fn(x0)(x1);
+  };
+};
+
+var ary2of2 = function ary2of2(fn) {
+  return function (x0, x1) {
+    return arguments.length < 2 ? function (x1) {
+      return fn(x0, x1);
+    } : fn(x0, x1);
+  };
+};
+
+var ary1of3 = function ary1of3(fn) {
+  return function (x0, x1, x2) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return curryN(2, fn(x0));
+      case 2:
+        return curryN(2, fn(x0))(x1);
+      default:
+        return curryN(2, fn(x0))(x1, x2);
+    }
+  };
+};
+
+var ary2of3 = function ary2of3(fn) {
+  return function (x0, x1, x2) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return ary1of2(function (x1) {
+          return fn(x0, x1);
+        });
+      case 2:
+        return fn(x0, x1);
+      default:
+        return fn(x0, x1)(x2);
+    }
+  };
+};
+
+var ary3of3 = function ary3of3(fn) {
+  return function (x0, x1, x2) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return ary2of2(function (x1, x2) {
+          return fn(x0, x1, x2);
+        });
+      case 2:
+        return function (x2) {
+          return fn(x0, x1, x2);
+        };
+      default:
+        return fn(x0, x1, x2);
+    }
+  };
+};
+
+var ary1of4 = function ary1of4(fn) {
+  return function (x0, x1, x2, x3) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return curryN(3, fn(x0));
+      case 2:
+        return curryN(3, fn(x0))(x1);
+      case 3:
+        return curryN(3, fn(x0))(x1, x2);
+      default:
+        return curryN(3, fn(x0))(x1, x2, x3);
+    }
+  };
+};
+
+var ary2of4 = function ary2of4(fn) {
+  return function (x0, x1, x2, x3) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return ary1of3(function (x1) {
+          return fn(x0, x1);
+        });
+      case 2:
+        return curryN(2, fn(x0, x1));
+      case 3:
+        return curryN(2, fn(x0, x1))(x2);
+      default:
+        return curryN(2, fn(x0, x1))(x2, x3);
+    }
+  };
+};
+
+var ary3of4 = function ary3of4(fn) {
+  return function (x0, x1, x2, x3) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return ary2of3(function (x1, x2) {
+          return fn(x0, x1, x2);
+        });
+      case 2:
+        return ary1of2(function (x2) {
+          return fn(x0, x1, x2);
+        });
+      case 3:
+        return fn(x0, x1, x2);
+      default:
+        return fn(x0, x1, x2)(x3);
+    }
+  };
+};
+
+var ary4of4 = function ary4of4(fn) {
+  return function (x0, x1, x2, x3) {
+    switch (arguments.length) {
+      case 0:
+      case 1:
+        return ary3of3(function (x1, x2, x3) {
+          return fn(x0, x1, x2, x3);
+        });
+      case 2:
+        return ary2of2(function (x2, x3) {
+          return fn(x0, x1, x2, x3);
+        });
+      case 3:
+        return function (x3) {
+          return fn(x0, x1, x2, x3);
+        };
+      default:
+        return fn(x0, x1, x2, x3);
+    }
+  };
+};
+
+var ary0of0 = function ary0of0(fn) {
+  return fn.length === 0 ? fn : function () {
+    return fn();
+  };
+};
+var ary1of1 = function ary1of1(fn) {
+  return fn.length === 1 ? fn : function (x) {
+    return fn(x);
+  };
+};
+
+var C = [[ary0of0], [ary1of1, ary1of1], [void 0, ary1of2, ary2of2], [void 0, ary1of3, ary2of3, ary3of3], [void 0, ary1of4, ary2of4, ary3of4, ary4of4]];
+
+var curryN = function curryN(n, f) {
+  return C[n][Math.min(n, f.length)](f);
+};
+var arityN = function arityN(n, f) {
+  return C[n][n](f);
+};
+var curry = function curry(f) {
+  return arityN(f.length, f);
+};
+
+//
+
+var assign = Object.assign;
+
+var toObject = function toObject(x) {
+  return assign({}, x);
+};
+
+//
+
+var id = function id(x) {
+  return x;
+};
+var always = function always(x) {
+  return function (_) {
+    return x;
+  };
+};
+var applyU = function applyU(x2y, x) {
+  return x2y(x);
+};
+var sndU = function sndU(_, y) {
+  return y;
+};
+
+//
+
+var freeze = function freeze(x) {
+  return x && Object.freeze(x);
+};
+
+var array0 = /*#__PURE__*/freeze([]);
+var object0 = /*#__PURE__*/freeze({});
+
+//
+
+var isDefined = function isDefined(x) {
+  return void 0 !== x;
+};
+
+//
+
+var hasU = function hasU(p, x) {
+  return Object.prototype.hasOwnProperty.call(x, p);
+};
+
+//
+
+var constructorOf = function constructorOf(x) {
+  return x === undefined || x === null ? x : (hasU("constructor", x) ? Object.getPrototypeOf(x) : x).constructor;
+};
+
+//
+
+var isFunction = function isFunction(x) {
+  return typeof x === "function";
+};
+var isString = function isString(x) {
+  return typeof x === "string";
+};
+var isNumber = function isNumber(x) {
+  return typeof x === "number";
+};
+
+var isArray = Array.isArray;
+
+var isObject = function isObject(x) {
+  return x ? Object === constructorOf(x) : false;
+};
+
+//
+
+function pipe2U(fn1, fn2) {
+  var n = fn1.length;
+  return n === 1 ? function (x) {
+    return fn2(fn1(x));
+  } : arityN(n, function () {
+    return fn2(fn1.apply(undefined, arguments));
+  });
+}
+
+var compose2U = function compose2U(fn1, fn2) {
+  return pipe2U(fn2, fn1);
+};
+
+//
+
+function seq(x) {
+  for (var _len = arguments.length, fns = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    fns[_key - 1] = arguments[_key];
+  }
+
+  for (var i = 0, n = fns.length; i < n; ++i) {
+    x = fns[i](x);
+  }return x;
+}
+
+function seqPartial(x) {
+  for (var _len2 = arguments.length, fns = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    fns[_key2 - 1] = arguments[_key2];
+  }
+
+  for (var i = 0, n = fns.length; isDefined(x) && i < n; ++i) {
+    x = fns[i](x);
+  }return x;
+}
+
+//
+
+var identicalU = function identicalU(a, b) {
+  return a === b && (a !== 0 || 1 / a === 1 / b) || a !== a && b !== b;
+};
+
+//
+
+function whereEqU(t, o) {
+  for (var k in t) {
+    var bk = o[k];
+    if (!isDefined(bk) && !hasU(k, o) || !acyclicEqualsU(t[k], bk)) return false;
+  }
+  return true;
+}
+
+//
+
+function hasKeysOfU(t, o) {
+  for (var k in t) {
+    if (!hasU(k, o)) return false;
+  }return true;
+}
+
+//
+
+var acyclicEqualsObject = function acyclicEqualsObject(a, b) {
+  return whereEqU(a, b) && hasKeysOfU(b, a);
+};
+
+function acyclicEqualsArray(a, b) {
+  var n = a.length;
+  if (n !== b.length) return false;
+  for (var i = 0; i < n; ++i) {
+    if (!acyclicEqualsU(a[i], b[i])) return false;
+  }return true;
+}
+
+function acyclicEqualsU(a, b) {
+  if (identicalU(a, b)) return true;
+  if (!a || !b) return false;
+  var c = constructorOf(a);
+  if (c !== constructorOf(b)) return false;
+  switch (c) {
+    case Array:
+      return acyclicEqualsArray(a, b);
+    case Object:
+      return acyclicEqualsObject(a, b);
+    default:
+      return isFunction(a.equals) && a.equals(b);
+  }
+}
+
+//
+
+function unzipObjIntoU(o, ks, vs) {
+  for (var k in o) {
+    if (ks) ks.push(k);
+    if (vs) vs.push(o[k]);
+  }
+}
+
+function keys(o) {
+  if (o instanceof Object) {
+    if (Object === constructorOf(o)) {
+      var ks = [];
+      unzipObjIntoU(o, ks, 0);
+      return ks;
+    } else {
+      return Object.keys(o);
+    }
+  }
+}
+
+function values(o) {
+  if (o instanceof Object) {
+    if (Object === constructorOf(o)) {
+      var vs = [];
+      unzipObjIntoU(o, 0, vs);
+      return vs;
+    } else {
+      var xs = Object.keys(o),
+          n = xs.length;
+      for (var i = 0; i < n; ++i) {
+        xs[i] = o[xs[i]];
+      }return xs;
+    }
+  }
+}
+
+//
+
+function assocPartialU(k, v, o) {
+  var r = {};
+  if (o instanceof Object) {
+    if (Object !== constructorOf(o)) o = toObject(o);
+    for (var l in o) {
+      if (l !== k) {
+        r[l] = o[l];
+      } else {
+        r[k] = v;
+        k = void 0;
+      }
+    }
+  }
+  if (isDefined(k)) r[k] = v;
+  return r;
+}
+
+function dissocPartialU(k, o) {
+  var r = void 0;
+  if (o instanceof Object) {
+    if (Object !== constructorOf(o)) o = toObject(o);
+    for (var l in o) {
+      if (l !== k) {
+        if (!r) r = {};
+        r[l] = o[l];
+      } else {
+        k = void 0;
+      }
+    }
+  }
+  return r;
+}
+
+//
+
+function inherit(Derived, Base, protos, statics) {
+  var proto = Derived.prototype = Object.create(Base.prototype);
+  proto.constructor = Derived;
+  assign(proto, protos);
+  assign(Derived, statics);
+  return Derived;
+}
+
+exports.curryN = curryN;
+exports.arityN = arityN;
+exports.curry = curry;
+exports.assign = assign;
+exports.toObject = toObject;
+exports.id = id;
+exports.always = always;
+exports.applyU = applyU;
+exports.sndU = sndU;
+exports.freeze = freeze;
+exports.array0 = array0;
+exports.object0 = object0;
+exports.isDefined = isDefined;
+exports.hasU = hasU;
+exports.constructorOf = constructorOf;
+exports.isFunction = isFunction;
+exports.isString = isString;
+exports.isNumber = isNumber;
+exports.isArray = isArray;
+exports.isObject = isObject;
+exports.pipe2U = pipe2U;
+exports.compose2U = compose2U;
+exports.seq = seq;
+exports.seqPartial = seqPartial;
+exports.identicalU = identicalU;
+exports.whereEqU = whereEqU;
+exports.hasKeysOfU = hasKeysOfU;
+exports.acyclicEqualsObject = acyclicEqualsObject;
+exports.acyclicEqualsU = acyclicEqualsU;
+exports.unzipObjIntoU = unzipObjIntoU;
+exports.keys = keys;
+exports.values = values;
+exports.assocPartialU = assocPartialU;
+exports.dissocPartialU = dissocPartialU;
+exports.inherit = inherit;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

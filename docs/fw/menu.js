@@ -1,4 +1,6 @@
 (function () {
+  'use strict'
+
   function removeIds(elem) {
     elem.removeAttribute("id")
     for (var i=0, n=elem.childElementCount; i < n; ++i)
@@ -14,6 +16,9 @@
     if (!menuContents)
       return
     var contents = document.querySelector("#contents")
+    if (!contents)
+      return
+    contents = contents.parentNode
     if (!contents)
       return
     var tree = contents.nextElementSibling
