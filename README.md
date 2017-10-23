@@ -1,4 +1,4 @@
-# <a id="fastener"></a> Fastener &middot; [![GitHub stars](https://img.shields.io/github/stars/polytypic/fastener.svg?style=social)](https://github.com/polytypic/fastener) [![npm](https://img.shields.io/npm/dm/fastener.svg)](https://www.npmjs.com/package/fastener)
+# <a id="fastener"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#) Fastener &middot; [![GitHub stars](https://img.shields.io/github/stars/polytypic/fastener.svg?style=social)](https://github.com/polytypic/fastener) [![npm](https://img.shields.io/npm/dm/fastener.svg)](https://www.npmjs.com/package/fastener)
 
 [Zippers](https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf) are
 a powerful abstraction for *implementing* arbitrary queries and transforms on
@@ -12,7 +12,7 @@ manipulating JSON data.
 [![Code Coverage](https://img.shields.io/codecov/c/github/polytypic/fastener/master.svg)](https://codecov.io/github/polytypic/fastener?branch=master)
 [![](https://david-dm.org/polytypic/fastener.svg)](https://david-dm.org/polytypic/fastener) [![](https://david-dm.org/polytypic/fastener/dev-status.svg)](https://david-dm.org/polytypic/fastener?type=dev)
 
-## Contents
+## <a id="contents"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#contents) Contents
 
 * [Tutorial](#tutorial)
 * [Reference](#reference)
@@ -45,7 +45,7 @@ manipulating JSON data.
     * [`F.everywhere(json => json, zipper) ~> zipper`](#F-everywhere "F.everywhere: (JSON -> JSON) -> Zipper -> Zipper")
 * [Related Work](#related-work)
 
-## Tutorial
+## <a id="tutorial"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#tutorial) Tutorial
 
 Playing with zippers in a REPL can be very instructive.  First we require the
 libraries
@@ -269,7 +269,7 @@ implement arbitrary transforms on data structures.  This can also make them more
 difficult to compose and reason about than more limited approaches such as
 [lenses](https://github.com/calmm-js/partial.lenses).
 
-## Reference
+## <a id="reference"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#reference) Reference
 
 The zipper combinators are available as named imports.  Typically one just
 imports the library as:
@@ -287,7 +287,7 @@ const seq = (x, ...fs) => R.reduce((x, f) => f(x), x, fs)
 written using [`reduce`](http://ramdajs.com/0.21.0/docs/#reduce) that allows one
 to express a sequence of operations to perform starting from a given value.
 
-### Introduction and Elimination
+### <a id="introduction-and-elimination"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#introduction-and-elimination) Introduction and Elimination
 
 #### <a id="F-toZipper"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#F-toZipper) [`F.toZipper(json) ~> zipper`](#F-toZipper "F.toZipper: JSON -> Zipper")
 
@@ -318,7 +318,7 @@ seq(F.toZipper([1,2,3]),
 // [ 2, 2, 3 ]
 ```
 
-### Focus
+### <a id="focus"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#focus) Focus
 
 Focus combinators allow one to inspect and modify the element that a zipper is
 focused on.
@@ -371,12 +371,12 @@ seq(F.toZipper(["a","b","c"]),
 // [ 'a', 'lol', 'c' ]
 ```
 
-### Movement
+### <a id="movement"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#movement) Movement
 
 Movement combinators can be applied to any zipper, but they return `undefined`
 in case of illegal moves.
 
-#### Parent-Child movement
+#### <a id="parent-child-movement"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#parent-child-movement) Parent-Child movement
 
 Parent-Child movement is moving the focus between a parent object or array and a
 child element of said parent.
@@ -406,7 +406,7 @@ zipper is currently focused on.
 `F.up(zipper)` moves the focus from an array element or object property to the
 containing array or object.
 
-#### Path movement
+#### <a id="path-movement"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#path-movement) Path movement
 
 Path movement is moving the focus along a path from a parent object or array to
 a nested child element.
@@ -420,7 +420,7 @@ a nested child element.
 `F.pathOf(zipper)` returns the path from the root to the current element focused
 on by the zipper.
 
-#### Sibling movement
+#### <a id="sibling-movement"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#sibling-movement) Sibling movement
 
 Sibling movement is moving the focus between the elements of an array or an object.
 
@@ -440,7 +440,7 @@ Sibling movement is moving the focus between the elements of an array or an obje
 
 `F.right(zipper)` moves the focus to the element on the right of the current focus.
 
-### Queries
+### <a id="queries"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#queries) Queries
 
 #### <a id="F-queryMove"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#F-queryMove) [`F.queryMove(zipper => maybeZipper, value, zipper => value, zipper) ~> value`](#F-queryMove "F.queryMove: (Zipper -> Maybe Zipper) -> a -> (Zipper -> a) -> Zipper -> a")
 
@@ -461,7 +461,7 @@ seq(F.toZipper({y: 1}),
 // true
 ```
 
-### Transforms
+### <a id="transforms"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#transforms) Transforms
 
 #### <a id="F-transformMove"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#F-transformMove) [`F.transformMove(move, zipper => zipper, zipper) ~> zipper`](#F-transformMove "F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -> (Zipper -> Zipper) -> Zipper -> Zipper")
 
@@ -506,7 +506,7 @@ seq(F.toZipper({foo: 1,
 // { foo: 2, bar: [ { lol: 'bal', example: 3 } ] }
 ```
 
-## Related Work
+## <a id="related-work"></a> [≡](#contents) [▶](https://polytypic.github.io/fastener/#related-work) Related Work
 
 While the implementation is very different, the choice of combinators is based
 on Michael D. Adams' paper
