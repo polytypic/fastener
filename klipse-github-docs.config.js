@@ -8,7 +8,7 @@
     'https://unpkg.com/ramda/dist/ramda.min.js'
   ],
   source: 'README.md',
-  target: 'docs/index.html',
+  target: 'index.html',
   title: 'Fastener',
   stripComments: true,
   constToVar: true,
