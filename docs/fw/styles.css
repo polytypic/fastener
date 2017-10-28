@@ -80,7 +80,7 @@
   position: relative;
 }
 
-.markdown-body div.preview {
+.preview {
   display: none;
   position: absolute;
   background-color: white;
@@ -91,19 +91,16 @@
   left: 50%;
   width: 40em;
   overflow: auto;
-  transform: translate(-20%, 0);
+  transform: translate(-25%, 0);
   font-size: 90%;
-  z-index: 100;
+  z-index: 100000;
   color: rgb(51, 51, 51);
   font-weight: normal;
   line-height: 1.5;
+  white-space: normal;
 }
 
-.markdown-body div.preview * {
-  font-size: 90%;
-}
-
-.markdown-body a.preview-anchor:hover div.preview {
+.preview-anchor:hover .preview {
   display: block;
 }
 
@@ -129,38 +126,43 @@
   display: none;
 }
 
-.markdown-body .menu .menu-body {
+.menu .menu-body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
   position: fixed;
   display: flex;
   left: 0;
   top: 0;
   height: 100%;
-  background: white;
   z-index: 10000;
   white-space: nowrap;
   font-size: 90%;
+  min-width: 20px;
   max-width: 20px;
   transition: all 250ms;
   box-shadow: 2px 0 8px 0 rgba(0, 0, 0, 0.4);
   background: #eee;
   color: #000;
+  overflow-y: scroll;
 }
 
-.markdown-body .menu.open .menu-body {
+.menu.open .menu-body {
+  min-width: 40%;
   max-width: 100%;
   background: #fff;
   color: #333;
 }
 
-.markdown-body .menu .menu-side {
+.menu .menu-side {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 20px;
-  min-width: 20px;
   text-align: center;
   cursor: pointer;
 }
 
-.markdown-body .menu .menu-overlay {
+.menu .menu-overlay {
   z-index: 1000;
   position: fixed;
   opacity: 0;
@@ -172,18 +174,23 @@
   transition: opacity 250ms;
 }
 
-.markdown-body .menu.open .menu-overlay {
+.menu.open .menu-overlay {
   width: 100%;
   height: 100%;
   opacity: 0.5;
 }
 
-.markdown-body .menu .menu-contents {
-  padding-right: 1em;
-  overflow-y: scroll;
+.menu .menu-contents {
+  display: none;
+  padding: 0 2em 0 20px;
 }
 
-.markdown-body .menu .menu-contents ul {
+.menu.open .menu-contents {
+  display: block;
+  margin-top: 1em;
+}
+
+.menu .menu-contents ul {
   list-style-type: none;
   padding-left: 1em;
 }

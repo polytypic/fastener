@@ -65,8 +65,8 @@
     "babel-register": "^6.26.0",
     "benchmark": "^2.1.4",
     "codecov": "^3.0.0",
-    "eslint": "^4.9.0",
-    "klipse-github-docs-generator": "^0.2.0",
+    "eslint": "^4.10.0",
+    "klipse-github-docs-generator": "^0.2.4",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "rollup": "^0.50.0",
@@ -75,7 +75,7 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "sprintf-js": "^1.1.1",
-    "uglify-js": "^3.1.5",
+    "uglify-js": "^3.1.6",
     "watch-run": "^1.2.5"
   }
 }
