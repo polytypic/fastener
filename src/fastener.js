@@ -8,19 +8,17 @@ import {
   isNumber,
   isObject,
   isString
-} from "infestines"
+} from 'infestines'
 
 //
 
 function firstKey(o) {
-  for (const k in o)
-    return k
+  for (const k in o) return k
 }
 
 function lastKey(o) {
   let key
-  for (const k in o)
-    key = k
+  for (const k in o) key = k
   return key
 }
 
@@ -37,9 +35,8 @@ function reverse(from) {
 
 //
 
-const zipper = (left, focus, key, right, up) => isDefined(up)
-  ? {left, focus, key, right, up}
-  : {left, focus, key, right}
+const zipper = (left, focus, key, right, up) =>
+  isDefined(up) ? { left, focus, key, right, up } : { left, focus, key, right }
 
 //
 
@@ -55,13 +52,9 @@ function fromObject(object, key, up) {
   let right = null
   let focus
   for (const k in object)
-    if (isDefined(focus))
-      right = [right, object[k], k]
-    else
-      if (key === k)
-        focus = object[k]
-      else
-        left = [left, object[k], k]
+    if (isDefined(focus)) right = [right, object[k], k]
+    else if (key === k) focus = object[k]
+    else left = [left, object[k], k]
   return zipper(left, focus, key, reverse(right), up)
 }
 
@@ -77,10 +70,8 @@ function intoArray(list, array) {
 function fromArray(array, key, up) {
   let left = null
   let right = null
-  for (let i=0; i<key; ++i)
-    left = [left, array[i]]
-  for (let i=array.length-1; key < i; --i)
-    right = [right, array[i]]
+  for (let i = 0; i < key; ++i) left = [left, array[i]]
+  for (let i = array.length - 1; key < i; --i) right = [right, array[i]]
   return zipper(left, array[key], key, right, up)
 }
 
@@ -89,29 +80,27 @@ function fromArray(array, key, up) {
 export const get = z => z.focus
 export const keyOf = z => z.key
 
-const setU = (focus, z) => assocPartialU("focus", focus, z)
+const setU = (focus, z) => assocPartialU('focus', focus, z)
 export const set = curry(setU)
 
 const modifyU = (f, z) => setU(f(get(z)), z)
 export const modify = curry(modifyU)
 
-export function up({left, focus, key, right, up}) {
+export function up({ left, focus, key, right, up }) {
   switch (typeof key) {
-    case "number": {
+    case 'number': {
       const array = []
       intoArray(reverse(left), array)
-      if (isDefined(focus))
-        array.push(focus)
+      if (isDefined(focus)) array.push(focus)
       intoArray(right, array)
-      return assocPartialU("focus", array, up)
+      return assocPartialU('focus', array, up)
     }
-    case "string": {
+    case 'string': {
       const object = {}
       intoObject(reverse(left), object)
-      if (isDefined(focus))
-        object[key] = focus
+      if (isDefined(focus)) object[key] = focus
       intoObject(right, object)
-      return assocPartialU("focus", object, up)
+      return assocPartialU('focus', object, up)
     }
   }
 }
@@ -119,15 +108,14 @@ export function up({left, focus, key, right, up}) {
 function downToU(key, z) {
   const focus = z.focus
   if (isObject(focus) && isString(key) && key in focus)
-    return fromObject(focus, key, dissocPartialU("focus", z))
+    return fromObject(focus, key, dissocPartialU('focus', z))
   if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length)
-    return fromArray(focus, key, dissocPartialU("focus", z))
+    return fromArray(focus, key, dissocPartialU('focus', z))
 }
 export const downTo = curry(downToU)
 
 export const downPath = curry((path, z) => {
-  for (let i=0, n=path.length; z && i<n; ++i)
-    z = downToU(path[i], z)
+  for (let i = 0, n = path.length; z && i < n; ++i) z = downToU(path[i], z)
   return z
 })
 
@@ -135,43 +123,58 @@ const downMost = head => z => {
   const focus = z.focus
   if (isObject(focus))
     return downToU(head ? firstKey(focus) : lastKey(focus), z)
-  if (isArray(focus))
-    return downToU(head ? 0 : focus.length-1, z)
+  if (isArray(focus)) return downToU(head ? 0 : focus.length - 1, z)
 }
 
 export const downHead = downMost(true)
 export const downLast = downMost(false)
 
-export const left = ({left, focus, key, right, up}) =>
+export const left = ({ left, focus, key, right, up }) =>
   left
-  ? isNumber(key)
-    ? zipper(left[0], left[1], key-1,   [right, focus], up)
-    : zipper(left[0], left[1], left[2], [right, focus, key], up)
-  : void 0
+    ? isNumber(key)
+      ? zipper(left[0], left[1], key - 1, [right, focus], up)
+      : zipper(left[0], left[1], left[2], [right, focus, key], up)
+    : void 0
 
-export const right = ({left, focus, key, right, up}) =>
+export const right = ({ left, focus, key, right, up }) =>
   right
-  ? isNumber(key)
-    ? zipper([left, focus],      right[1], key+1,    right[0], up)
-    : zipper([left, focus, key], right[1], right[2], right[0], up)
-  : void 0
+    ? isNumber(key)
+      ? zipper([left, focus], right[1], key + 1, right[0], up)
+      : zipper([left, focus, key], right[1], right[2], right[0], up)
+    : void 0
 
-export function head(z) {const u = up(z); return u && downHead(u)}
-export function last(z) {const u = up(z); return u && downLast(u)}
+export function head(z) {
+  const u = up(z)
+  return u && downHead(u)
+}
+export function last(z) {
+  const u = up(z)
+  return u && downLast(u)
+}
 
-export const toZipper = focus => ({focus})
+export const toZipper = focus => ({ focus })
 
-export function fromZipper(z) {const u=up(z); return u ? fromZipper(u) : get(z)}
+export function fromZipper(z) {
+  const u = up(z)
+  return u ? fromZipper(u) : get(z)
+}
 
-function queryMoveU(move, b, f, z) {const m = move(z); return m ? f(m) : b}
+function queryMoveU(move, b, f, z) {
+  const m = move(z)
+  return m ? f(m) : b
+}
 export const queryMove = curry(queryMoveU)
 
 function bwd(move, z) {
   switch (move) {
-    case left: return right
-    case right: return left
-    case up: return downTo(keyOf(z))
-    default: return up
+    case left:
+      return right
+    case right:
+      return left
+    case up:
+      return downTo(keyOf(z))
+    default:
+      return up
   }
 }
 
