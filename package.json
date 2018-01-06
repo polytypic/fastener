@@ -42,6 +42,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.1.2",
+    "babel-plugin-annotate-pure-calls": "^0.2.2",
     "babel-plugin-check-es2015-constants": "^6.22.0",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
     "babel-plugin-transform-es2015-block-scoped-functions": "^6.22.0",
@@ -69,7 +70,7 @@
     "klipse-github-docs-generator": "^0.3.1",
     "mocha": "^4.1.0",
     "nyc": "^11.4.1",
-    "rollup": "^0.53.2",
+    "rollup": "^0.53.3",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",

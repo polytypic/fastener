@@ -90,10 +90,10 @@ export const get = z => z.focus
 export const keyOf = z => z.key
 
 const setU = (focus, z) => assocPartialU("focus", focus, z)
-export const set = /*#__PURE__*/curry(setU)
+export const set = curry(setU)
 
 const modifyU = (f, z) => setU(f(get(z)), z)
-export const modify = /*#__PURE__*/curry(modifyU)
+export const modify = curry(modifyU)
 
 export function up({left, focus, key, right, up}) {
   switch (typeof key) {
@@ -123,9 +123,9 @@ function downToU(key, z) {
   if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length)
     return fromArray(focus, key, dissocPartialU("focus", z))
 }
-export const downTo = /*#__PURE__*/curry(downToU)
+export const downTo = curry(downToU)
 
-export const downPath = /*#__PURE__*/curry((path, z) => {
+export const downPath = curry((path, z) => {
   for (let i=0, n=path.length; z && i<n; ++i)
     z = downToU(path[i], z)
   return z
@@ -139,8 +139,8 @@ const downMost = head => z => {
     return downToU(head ? 0 : focus.length-1, z)
 }
 
-export const downHead = /*#__PURE__*/downMost(true)
-export const downLast = /*#__PURE__*/downMost(false)
+export const downHead = downMost(true)
+export const downLast = downMost(false)
 
 export const left = ({left, focus, key, right, up}) =>
   left
@@ -164,7 +164,7 @@ export const toZipper = focus => ({focus})
 export function fromZipper(z) {const u=up(z); return u ? fromZipper(u) : get(z)}
 
 function queryMoveU(move, b, f, z) {const m = move(z); return m ? f(m) : b}
-export const queryMove = /*#__PURE__*/curry(queryMoveU)
+export const queryMove = curry(queryMoveU)
 
 function bwd(move, z) {
   switch (move) {
@@ -177,13 +177,13 @@ function bwd(move, z) {
 
 const transformMoveU = (move, f, z) =>
   queryMoveU(move, z, x => queryMoveU(bwd(move, z), z, id, f(x)), z)
-export const transformMove = /*#__PURE__*/curry(transformMoveU)
+export const transformMove = curry(transformMoveU)
 
 const everywhereG = f => z =>
   transformMoveU(right, everywhereG(f), everywhereU(f, z))
 const everywhereU = (f, z) =>
   modifyU(f, transformMoveU(downHead, everywhereG(f), z))
-export const everywhere = /*#__PURE__*/curry(everywhereU)
+export const everywhere = curry(everywhereU)
 
 export function pathOf(z) {
   const path = []
