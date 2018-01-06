@@ -115,7 +115,7 @@ describe('everywhere', () => {
   testEq({ foo: [2, { y: 3 }, 4], bar: 1 }, () =>
     I.seq(
       F.toZipper({ foo: [1, { y: 2 }, 3], bar: 0 }),
-      F.everywhere(x => (typeof x == 'number' ? x + 1 : x)),
+      F.everywhere(x => (I.isNumber(x) ? x + 1 : x)),
       F.fromZipper
     )
   )
