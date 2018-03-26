@@ -107,6 +107,7 @@ of operations on a value:</p>
 </code></pre>
 <p>First we just create a zipper using <a href="#F-toZipper"><code>F.toZipper</code></a>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data))
+
 </code></pre>
 <p>As can be seen, <strong><em>the zipper is just a simple JSON object</em></strong> and the <code>focus</code> is
 the <code>data</code> object that we gave to <a href="#F-toZipper"><code>F.toZipper</code></a>.  As long the data
@@ -117,24 +118,28 @@ operate on zippers rather than rely on their exact format.</p>
 <a href="#F-downTo"><code>F.downTo</code></a>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
     F.downTo(&#39;contents&#39;))
+
 </code></pre>
 <p>As seen above, the <code>focus</code> now has the <code>contents</code> array.  We can use
 <a href="#F-get"><code>F.get</code></a> to extract the value under focus:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
     F.downTo(&#39;contents&#39;),
     F.get)
+
 </code></pre>
 <p>Then we move into the first element of <code>contents</code> using
 <a href="#F-downHead"><code>F.downHead</code></a>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
     F.downTo(&#39;contents&#39;),
     F.downHead)
+
 </code></pre>
 <p>And continue into the first property of that which happens to be the <code>language</code>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
     F.downTo(&#39;contents&#39;),
     F.downHead,
     F.downHead)
+
 </code></pre>
 <p>And to the next property, <code>title</code>, using <a href="#F-right"><code>F.right</code></a>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
@@ -142,6 +147,7 @@ operate on zippers rather than rely on their exact format.</p>
     F.downHead,
     F.downHead,
     F.right)
+
 </code></pre>
 <p>Let&#39;s then use <a href="#F-modify"><code>F.modify</code></a> to modify the <code>title</code>:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(data),
@@ -150,6 +156,7 @@ operate on zippers rather than rely on their exact format.</p>
     F.downHead,
     F.right,
     F.modify(t =&gt; &quot;The &quot; + t))
+
 </code></pre>
 <p>When we now move outwards using <a href="#F-up"><code>F.up</code></a> we can see the changed title
 become part of the data:</p>
@@ -160,6 +167,7 @@ become part of the data:</p>
     F.right,
     F.modify(t =&gt; &quot;The &quot; + t),
     F.up)
+
 </code></pre>
 <p>We can also just move back to the root and get the updated data structure using
 <a href="#F-fromZipper"><code>F.fromZipper</code></a>:</p>
@@ -170,6 +178,7 @@ become part of the data:</p>
     F.right,
     F.modify(t =&gt; &quot;The &quot; + t),
     F.fromZipper)
+
 </code></pre>
 <p>The above hopefully helped to understand how zippers work.  However, it is
 important to realize that one typically does not use zipper combinators to
@@ -203,6 +212,7 @@ like <code>data</code>, tries to focus on the <code>text</code> element of an ob
     textIn(&quot;en&quot;),
     F.modify(x =&gt; &#39;The &#39; + x),
     F.fromZipper)
+
 </code></pre>
 <p>Of course, this just scratches the surface.  Zippers are powerful enough to
 implement arbitrary transforms on data structures.  This can also make them more
@@ -227,6 +237,7 @@ JSON object.</p>
     F.downHead,
     F.modify(x =&gt; x + 1),
     F.fromZipper)
+
 </code></pre>
 <h4><a id="F-fromZipper"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-fromZipper">■</a> <a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper) ~&gt; json</code></a></h4>
 <p><code>F.fromZipper(zipper)</code> extracts the modified JSON object from the given zipper.</p>
@@ -235,6 +246,7 @@ JSON object.</p>
     F.downHead,
     F.modify(x =&gt; x + 1),
     F.fromZipper)
+
 </code></pre>
 <h3><a id="focus"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#focus">■</a> Focus</h3>
 <p>Focus combinators allow one to inspect and modify the element that a zipper is
@@ -243,10 +255,12 @@ focused on.</p>
 <p><code>F.get(zipper)</code> returns the element that the zipper is focused on.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(1), F.get)
+
 </code></pre>
 <pre><code class="hljs lang-js">seq(F.toZipper([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]),
     F.downTo(2),
     F.get)
+
 </code></pre>
 <h4><a id="F-modify"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-modify">■</a> <a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.modify(fn, zipper)</code> is equivalent to <code>F.set(fn(F.get(zipper)), zipper)</code> and
@@ -257,6 +271,7 @@ the given function for the element.</p>
     F.downTo(2),
     F.modify(x =&gt; x + x),
     F.fromZipper)
+
 </code></pre>
 <h4><a id="F-set"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-set">■</a> <a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.set(json, zipper)</code> replaces the element that the zipper is focused on with
@@ -266,6 +281,7 @@ the given value.</p>
     F.downTo(1),
     F.set(&#39;lol&#39;),
     F.fromZipper)
+
 </code></pre>
 <h3><a id="movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#movement">■</a> Movement</h3>
 <p>Movement combinators can be applied to any zipper, but they return <code>undefined</code>
@@ -314,9 +330,11 @@ move was illegal in which case the given default value is returned instead.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper({x: 1}),
     F.queryMove(F.downTo(&#39;y&#39;), false, () =&gt; true))
+
 </code></pre>
 <pre><code class="hljs lang-js">seq(F.toZipper({y: 1}),
     F.queryMove(F.downTo(&#39;y&#39;), false, () =&gt; true))
+
 </code></pre>
 <h3><a id="transforms"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#transforms">■</a> Transforms</h3>
 <h4><a id="F-transformMove"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-transformMove">■</a> <a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper) ~&gt; zipper</code></a></h4>
@@ -334,10 +352,12 @@ illegal move.</p>
 <pre><code class="hljs lang-js">seq(F.toZipper({y: 1}),
     F.transformMove(F.downTo(&#39;y&#39;), F.modify(x =&gt; x + 1)),
     F.fromZipper)
+
 </code></pre>
 <pre><code class="hljs lang-js">seq(F.toZipper({x: 1}),
     F.transformMove(F.downTo(&#39;y&#39;), F.modify(x =&gt; x + 1)),
     F.fromZipper)
+
 </code></pre>
 <h4><a id="F-everywhere"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-everywhere">■</a> <a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.everywhere(fn, zipper)</code> performs a transform of the focused element by
@@ -347,6 +367,7 @@ modifying each possible focus of the element with a bottom-up traversal.</p>
                 bar: [{lol: &quot;bal&quot;, example: 2}]}),
     F.everywhere(x =&gt; typeof x === &quot;number&quot; ? x + 1 : x),
     F.fromZipper)
+
 </code></pre>
 <h2><a id="related-work"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#related-work">■</a> Related Work</h2>
 <p>While the implementation is very different, the choice of combinators is based

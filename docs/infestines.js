@@ -213,26 +213,31 @@ var hasU = function hasU(p, x) {
 
 //
 
+var prototypeOf = function prototypeOf(x) {
+  return null == x ? x : Object.getPrototypeOf(x);
+};
+
 var constructorOf = function constructorOf(x) {
-  return x === undefined || x === null ? x : (hasU("constructor", x) ? Object.getPrototypeOf(x) : x).constructor;
+  return null == x ? x : (hasU('constructor', x) ? prototypeOf(x) : x).constructor;
 };
 
 //
 
 var isFunction = function isFunction(x) {
-  return typeof x === "function";
+  return typeof x === 'function';
 };
 var isString = function isString(x) {
-  return typeof x === "string";
+  return typeof x === 'string';
 };
 var isNumber = function isNumber(x) {
-  return typeof x === "number";
+  return typeof x === 'number';
 };
 
 var isArray = Array.isArray;
 
+var object = /*#__PURE__*/prototypeOf({});
 var isObject = function isObject(x) {
-  return x ? Object === constructorOf(x) : false;
+  return null != x && typeof x === 'object' && (hasU('constructor', x) ? prototypeOf(x) === object : x.constructor === Object);
 };
 
 //
@@ -336,7 +341,7 @@ function unzipObjIntoU(o, ks, vs) {
 
 function keys(o) {
   if (o instanceof Object) {
-    if (Object === constructorOf(o)) {
+    if (isObject(o)) {
       var ks = [];
       unzipObjIntoU(o, ks, 0);
       return ks;
@@ -348,7 +353,7 @@ function keys(o) {
 
 function values(o) {
   if (o instanceof Object) {
-    if (Object === constructorOf(o)) {
+    if (isObject(o)) {
       var vs = [];
       unzipObjIntoU(o, 0, vs);
       return vs;
@@ -367,7 +372,7 @@ function values(o) {
 function assocPartialU(k, v, o) {
   var r = {};
   if (o instanceof Object) {
-    if (Object !== constructorOf(o)) o = toObject(o);
+    if (!isObject(o)) o = toObject(o);
     for (var l in o) {
       if (l !== k) {
         r[l] = o[l];
@@ -384,7 +389,7 @@ function assocPartialU(k, v, o) {
 function dissocPartialU(k, o) {
   var r = void 0;
   if (o instanceof Object) {
-    if (Object !== constructorOf(o)) o = toObject(o);
+    if (!isObject(o)) o = toObject(o);
     for (var l in o) {
       if (l !== k) {
         if (!r) r = {};
@@ -399,13 +404,9 @@ function dissocPartialU(k, o) {
 
 //
 
-function inherit(Derived, Base, protos, statics) {
-  var proto = Derived.prototype = Object.create(Base.prototype);
-  proto.constructor = Derived;
-  assign(proto, protos);
-  assign(Derived, statics);
-  return Derived;
-}
+var inherit = function inherit(Derived, Base, protos, statics) {
+  return assign(Derived.prototype = Object.create(Base.prototype), protos).constructor = assign(Derived, statics);
+};
 
 exports.curryN = curryN;
 exports.arityN = arityN;
@@ -421,6 +422,7 @@ exports.array0 = array0;
 exports.object0 = object0;
 exports.isDefined = isDefined;
 exports.hasU = hasU;
+exports.prototypeOf = prototypeOf;
 exports.constructorOf = constructorOf;
 exports.isFunction = isFunction;
 exports.isString = isString;
