@@ -33,12 +33,12 @@ function reverse(from) {
 //
 
 var zipper = function zipper(left, focus, key, right, up) {
-  return infestines.isDefined(up) ? { left: left, focus: focus, key: key, right: right, up: up } : { left: left, focus: focus, key: key, right: right };
-};
+  return infestines.isDefined(up) ? { left: left, focus: focus, key: key, right: right, up: up } : { left: left, focus: focus, key: key, right: right
 
-//
+    //
 
-function intoObject(list, object) {
+  };
+};function intoObject(list, object) {
   while (list) {
     object[list[2]] = list[1];
     list = list[0];
@@ -83,7 +83,7 @@ var keyOf = function keyOf(z) {
 };
 
 var setU = function setU(focus, z) {
-  return infestines.assocPartialU("focus", focus, z);
+  return infestines.assocPartialU('focus', focus, z);
 };
 var set = /*#__PURE__*/infestines.curry(setU);
 
@@ -100,29 +100,29 @@ function up(_ref) {
       up = _ref.up;
 
   switch (typeof key) {
-    case "number":
+    case 'number':
       {
         var array = [];
         intoArray(reverse(left), array);
         if (infestines.isDefined(focus)) array.push(focus);
         intoArray(right, array);
-        return infestines.assocPartialU("focus", array, up);
+        return infestines.assocPartialU('focus', array, up);
       }
-    case "string":
+    case 'string':
       {
         var object = {};
         intoObject(reverse(left), object);
         if (infestines.isDefined(focus)) object[key] = focus;
         intoObject(right, object);
-        return infestines.assocPartialU("focus", object, up);
+        return infestines.assocPartialU('focus', object, up);
       }
   }
 }
 
 function downToU(key, z) {
   var focus = z.focus;
-  if (infestines.isObject(focus) && infestines.isString(key) && key in focus) return fromObject(focus, key, infestines.dissocPartialU("focus", z));
-  if (infestines.isArray(focus) && infestines.isNumber(key) && 0 <= key && key < focus.length) return fromArray(focus, key, infestines.dissocPartialU("focus", z));
+  if (infestines.isObject(focus) && infestines.isString(key) && key in focus) return fromObject(focus, key, infestines.dissocPartialU('focus', z));
+  if (infestines.isArray(focus) && infestines.isNumber(key) && 0 <= key && key < focus.length) return fromArray(focus, key, infestines.dissocPartialU('focus', z));
 }
 var downTo = /*#__PURE__*/infestines.curry(downToU);
 
@@ -162,10 +162,12 @@ var right = function right(_ref3) {
 };
 
 function head(z) {
-  var u = up(z);return u && downHead(u);
+  var u = up(z);
+  return u && downHead(u);
 }
 function last(z) {
-  var u = up(z);return u && downLast(u);
+  var u = up(z);
+  return u && downLast(u);
 }
 
 var toZipper = function toZipper(focus) {
@@ -173,11 +175,13 @@ var toZipper = function toZipper(focus) {
 };
 
 function fromZipper(z) {
-  var u = up(z);return u ? fromZipper(u) : get(z);
+  var u = up(z);
+  return u ? fromZipper(u) : get(z);
 }
 
 function queryMoveU(move, b, f, z) {
-  var m = move(z);return m ? f(m) : b;
+  var m = move(z);
+  return m ? f(m) : b;
 }
 var queryMove = /*#__PURE__*/infestines.curry(queryMoveU);
 

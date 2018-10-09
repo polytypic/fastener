@@ -29,12 +29,12 @@ function reverse(from) {
 //
 
 var zipper = function zipper(left, focus, key, right, up) {
-  return isDefined(up) ? { left: left, focus: focus, key: key, right: right, up: up } : { left: left, focus: focus, key: key, right: right };
-};
+  return isDefined(up) ? { left: left, focus: focus, key: key, right: right, up: up } : { left: left, focus: focus, key: key, right: right
 
-//
+    //
 
-function intoObject(list, object) {
+  };
+};function intoObject(list, object) {
   while (list) {
     object[list[2]] = list[1];
     list = list[0];
@@ -79,7 +79,7 @@ var keyOf = function keyOf(z) {
 };
 
 var setU = function setU(focus, z) {
-  return assocPartialU("focus", focus, z);
+  return assocPartialU('focus', focus, z);
 };
 var set = /*#__PURE__*/curry(setU);
 
@@ -96,29 +96,29 @@ function up(_ref) {
       up = _ref.up;
 
   switch (typeof key) {
-    case "number":
+    case 'number':
       {
         var array = [];
         intoArray(reverse(left), array);
         if (isDefined(focus)) array.push(focus);
         intoArray(right, array);
-        return assocPartialU("focus", array, up);
+        return assocPartialU('focus', array, up);
       }
-    case "string":
+    case 'string':
       {
         var object = {};
         intoObject(reverse(left), object);
         if (isDefined(focus)) object[key] = focus;
         intoObject(right, object);
-        return assocPartialU("focus", object, up);
+        return assocPartialU('focus', object, up);
       }
   }
 }
 
 function downToU(key, z) {
   var focus = z.focus;
-  if (isObject(focus) && isString(key) && key in focus) return fromObject(focus, key, dissocPartialU("focus", z));
-  if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length) return fromArray(focus, key, dissocPartialU("focus", z));
+  if (isObject(focus) && isString(key) && key in focus) return fromObject(focus, key, dissocPartialU('focus', z));
+  if (isArray(focus) && isNumber(key) && 0 <= key && key < focus.length) return fromArray(focus, key, dissocPartialU('focus', z));
 }
 var downTo = /*#__PURE__*/curry(downToU);
 
@@ -158,10 +158,12 @@ var right = function right(_ref3) {
 };
 
 function head(z) {
-  var u = up(z);return u && downHead(u);
+  var u = up(z);
+  return u && downHead(u);
 }
 function last(z) {
-  var u = up(z);return u && downLast(u);
+  var u = up(z);
+  return u && downLast(u);
 }
 
 var toZipper = function toZipper(focus) {
@@ -169,11 +171,13 @@ var toZipper = function toZipper(focus) {
 };
 
 function fromZipper(z) {
-  var u = up(z);return u ? fromZipper(u) : get(z);
+  var u = up(z);
+  return u ? fromZipper(u) : get(z);
 }
 
 function queryMoveU(move, b, f, z) {
-  var m = move(z);return m ? f(m) : b;
+  var m = move(z);
+  return m ? f(m) : b;
 }
 var queryMove = /*#__PURE__*/curry(queryMoveU);
 
