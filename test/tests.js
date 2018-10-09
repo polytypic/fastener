@@ -16,8 +16,7 @@ function testEq(expect, thunk) {
   const expr = thunk
     .toString()
     .replace(/\s+/g, ' ')
-    .replace(/^\s*function\s*\(\s*\)\s*{\s*(return\s*)?/, '')
-    .replace(/\s*;?\s*}\s*$/, '')
+    .replace(/^\(\)\s+=>\s+/, '')
 
   it(`${expr} => ${show(expect)}`, () => {
     const actual = thunk()
