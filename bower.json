@@ -14,7 +14,7 @@
   ],
   "homepage": "https://github.com/polytypic/fastener",
   "dependencies": {
-    "infestines": "^0.4.2"
+    "infestines": "^0.4.7"
   },
   "ignore": ["*", "!*.md", "!dist/*"]
 }
