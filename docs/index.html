@@ -5,7 +5,7 @@
     <title>Fastener</title>
     <link rel="stylesheet" type="text/css" href="fw/github.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/googlecode.min.css">
-    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/klipse@7.6.9/dist/codemirror.css">
     <link rel="stylesheet" type="text/css" href="fw/styles.css">
   </head>
   <body class="markdown-body">
@@ -28,7 +28,7 @@
       plugin</a>.
     </p>
     <hr>
-    <h1><a id="fastener"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#">■</a> <a href="#fastener">Fastener</a> &middot; <a href="https://github.com/polytypic/fastener"><img src="https://img.shields.io/github/stars/polytypic/fastener.svg?style=social" alt="GitHub stars"></a> <a href="https://www.npmjs.com/package/fastener"><img src="https://img.shields.io/npm/dm/fastener.svg" alt="npm"></a></h1>
+    <h1 id="a-idfastenera-≡-■-fastener--github-stars-npm"><a id="fastener"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#">■</a> <a href="#fastener">Fastener</a> &middot; <a href="https://github.com/polytypic/fastener"><img src="https://img.shields.io/github/stars/polytypic/fastener.svg?style=social" alt="GitHub stars"></a> <a href="https://www.npmjs.com/package/fastener"><img src="https://img.shields.io/npm/dm/fastener.svg" alt="npm"></a></h1>
 <p><a href="https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf">Zippers</a>
 are a powerful abstraction for implementing arbitrary queries and transforms on
 immutable data structures and for step-by-step navigation and modification of
@@ -39,7 +39,7 @@ manipulating JSON data.</p>
 <a href="https://travis-ci.org/polytypic/fastener"><img src="https://travis-ci.org/polytypic/fastener.svg?branch=master" alt="Build Status"></a>
 <a href="https://codecov.io/github/polytypic/fastener?branch=master"><img src="https://img.shields.io/codecov/c/github/polytypic/fastener/master.svg" alt="Code Coverage"></a>
 <a href="https://david-dm.org/polytypic/fastener"><img src="https://david-dm.org/polytypic/fastener.svg" alt=""></a> <a href="https://david-dm.org/polytypic/fastener?type=dev"><img src="https://david-dm.org/polytypic/fastener/dev-status.svg" alt=""></a></p>
-<h2><a id="contents"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#contents">■</a> <a href="#contents">Contents</a></h2>
+<h2 id="a-idcontentsa-≡-■-contents"><a id="contents"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#contents">■</a> <a href="#contents">Contents</a></h2>
 <ul>
 <li><a href="#tutorial">Tutorial</a></li>
 <li><a href="#reference">Reference</a><ul>
@@ -90,7 +90,7 @@ manipulating JSON data.</p>
 </li>
 <li><a href="#related-work">Related Work</a></li>
 </ul>
-<h2><a id="tutorial"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#tutorial">■</a> <a href="#tutorial">Tutorial</a></h2>
+<h2 id="a-idtutoriala-≡-■-tutorial"><a id="tutorial"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#tutorial">■</a> <a href="#tutorial">Tutorial</a></h2>
 <p>Playing with zippers in a REPL can be very instructive.  First we require the
 libraries</p>
 <pre><code class="hljs lang-jsx">import * as F from &quot;fastener&quot;
@@ -202,7 +202,7 @@ like <code>data</code>, tries to focus on the <code>text</code> element of an ob
 implement arbitrary transforms on data structures.  This can also make them more
 difficult to compose and reason about than more limited approaches such as
 <a href="https://github.com/calmm-js/partial.lenses">lenses</a>.</p>
-<h2><a id="reference"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#reference">■</a> <a href="#reference">Reference</a></h2>
+<h2 id="a-idreferencea-≡-■-reference"><a id="reference"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#reference">■</a> <a href="#reference">Reference</a></h2>
 <p>The zipper combinators are available as named exports.  Typically one just
 imports the library as:</p>
 <pre><code class="hljs lang-jsx">import * as F from &quot;fastener&quot;</code></pre>
@@ -210,8 +210,8 @@ imports the library as:</p>
 <pre><code class="hljs lang-jsx">var seq = (x, ...fs) =&gt; R.reduce((x, f) =&gt; f(x), x, fs)</code></pre>
 <p>written using <a href="http://ramdajs.com/0.21.0/docs/#reduce"><code>reduce</code></a> that allows one
 to express a sequence of operations to perform starting from a given value.</p>
-<h3><a id="introduction-and-elimination"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#introduction-and-elimination">■</a> <a href="#introduction-and-elimination">Introduction and Elimination</a></h3>
-<h4><a id="F-toZipper"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-toZipper">■</a> <a href="#F-toZipper" title="F.toZipper: JSON -&gt; Zipper"><code>F.toZipper(json) ~&gt; zipper</code></a></h4>
+<h3 id="a-idintroduction-and-eliminationa-≡-■-introduction-and-elimination"><a id="introduction-and-elimination"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#introduction-and-elimination">■</a> <a href="#introduction-and-elimination">Introduction and Elimination</a></h3>
+<h4 id="a-idf-tozippera-≡-■-ftozipperjson--zipper"><a id="F-toZipper"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-toZipper">■</a> <a href="#F-toZipper" title="F.toZipper: JSON -&gt; Zipper"><code>F.toZipper(json) ~&gt; zipper</code></a></h4>
 <p><code>F.toZipper(json)</code> creates a new zipper that is focused on the root of the given
 JSON object.</p>
 <p>For example:</p>
@@ -220,7 +220,7 @@ JSON object.</p>
     F.modify(x =&gt; x + 1),
     F.fromZipper)
 </code></pre>
-<h4><a id="F-fromZipper"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-fromZipper">■</a> <a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper) ~&gt; json</code></a></h4>
+<h4 id="a-idf-fromzippera-≡-■-ffromzipperzipper--json"><a id="F-fromZipper"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-fromZipper">■</a> <a href="#F-fromZipper" title="F.fromZipper: Zipper -&gt; JSON"><code>F.fromZipper(zipper) ~&gt; json</code></a></h4>
 <p><code>F.fromZipper(zipper)</code> extracts the modified JSON object from the given zipper.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper([1,2,3]),
@@ -228,10 +228,10 @@ JSON object.</p>
     F.modify(x =&gt; x + 1),
     F.fromZipper)
 </code></pre>
-<h3><a id="focus"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#focus">■</a> <a href="#focus">Focus</a></h3>
+<h3 id="a-idfocusa-≡-■-focus"><a id="focus"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#focus">■</a> <a href="#focus">Focus</a></h3>
 <p>Focus combinators allow one to inspect and modify the element that a zipper is
 focused on.</p>
-<h4><a id="F-get"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-get">■</a> <a href="#F-get" title="F.get: Zipper -&gt; JSON"><code>F.get(zipper) ~&gt; json</code></a></h4>
+<h4 id="a-idf-geta-≡-■-fgetzipper--json"><a id="F-get"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-get">■</a> <a href="#F-get" title="F.get: Zipper -&gt; JSON"><code>F.get(zipper) ~&gt; json</code></a></h4>
 <p><code>F.get(zipper)</code> returns the element that the zipper is focused on.</p>
 <p>For example:</p>
 <pre><code class="hljs lang-js">seq(F.toZipper(1), F.get)
@@ -240,7 +240,7 @@ focused on.</p>
     F.downTo(2),
     F.get)
 </code></pre>
-<h4><a id="F-modify"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-modify">■</a> <a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
+<h4 id="a-idf-modifya-≡-■-fmodifyjson--json-zipper--zipper"><a id="F-modify"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-modify">■</a> <a href="#F-modify" title="F.modify: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.modify(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.modify(fn, zipper)</code> is equivalent to <code>F.set(fn(F.get(zipper)), zipper)</code> and
 replaces the element that the zipper is focused on with the value returned by
 the given function for the element.</p>
@@ -250,7 +250,7 @@ the given function for the element.</p>
     F.modify(x =&gt; x + x),
     F.fromZipper)
 </code></pre>
-<h4><a id="F-set"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-set">■</a> <a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper) ~&gt; zipper</code></a></h4>
+<h4 id="a-idf-seta-≡-■-fsetjson-zipper--zipper"><a id="F-set"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-set">■</a> <a href="#F-set" title="F.set: JSON -&gt; Zipper -&gt; Zipper"><code>F.set(json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.set(json, zipper)</code> replaces the element that the zipper is focused on with
 the given value.</p>
 <p>For example:</p>
@@ -259,47 +259,47 @@ the given value.</p>
     F.set(&#39;lol&#39;),
     F.fromZipper)
 </code></pre>
-<h3><a id="movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#movement">■</a> <a href="#movement">Movement</a></h3>
+<h3 id="a-idmovementa-≡-■-movement"><a id="movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#movement">■</a> <a href="#movement">Movement</a></h3>
 <p>Movement combinators can be applied to any zipper, but they return <code>undefined</code>
 in case of illegal moves.</p>
-<h4><a id="parent-child-movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#parent-child-movement">■</a> <a href="#parent-child-movement">Parent-Child movement</a></h4>
+<h4 id="a-idparent-child-movementa-≡-■-parent-child-movement"><a id="parent-child-movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#parent-child-movement">■</a> <a href="#parent-child-movement">Parent-Child movement</a></h4>
 <p>Parent-Child movement is moving the focus between a parent object or array and a
 child element of said parent.</p>
-<h5><a id="F-downHead"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downHead">■</a> <a href="#F-downHead" title="F.downHead: Zipper -&gt; Maybe Zipper"><code>F.downHead(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-downheada-≡-■-fdownheadzipper--maybezipper"><a id="F-downHead"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downHead">■</a> <a href="#F-downHead" title="F.downHead: Zipper -&gt; Maybe Zipper"><code>F.downHead(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downHead(zipper)</code> moves the focus to the leftmost element of the object or
 array that the zipper is focused on.</p>
-<h5><a id="F-downLast"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downLast">■</a> <a href="#F-downLast" title="F.downLast: Zipper -&gt; Maybe Zipper"><code>F.downLast(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-downlasta-≡-■-fdownlastzipper--maybezipper"><a id="F-downLast"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downLast">■</a> <a href="#F-downLast" title="F.downLast: Zipper -&gt; Maybe Zipper"><code>F.downLast(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downLast(zipper)</code> moves the focus to the rightmost element of the object or
 array that the zipper is focused on.</p>
-<h5><a id="F-downTo"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downTo">■</a> <a href="#F-downTo" title="F.downTo: (String|Number) -&gt; Zipper -&gt; Maybe Zipper"><code>F.downTo(key, zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-downtoa-≡-■-fdowntokey-zipper--maybezipper"><a id="F-downTo"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downTo">■</a> <a href="#F-downTo" title="F.downTo: (String|Number) -&gt; Zipper -&gt; Maybe Zipper"><code>F.downTo(key, zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downTo(key, zipper)</code> moves the focus to the specified object property or
 array index of the object or array that the zipper is focused on.</p>
-<h5><a id="F-keyOf"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-keyOf">■</a> <a href="#F-keyOf" title="F.keyOf: Zipper -&gt; Maybe (String|Number)"><code>F.keyOf(zipper) ~&gt; maybeKey</code></a></h5>
+<h5 id="a-idf-keyofa-≡-■-fkeyofzipper--maybekey"><a id="F-keyOf"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-keyOf">■</a> <a href="#F-keyOf" title="F.keyOf: Zipper -&gt; Maybe (String|Number)"><code>F.keyOf(zipper) ~&gt; maybeKey</code></a></h5>
 <p><code>F.keyOf(zipper)</code> returns the object property name or the array index that the
 zipper is currently focused on.</p>
-<h5><a id="F-up"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-up">■</a> <a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-upa-≡-■-fupzipper--maybezipper"><a id="F-up"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-up">■</a> <a href="#F-up" title="F.up: Zipper -&gt; Maybe Zipper"><code>F.up(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.up(zipper)</code> moves the focus from an array element or object property to the
 containing array or object.</p>
-<h4><a id="path-movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#path-movement">■</a> <a href="#path-movement">Path movement</a></h4>
+<h4 id="a-idpath-movementa-≡-■-path-movement"><a id="path-movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#path-movement">■</a> <a href="#path-movement">Path movement</a></h4>
 <p>Path movement is moving the focus along a path from a parent object or array to
 a nested child element.</p>
-<h5><a id="F-downPath"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downPath">■</a> <a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-downpatha-≡-■-fdownpathkeys-zipper--maybezipper"><a id="F-downPath"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-downPath">■</a> <a href="#F-downPath" title="F.downPath: [String|Number] -&gt; Zipper -&gt; Maybe Zipper"><code>F.downPath([...keys], zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.downPath(path, zipper)</code> moves the focus along the specified path of keys.</p>
-<h5><a id="F-pathOf"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-pathOf">■</a> <a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper) ~&gt; [...keys]</code></a></h5>
+<h5 id="a-idf-pathofa-≡-■-fpathofzipper--keys"><a id="F-pathOf"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-pathOf">■</a> <a href="#F-pathOf" title="F.pathOf: Zipper -&gt; [String|Number]"><code>F.pathOf(zipper) ~&gt; [...keys]</code></a></h5>
 <p><code>F.pathOf(zipper)</code> returns the path from the root to the current element focused
 on by the zipper.</p>
-<h4><a id="sibling-movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#sibling-movement">■</a> <a href="#sibling-movement">Sibling movement</a></h4>
+<h4 id="a-idsibling-movementa-≡-■-sibling-movement"><a id="sibling-movement"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#sibling-movement">■</a> <a href="#sibling-movement">Sibling movement</a></h4>
 <p>Sibling movement is moving the focus between the elements of an array or an object.</p>
-<h5><a id="F-head"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-head">■</a> <a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-heada-≡-■-fheadzipper--maybezipper"><a id="F-head"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-head">■</a> <a href="#F-head" title="F.head: Zipper -&gt; Maybe Zipper"><code>F.head(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.head(zipper)</code> moves the focus to the leftmost sibling of the current focus.</p>
-<h5><a id="F-last"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-last">■</a> <a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-lasta-≡-■-flastzipper--maybezipper"><a id="F-last"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-last">■</a> <a href="#F-last" title="F.last: Zipper -&gt; Maybe Zipper"><code>F.last(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.last(zipper)</code> moves the focus to the rightmost sibling of the current focus.</p>
-<h5><a id="F-left"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-left">■</a> <a href="#F-left" title="F.left: Zipper -&gt; Maybe Zipper"><code>F.left(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-lefta-≡-■-fleftzipper--maybezipper"><a id="F-left"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-left">■</a> <a href="#F-left" title="F.left: Zipper -&gt; Maybe Zipper"><code>F.left(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.left(zipper)</code> moves the focus to the element on the left of the current focus.</p>
-<h5><a id="F-right"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-right">■</a> <a href="#F-right" title="F.right: Zipper -&gt; Maybe Zipper"><code>F.right(zipper) ~&gt; maybeZipper</code></a></h5>
+<h5 id="a-idf-righta-≡-■-frightzipper--maybezipper"><a id="F-right"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-right">■</a> <a href="#F-right" title="F.right: Zipper -&gt; Maybe Zipper"><code>F.right(zipper) ~&gt; maybeZipper</code></a></h5>
 <p><code>F.right(zipper)</code> moves the focus to the element on the right of the current focus.</p>
-<h3><a id="queries"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#queries">■</a> <a href="#queries">Queries</a></h3>
-<h4><a id="F-queryMove"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-queryMove">■</a> <a href="#F-queryMove" title="F.queryMove: (Zipper -&gt; Maybe Zipper) -&gt; a -&gt; (Zipper -&gt; a) -&gt; Zipper -&gt; a"><code>F.queryMove(zipper =&gt; maybeZipper, value, zipper =&gt; value, zipper) ~&gt; value</code></a></h4>
+<h3 id="a-idqueriesa-≡-■-queries"><a id="queries"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#queries">■</a> <a href="#queries">Queries</a></h3>
+<h4 id="a-idf-querymovea-≡-■-fquerymovezipper--maybezipper-value-zipper--value-zipper--value"><a id="F-queryMove"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-queryMove">■</a> <a href="#F-queryMove" title="F.queryMove: (Zipper -&gt; Maybe Zipper) -&gt; a -&gt; (Zipper -&gt; a) -&gt; Zipper -&gt; a"><code>F.queryMove(zipper =&gt; maybeZipper, value, zipper =&gt; value, zipper) ~&gt; value</code></a></h4>
 <p><code>F.queryMove(move, default, fn, zipper)</code> applies the given function <code>fn</code> to the
 zipper focused on after the given movement and returns the result unless the
 move was illegal in which case the given default value is returned instead.</p>
@@ -310,8 +310,8 @@ move was illegal in which case the given default value is returned instead.</p>
 <pre><code class="hljs lang-js">seq(F.toZipper({y: 1}),
     F.queryMove(F.downTo(&#39;y&#39;), false, () =&gt; true))
 </code></pre>
-<h3><a id="transforms"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#transforms">■</a> <a href="#transforms">Transforms</a></h3>
-<h4><a id="F-transformMove"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-transformMove">■</a> <a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper) ~&gt; zipper</code></a></h4>
+<h3 id="a-idtransformsa-≡-■-transforms"><a id="transforms"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#transforms">■</a> <a href="#transforms">Transforms</a></h3>
+<h4 id="a-idf-transformmovea-≡-■-ftransformmovemove-zipper--zipper-zipper--zipper"><a id="F-transformMove"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-transformMove">■</a> <a href="#F-transformMove" title="F.transformMove: (F.downHead|F.downLast|F.downTo(key)|F.left|F.right|F.up) -&gt; (Zipper -&gt; Zipper) -&gt; Zipper -&gt; Zipper"><code>F.transformMove(move, zipper =&gt; zipper, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.transformMove(move, fn, zipper)</code> applies the given function to the zipper
 focused on after the given movement.  The movement <code>move</code> must be one of
 <a href="#F-downHead"><code>F.downHead</code></a>, <a href="#F-downLast"><code>F.downLast</code></a>,
@@ -328,7 +328,7 @@ zipper was originally focused on.  Nothing is done in case of an illegal move.</
     F.transformMove(F.downTo(&#39;y&#39;), F.modify(x =&gt; x + 1)),
     F.fromZipper)
 </code></pre>
-<h4><a id="F-everywhere"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-everywhere">■</a> <a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
+<h4 id="a-idf-everywherea-≡-■-feverywherejson--json-zipper--zipper"><a id="F-everywhere"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#F-everywhere">■</a> <a href="#F-everywhere" title="F.everywhere: (JSON -&gt; JSON) -&gt; Zipper -&gt; Zipper"><code>F.everywhere(json =&gt; json, zipper) ~&gt; zipper</code></a></h4>
 <p><code>F.everywhere(fn, zipper)</code> performs a transform of the focused element by
 modifying each possible focus of the element with a bottom-up traversal.</p>
 <p>For example:</p>
@@ -337,7 +337,7 @@ modifying each possible focus of the element with a bottom-up traversal.</p>
     F.everywhere(x =&gt; typeof x === &quot;number&quot; ? x + 1 : x),
     F.fromZipper)
 </code></pre>
-<h2><a id="related-work"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#related-work">■</a> <a href="#related-work">Related Work</a></h2>
+<h2 id="a-idrelated-worka-≡-■-related-work"><a id="related-work"></a> <a href="#contents">≡</a> <a href="https://github.com/polytypic/fastener/blob/master/README.md#related-work">■</a> <a href="#related-work">Related Work</a></h2>
 <p>While the implementation is very different, the choice of combinators is based
 on Michael D. Adams&#39; paper
 <a href="http://michaeldadams.org/papers/scrap_your_zippers/">Scrap Your Zippers</a>.</p>
@@ -353,7 +353,7 @@ on Michael D. Adams&#39; paper
     <script type="text/javascript" src="fastener.js"></script>
     <script type="text/javascript" src="https://unpkg.com/ramda/dist/ramda.min.js"></script>
     <script type="text/javascript" src="fw/klipse-settings.js"></script>
-    <script type="text/javascript" src="https://storage.googleapis.com/app.klipse.tech/plugin_prod/js/klipse_plugin.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/klipse@7.6.9/dist/klipse_plugin.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
     <script type="text/javascript" src="fw/init-hljs.js"></script>
